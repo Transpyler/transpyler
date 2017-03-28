@@ -28,12 +28,12 @@ setup(
     author='Fábio Macêdo Mendes',
     author_email='fabiomacedomendes@gmail.com',
     url='',
-    description='A short description for your project.',
+    description='A framework for building internationalized Python-like languages.',
     long_description=codecs.open('README.rst', 'rb', 'utf8').read(),
 
     # Classifiers (see https://pypi.python.org/pypi?%3Aaction=list_classifiers)
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: GNU General Public License (GPL)',
         'Operating System :: OS Independent',
@@ -49,10 +49,15 @@ setup(
     package_dir={'': 'src'},
     packages=find_packages('src'),
     install_requires=[
+        'lazyutils',
+        'unidecode',
     ],
     extras_require={
         'dev': [
             'python-boilerplate[dev]',
+        ],
+        'google_translate': [
+            'textblob',
         ],
     },
 

@@ -2,6 +2,7 @@ from mock import mock
 
 from transpyler.tools.google_translate import translate_functions, translate_function, get_args
 
+
 def function(x, y=1, *args, z=1, d=2, **kwargs):
     """
     Some function!

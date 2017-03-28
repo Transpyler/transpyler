@@ -1,5 +1,6 @@
-from lazyutils import lazy
 import builtins as _builtins
+
+from lazyutils import lazy
 
 
 class Instrospection:
@@ -15,21 +16,21 @@ class Instrospection:
         return [
             name for (name, value) in vars(_builtins).items()
             if isinstance(value, type) and issubclass(value, Exception)
-            ]
+        ]
 
     @lazy
     def py_types(self):
         return [
             name for (name, value) in vars(_builtins).items()
             if isinstance(value, type) and not issubclass(value, Exception)
-            ]
+        ]
 
     @lazy
     def py_functions(self):
         return [
             name for (name, value) in vars(_builtins).items()
             if name not in self.py_types and name not in self.py_exceptions
-            ]
+        ]
 
     @lazy
     def py_builtins(self):
@@ -37,7 +38,6 @@ class Instrospection:
 
     def __init__(self, language):
         self.language = language
-
 
         # def _filtering_out(self, names):
         #     """

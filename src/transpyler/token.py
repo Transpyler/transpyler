@@ -30,7 +30,7 @@ class Token:
             tk_list.append(tok)
         return tk_list
 
-    def __init__(self, data, type=None, start=None, end=None, line=None,
+    def __init__(self, data, type=None, start=None, end=None, line=None,  # noqa: C901
                  abstract=False):
 
         # Start from TokenInfo object
@@ -77,13 +77,14 @@ class Token:
         self.line = line
         if not abstract:
             if start is None or end is None:
-                raise ValueError('could not define start/end of concrete token')
+                raise ValueError(
+                    'could not define start/end of concrete token')
         else:
             if start is not None or end is not None:
                 raise ValueError('cannot define start/end positions of '
                                  'abstract token')
 
-    def __eq__(self, other):
+    def __eq__(self, other):  # noqa: C901
         if isinstance(other, Token):
             if self.string is None or other.string is None:
                 return self.type == other.type

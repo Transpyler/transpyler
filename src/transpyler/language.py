@@ -2,8 +2,9 @@ import builtins as _builtins
 import codeop
 
 from lazyutils import lazy
-from transpyler.lexer import Lexer
+
 from transpyler.builtins import Builtins
+from transpyler.lexer import Lexer
 
 # Save useful builtin functions
 _compile = _builtins.compile

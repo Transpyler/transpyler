@@ -1,6 +1,7 @@
 import tokenize
 
 from lazyutils import lazy
+
 from transpyler.errors import BadSytaxError
 from transpyler.token import Token, displace_tokens, token_find
 from transpyler.utils import keep_spaces
@@ -70,7 +71,7 @@ class Lexer:
         current_string = src
 
         # FIXME: Not reaching here!
-        #if not current_string.endswith('\n'):
+        # if not current_string.endswith('\n'):
         #    current_string += '\n'
 
         def iterlines():

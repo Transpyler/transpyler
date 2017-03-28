@@ -1,5 +1,6 @@
-import re
 import functools
+import re
+
 from unidecode import unidecode
 
 __all__ = [
@@ -18,6 +19,7 @@ __all__ = [
 
 HEADING_SPACE = re.compile(r'^\s*')
 ENDING_SPACE = re.compile(r'\s*$')
+SYNONYM_ERROR_MSG = '%s is present in namespace, but is also a synonym of %s'
 
 
 def synonyms(*args):
@@ -41,6 +43,7 @@ def synonyms(*args):
             '-----\n\n'
             'Também pode ser chamada como ' + data)
         return func
+
     return decorator
 
 
@@ -51,30 +54,36 @@ def collect_synonyms(namespace, add_unaccented=True):
     Raise a ValueError for name conflicts.
     """
 
-    D = {}
-    unaccent = unidecode
-    msg = '%s is present in namespace, but is also a synonym of %s'
+    map = {}
+    map.update(collect_aliases(namespace))
+    if add_unaccented:
+        map.update(collect_unaccented(namespace))
+    return map
 
-    # Collect aliases
+
+def collect_unaccented(namespace):
+    map = {}
+    unaccent = unidecode
+    for name, func in list(map.items()):
+        no_accent = unaccent(name)
+        if no_accent != name:
+            if no_accent in map:
+                raise ValueError(SYNONYM_ERROR_MSG % (no_accent, name))
+            map[no_accent] = func
+    return map
+
+
+def collect_aliases(namespace):
+    map = {}
     for attr, func in namespace.items():
         try:
             for alias in func.__synonyms__:
-                D[alias] = func
+                map[alias] = func
                 if alias in namespace:
-                    raise ValueError(msg % (alias, attr))
+                    raise ValueError(SYNONYM_ERROR_MSG % (alias, attr))
         except AttributeError:
             continue
-    D.update(namespace)
-
-    # Collect unaccented
-    for name, func in list(D.items()):
-        no_accent = unaccent(name)
-        if no_accent != name:
-            if no_accent in D:
-                raise ValueError(msg % (no_accent, name))
-            D[no_accent] = func
-
-    return D
+    return map
 
 
 def register_synonyms(global_ns):
