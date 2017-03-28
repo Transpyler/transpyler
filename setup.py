@@ -59,6 +59,11 @@ setup(
         'google_translate': [
             'textblob',
         ],
+        'jupyter': [
+            'jupyter',
+            'jupyter-console',
+            'ipython',
+        ],
     },
 
     # Other configurations

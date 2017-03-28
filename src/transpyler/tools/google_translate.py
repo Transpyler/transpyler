@@ -16,7 +16,7 @@ def translate_function(function, to_lang, from_lang='en'):
     """
     Translate a single function using Google Translate. The resulting source
     code just calls the original function and assumes it lives in the global
-    namespace.
+    get_namespace.
     """
 
     name = TextBlob(function.__name__)

@@ -5,7 +5,7 @@ from lazyutils import lazy
 
 class Instrospection:
     """
-    Introspections facilities for a transpyled Language.
+    Introspection facilities for a transpyled Language.
     """
 
     # Original python names
@@ -49,8 +49,8 @@ class Instrospection:
         #     return names
         #
         # all_names = [name for name in dir(tugalib) if not name.startswith('_')]
-        # namespace = {name: getattr(tugalib, name) for name in all_names}
-        # _names = namespace.copy()
+        # get_namespace = {name: getattr(tugalib, name) for name in all_names}
+        # _names = get_namespace.copy()
         #
         # # Classify names according to type: constants
         # constants = _filtering_out(

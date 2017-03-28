@@ -47,6 +47,7 @@ class Language:
     translations = None
     lexer_factory = Lexer
     builtins_factory = Builtins
+    invalid_tokens = None
 
     @lazy
     def lexer(self):
@@ -58,40 +59,40 @@ class Language:
 
     @lazy
     def _namespace_cache(self):
-        return self.builtins_namespace()
+        return self.get_builtins_namespace()
 
     def __init__(self, **kwargs):
         self._forbidden = False
         for k, v in kwargs.items():
             setattr(self, k, v)
+        self._has_init = False
 
-    def init(self, extra_builtins=None, forbidden=True):
+    def init(self, extra_builtins=None, curses=True):
         """
         Initializes language runtime.
 
         Args:
-            forbidden:
-                Load forbidden part of pytuga.lib. This enables translation for
-                builtin python types by hacking them at C-level.
+            curses:
+                Load curses that enable translation for builtin python types by
+                hacking them at C-level.
             extra_builtins (dict):
                 A dictionary with extra builtin functions to be added to the
                 runtime.
         """
 
-        if forbidden:
-            self.apply_forbidden()
-        if extra_builtins:
-            self.builtins.update(extra_builtins)
+        if not self._has_init:
+            if curses:
+                self.apply_curses()
+            if extra_builtins:
+                self.builtins.update(extra_builtins)
+            self._has_init = True
 
-    def apply_forbidden(self):
+    def apply_curses(self):
         """
+        Apply any required curses.
 
-        Returns:
-
+        Default implementation does nothing.
         """
-        if self._forbidden is False:
-            pass
-        self._forbidden = True
 
     def compile(self, source, filename, mode, flags=0, dont_inherit=False,
                 compile_function=None):
@@ -117,7 +118,8 @@ class Language:
         """
 
         source = self.transpile(source)
-        compile_function = self.compile_function or self._compile
+        if compile_function is None:
+            compile_function = self.compile_function or self._compile
         return compile_function(source, filename, mode, flags, dont_inherit)
 
     def exec(self, source, globals=None, locals=None, forbidden=False,
@@ -211,9 +213,9 @@ class Language:
         pytuga_src = self.transpile(src)
         return codeop.compile_command(pytuga_src, filename, symbol) is None
 
-    def builtins_namespace(self):
+    def get_builtins_namespace(self):
         """
-        Return a dictionary with the default builtins namespace for language.
+        Return a dictionary with the default builtins get_namespace for language.
         """
 
-        return self.builtins.namespace()
+        return self.builtins.get_namespace()

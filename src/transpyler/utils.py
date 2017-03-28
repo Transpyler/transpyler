@@ -19,7 +19,7 @@ __all__ = [
 
 HEADING_SPACE = re.compile(r'^\s*')
 ENDING_SPACE = re.compile(r'\s*$')
-SYNONYM_ERROR_MSG = '%s is present in namespace, but is also a synonym of %s'
+SYNONYM_ERROR_MSG = '%s is present in get_namespace, but is also a synonym of %s'
 
 
 def synonyms(*args):
@@ -49,7 +49,7 @@ def synonyms(*args):
 
 def collect_synonyms(namespace, add_unaccented=True):
     """
-    Return a dictionary with all synonyms found in the given namespace.
+    Return a dictionary with all synonyms found in the given get_namespace.
 
     Raise a ValueError for name conflicts.
     """
@@ -88,7 +88,7 @@ def collect_aliases(namespace):
 
 def register_synonyms(global_ns):
     """
-    Register all synonyms in the given namespace dictionary.
+    Register all synonyms in the given get_namespace dictionary.
     """
 
     D = collect_synonyms(global_ns)

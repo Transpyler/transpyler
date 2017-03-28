@@ -11,7 +11,7 @@ def make_manuel_suite(ns):
     """
     Prepare Manuel test suite.
 
-    Test functions are injected in the given namespace.
+    Test functions are injected in the given get_namespace.
     """
 
     # Wrap function so pytest does not expect an spurious "self" fixture.
@@ -34,7 +34,7 @@ def make_manuel_suite(ns):
     m += manuel.doctest.Manuel()
     m += manuel.codeblock.Manuel()
 
-    # Copy tests from the suite to the global namespace
+    # Copy tests from the suite to the global get_namespace
     suite = manuel.testing.TestSuite(m, *files)
     for i, test in enumerate(suite):
         name = 'test_doc_%s' % i

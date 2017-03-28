@@ -14,8 +14,11 @@ class Lexer:
     """
 
     @lazy
-    def error_dict(self):
-        return {}
+    def invalid_tokens(self):
+        try:
+            return dict(self.language.invalid_tokens)
+        except (AttributeError, TypeError):
+            return {}
 
     @lazy
     def translations(self):
@@ -100,7 +103,7 @@ class Lexer:
         tokens.
         """
 
-        self.detect_error_sequences(tokens, self.error_dict)
+        self.detect_error_sequences(tokens, self.invalid_tokens)
         tokens = self.replace_sequences(tokens, self.sequence_translations)
         tokens = self.replace_translations(tokens, self.single_translations)
         return tokens
@@ -108,7 +111,7 @@ class Lexer:
     def detect_error_sequences(self, tokens, error_dict):
         """
         Raises a BadSyntaxError if list of tokens contains any sub-sequence in
-        the given error_dict.
+        the given invalid_tokens.
 
         Args:
             tokens: List of tokens

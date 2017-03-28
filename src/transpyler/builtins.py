@@ -31,7 +31,7 @@ class Builtins:
     def __init__(self, language=None):
         self.language = language
 
-    def namespace(self):
+    def get_namespace(self):
         """
         Return a dictionary with all public functions.
         """
@@ -55,7 +55,7 @@ class Builtins:
         """
 
         old_builtins = vars(_builtins)
-        new_builtins = self.namespace()
+        new_builtins = self.get_namespace()
 
         for k, v in new_builtins.items():
             setattr(_builtins, k, v)
