@@ -1,8 +1,8 @@
-.. .. image:: https://travis-ci.org/*github_repository*.svg?branch=master
-    :target: https://travis-ci.org/*github_repository*
+.. image:: https://travis-ci.org/fabiommendes/transpyler.svg?branch=master
+    :target: https://travis-ci.org/fabiommendes/transpyler
 
-.. .. image:: https://coveralls.io/repos/github/*github_repository*/badge.svg?branch=master
-    :target: https://coveralls.io/github/*github_repository*?branch=master
+.. image:: https://coveralls.io/repos/github/fabiommendes/transpyler/badge.svg?branch=master
+    :target: https://coveralls.io/github/fabiommendes/transpyler?branch=master
 
 
 Transpyler is an infrastructure to create simple internationalized versions of
@@ -20,6 +20,7 @@ tokens. In transpyler it looks like this:
 
     from transpyler import Language
 
+    # Let us define Py-Klingon
     klingon = Language(
         name='Py-Klingon',
         translations={
@@ -32,6 +33,8 @@ tokens. In transpyler it looks like this:
             # ... you get the idea ;-)
         })
 
+
+    # Now execute some Klingon number crunching
     klingon.exec('''
     Qap fib(x):
         chugh x < 0:
@@ -48,7 +51,7 @@ supports a series of nice educational tools inherited from the original Pytuguê
 runtume:
 
 * Support for Jupyter/IPython: we can easily create a Jupyter kernel from a
-  Language instance. This enables nice CLI and GUI consoles and notebooks, which
+  Language instance. This enables nice consoles and notebooks which
   can be really handy in teaching a new programming language.
 * QCode support and syntax highlight: QCode is a Qt-based widget for coding
   editing.
