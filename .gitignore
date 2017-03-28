@@ -1,0 +1,25 @@
+# Cached builds
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.so
+*.dll
+*.egg
+*.egg-info/
+.cache/
+.coverage
+
+# Build directories
+docs/_build/
+build/
+dist/
+
+# Python-boilerplate auto generated files
+src/transpyler/__meta__.py
+
+# IDEs
+.idea/
+
+# Testing and temporary files
+.tox/
