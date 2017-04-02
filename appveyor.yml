@@ -1,3 +1,5 @@
+# We are using Appveyor.io to build our Windows Python packages. Check
+# instructions at https://packaging.python.org/appveyor
 environment:
   matrix:
     - PYTHON: "C:\\Python34"
@@ -30,10 +32,9 @@ test_script:
 after_test:
   - "%PYTHON%\\python.exe setup.py bdist_msi"
   - "%PYTHON%\\python.exe setup.py bdist_wininst"
-  - "%PYTHON%\\python.exe python.exe setup.py bdist_wheel"
+  - "%PYTHON%\\python.exe setup.py bdist_wheel"
 
 artifacts:
-  # Archive the generated packages in the ci.appveyor.com build report.
   - path: dist\*
 
 #on_success:
