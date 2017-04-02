@@ -21,6 +21,12 @@ __author__ = 'F\\xe1bio Mac\\xeado Mendes'
 with open(path, 'w') as F:
     F.write(meta)
 
+
+dependencies = {
+    'google_translate': ['textblob'],
+    'jupyter': ['jupyter', 'jupyter-console', 'ipython'],
+}
+
 setup(
     # Basic info
     name='transpyler',
@@ -55,15 +61,9 @@ setup(
     extras_require={
         'dev': [
             'python-boilerplate[dev]',
-        ],
-        'google_translate': [
-            'textblob',
-        ],
-        'jupyter': [
-            'jupyter',
-            'jupyter-console',
-            'ipython',
-        ],
+        ] + dependencies['google_translate'] + dependencies['jupyter'],
+        'google_translate': dependencies['google_translate'],
+        'jupypter': dependencies['jupyter'],
     },
 
     # Other configurations
