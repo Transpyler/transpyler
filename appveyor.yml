@@ -1,10 +1,4 @@
 environment:
-  global:
-    # SDK v7.0 MSVC Express 2008's SetEnv.cmd script will fail if the
-    # /E:ON and /V:ON options are not enabled in the batch script intepreter
-    # See: http://stackoverflow.com/a/13751649/163740
-    CMD_IN_ENV: "cmd /E:ON /V:ON /C .\\appveyor\\run_with_env.cmd"
-
   matrix:
     - PYTHON: "C:\\Python34"
       PYTHON_VERSION: "3.4.x"
@@ -53,19 +47,16 @@ install:
   - ps: "pip install tox codecov"
 
 build_script:
-  # Build the compiled extension
   - ps: "python setup.py build"
 
 test_script:
-  # Run the project tests
   - ps: "tox"
 
 after_test:
-  # If tests are successful, create binary packages for the project.
-  - "%CMD_IN_ENV% python setup.py bdist_wheel"
-  - "%CMD_IN_ENV% python setup.py bdist_wininst"
-  - "%CMD_IN_ENV% python setup.py bdist_msi"
-  - "%CMD_IN_ENV% codecov"
+  - ps: "python setup.py bdist_wheel"
+  - ps: "python setup.py bdist_wininst"
+  - ps: "python setup.py bdist_msi"
+  - ps: "codecov"
   - ps: "ls dist"
 
 artifacts:
