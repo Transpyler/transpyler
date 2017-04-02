@@ -39,9 +39,9 @@ setup(
         'Operating System :: OS Independent',
         'Programming Transpyler :: Python',
         'Programming Transpyler :: Python :: 3',
-        'Programming Transpyler :: Python :: 3.3',
         'Programming Transpyler :: Python :: 3.4',
         'Programming Transpyler :: Python :: 3.5',
+        'Programming Transpyler :: Python :: 3.6',
         'Topic :: Software Development :: Libraries',
     ],
 
