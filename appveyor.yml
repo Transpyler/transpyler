@@ -53,9 +53,8 @@ test_script:
   - ps: "tox"
 
 after_test:
-  #- ps: "python setup.py bdist_wheel"
-  #- ps: "python setup.py bdist_wininst"
   #- ps: "python setup.py bdist_msi"
+  - ps: "python setup.py bdist_wininst"
   - ps: "ls dist"
 
 artifacts:
