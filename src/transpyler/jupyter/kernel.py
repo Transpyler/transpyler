@@ -62,11 +62,6 @@ class TranspylerKernel(IPythonKernel):
     def language_version(self):
         return self.transpyler.language_version
 
-    def __init__(self, transpyler=None, **kwargs):
-        self.transpyler = transpyler or self.transpyler
-        super().__init__(**kwargs)
-        monkey_patch(self.transpyler)
-
     @lazy
     def banner(self):
         return self.transpyler.get_console_banner()
@@ -90,6 +85,7 @@ class TranspylerKernel(IPythonKernel):
         super().__init__(*args, **kwargs)
         if self.transpyler is None:
             raise ValueError('transpyler was not defined')
+        monkey_patch(self.transpyler)
         self.transpyler.init()
 
     def do_execute(self, code, *args, **kwargs):
@@ -98,7 +94,6 @@ class TranspylerKernel(IPythonKernel):
 
     def do_is_complete(self, code):
         return super().do_is_complete(self.transpyler.transpile(code))
-
 
 
 def start_kernel(transpyler):

@@ -1,14 +1,13 @@
 import re
+
 from pygments import unistring as uni
-from pygments.util import shebang_matches
-from pygments.token import Text, Operator, Keyword, Name, String, Number
-from pygments.lexer import RegexLexer
 from pygments.lexer import bygroups, default, words
 from pygments.lexers.python import Python3Lexer, PythonTracebackLexer
+from pygments.token import Text, Operator, Keyword, Name, String, Number
+from pygments.util import shebang_matches
 
-
-from pytuga import keyword
 from pytuga import core as tuga_introspect
+from pytuga import keyword
 
 KEYWORDS = keyword.kwlist
 CONSTANTS = keyword.constants
@@ -86,7 +85,7 @@ class TranspyledLexer(Python3Lexer):
         # the new style '{}'.format(...) string formatting
         (r'\{'
          '((\w+)((\.\w+)|(\[[^\]]+\]))*)?'  # field name
-         '(\![sra])?'                      # conversion
+         '(\![sra])?'  # conversion
          '(\:(.?[<>=\^])?[-+ ]?#?0?(\d+)?,?(\.\d+)?[bcdeEfFgGnosxX%]?)?'
          '\}', String.Interpol),
         # backslashes, quotes and formatting signs must be parsed one at a time

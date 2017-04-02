@@ -7,6 +7,7 @@ from transpyler.utils import full_class_name
 
 
 class LanguageInfo:
+
     def __init__(self, transpyler):
         self.transpyler = transpyler
 

@@ -1,8 +1,8 @@
 .. image:: https://travis-ci.org/fabiommendes/transpyler.svg?branch=master
     :target: https://travis-ci.org/fabiommendes/transpyler
 
-.. image:: https://coveralls.io/repos/github/fabiommendes/transpyler/badge.svg?branch=master
-    :target: https://coveralls.io/github/fabiommendes/transpyler?branch=master
+.. image:: https://codecov.io/gh/fabiommendes/transpyler/coverage.svg?branch=master
+    :target: https://codecov.io/gh/fabiommendes/transpyler/
 
 
 Transpyler is an infrastructure to create simple localized versions of

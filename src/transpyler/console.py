@@ -90,10 +90,6 @@ def run_console(transpyler):
     """
 
     console = TranspylerConsole(transpyler=transpyler)
-    try:
-        import readline
-    except ImportError:
-        pass
     banner = transpyler.get_console_banner()
     console.interact(banner)
 

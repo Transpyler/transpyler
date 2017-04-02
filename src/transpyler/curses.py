@@ -113,6 +113,7 @@ def curse_none_repr(name):
     """
 
     name = name or 'None'
+
     def __repr__():
         return name
 
