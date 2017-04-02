@@ -49,7 +49,7 @@ def translate_function(function, to_lang, from_lang='en'):
     args_call = []
     has_stararg = False
     for arg_name, default in args:
-        if has_stararg:
+        if has_stararg and not arg_name.startswith('*'):
             args_call.append('%s=%s' % (arg_name, arg_name))
         else:
             args_call.append(arg_name)
