@@ -1,145 +1,136 @@
-# from metakernel_python import MetaKernelPython as KernelBase
+import importlib
 from ast import PyCF_ONLY_AST
 
 from IPython.core.compilerop import CachingCompiler
 from IPython.utils import py3compat
-from ipykernel.ipkernel import IPythonKernel as KernelBase
+from ipykernel.ipkernel import IPythonKernel
 from ipykernel.zmqshell import ZMQInteractiveShell
+from lazyutils import lazy
 from traitlets import Type
 
-import transpyler
-import pytuga.console
+from transpyler.utils import for_transpiler
+from transpyler.transpyler import get_transpyler_from_name
 
 
-# We mokey-patch a few modules and functions to replace Python's compile
-# function with pytuga's version. This is potentially fragile, but it seems to
-# work well so far.
-def ast_parse(self, source, filename='<unknown>', symbol='exec'):
-    flags = self.flags | PyCF_ONLY_AST
-    return pytuga.compile(source, filename, symbol, flags, 1)
-
-
-CachingCompiler.ast_parse = ast_parse
-py3compat.compile = pytuga.compile
-
-
-class PrettyCallable:
+class TranspylerShell(ZMQInteractiveShell):
     """
-    Callable that whose repr() is a given message.
+    A IPython based shell for transpyled languages.
+
+    A shell is used by the kernel to interact with code.
     """
 
-    def __init__(self, func, name=None, doc=None, str=None,
-                 autoexec=False, autoexec_message=None):
-        self.__func = func
-        self.__autoexec = autoexec
-        self.__autoexec_message = autoexec_message
-        self.__repr = str or 'please call %s()' % self.__name__
-        self.__name__ = name or func.__name__
-        self.__doc__ = doc or func.__doc__
-
-    def __call__(self, *args, **kwargs):
-        return self.__func(*args, **kwargs)
-
-    def __repr__(self):
-        if self.__autoexec:
-            self.__func()
-            return self.__autoexec_message or ''
-        return self.__repr
-
-    def __getattr__(self, attr):
-        return getattr(self.__func, attr)
-
-
-def pretty_callable(str=None, **kwargs):
-    """
-    Decorate function to be a pretty callable.
-
-    Example:
-        >>> @pretty_callable('call exit() to finish interactive shell')
-        ... def exit():
-        ...     raise SystemExit
-    """
-
-    def decorator(func):
-        return PrettyCallable(func, str=str, **kwargs)
-
-    return decorator
-
-
-class PytugaShell(ZMQInteractiveShell):
-    """
-    A IPython based shell for pytuga.
-    """
+    @lazy
+    def transpyler(self):
+        return self.parent.transpyler
 
     def init_user_ns(self):
         """
-        Additional symbols for pytuga environment.
+        Additional symbols for the shell environment.
         """
 
         super().init_user_ns()
         ns = self.user_ns
-
-        @pretty_callable('digite "sair()" para terminar a execução',
-                         autoexec=True, autoexec_message='tchau! ;-)')
-        def sair():
-            """
-            Finaliza a execução do terminal de Pytuguês.
-            """
-
-            ns['exit']()
-
-        ns['sair'] = sair
+        self.transpyler.update_user_ns(ns)
 
     def ex(self, cmd):
-        return super().ex(pytuga.transpile(cmd))
+        return super().ex(self.transpyler.transpile(cmd))
 
     def ev(self, cmd):
-        return super().ev(pytuga.transpile(cmd))
+        return super().ev(self.transpyler.transpile(cmd))
 
 
-class PytugaKernel(KernelBase):
+class TranspylerKernel(IPythonKernel):
     """
-    A meta kernel based backend to use Pytuga in Jupyter/iPython.
+    A meta kernel based backend to use Transpyled languages in Jupyter/iPython.
     """
 
-    implementation = 'ipytuga'
-    implementation_version = pytuga.__version__
-    language = 'pytuga'
-    language_version = pytuga.__version__
-    banner = pytuga.console.pytuga_banner
+    transpyler = None
 
-    language_info = {
-        'mimetype': 'text/x-pytuga',
-        'file_extension': 'pytg',
-        'codemirror_mode': {
-            "version": 3,
-            "name": "ipython"
-        },
-        'pygments_lexer': 'python',
-    }
+    @lazy
+    def implementation(self):
+        return 'i' + self.transpyler.name
 
-    shell_class = Type(PytugaShell)
+    @lazy
+    def implementation_version(self):
+        return self.transpyler.version
+
+    @lazy
+    def language(self):
+        return self.transpyler.name
+
+    @lazy
+    def language_version(self):
+        return self.transpyler.language_version
+
+    def __init__(self, transpyler=None, **kwargs):
+        self.transpyler = transpyler or self.transpyler
+        super().__init__(**kwargs)
+        monkey_patch(self.transpyler)
+
+    @lazy
+    def banner(self):
+        return self.transpyler.get_console_banner()
+
+    @lazy
+    def language_info(self):
+        transpyler = self.transpyler
+        return {
+            'mimetype': transpyler.mimetype,
+            'file_extension': transpyler.file_extension,
+            'codemirror_mode': {
+                "version": 3,
+                "name": "ipython"
+            },
+            'pygments_lexer': 'python',
+        }
+
+    shell_class = Type(TranspylerShell)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        pytuga.init()
+        if self.transpyler is None:
+            raise ValueError('transpyler was not defined')
+        self.transpyler.init()
 
-    def __do_execute(self, code, *args, **kwargs):
-        print('do_execute', code, args)
+    def do_execute(self, code, *args, **kwargs):
+        code = self.transpyler.transpile(code)
         return super().do_execute(code, *args, **kwargs)
 
     def do_is_complete(self, code):
-        return super().do_is_complete(pytuga.transpile(code))
+        return super().do_is_complete(self.transpyler.transpile(code))
 
 
-def start_kernel():
+
+def start_kernel(transpyler):
     """
     Start Pytuga Jupyter kernel.
     """
 
     from ipykernel.kernelapp import IPKernelApp
-    IPKernelApp.launch_instance(kernel_class=PytugaKernel)
+
+    kernel_class = for_transpiler(TranspylerKernel, transpyler)
+    IPKernelApp.launch_instance(kernel_class=kernel_class)
 
 
+# We mokey-patch a few modules and functions to replace Python's compile
+# function with pytuga's version. This is potentially fragile, but it seems to
+# work well so far.
+def monkey_patch(transpyler):
+    def ast_parse(self, source, filename='<unknown>', symbol='exec'):
+        flags = self.flags | PyCF_ONLY_AST
+        return transpyler.compile(source, filename, symbol, flags, 1)
+
+    CachingCompiler.ast_parse = ast_parse
+    py3compat.compile = transpyler.compile
+
+
+# Find correct transpyler instance from argv and execute start_kernel
 if __name__ == '__main__':
-    start_kernel()
+    import sys
+
+    idx = sys.argv.index('--type')
+    sys.argv.pop(idx)
+    transpyler_class = sys.argv.pop(idx)
+    path, _, name = transpyler_class.rpartition('.')
+    transpyler_class = getattr(importlib.import_module(path), name)
+    start_kernel(get_transpyler_from_name(transpyler_class))

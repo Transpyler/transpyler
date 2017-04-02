@@ -26,11 +26,11 @@ def translate_function(function, to_lang, from_lang='en'):
 
     # Format arguments declaration
     args_decl = []
-    for (arg, default) in args:
+    for (arg_name, default) in args:
         if default is None:
-            args_decl.append(arg)
+            args_decl.append(arg_name)
         else:
-            args_decl.append('%s=%s' % (arg, default))
+            args_decl.append('%s=%s' % (arg_name, default))
     args_decl = ', '.join(args_decl)
 
     # Translate function name and make declaration.
@@ -46,7 +46,16 @@ def translate_function(function, to_lang, from_lang='en'):
     lines.append('    """')
 
     # Call original function
-    args_call = ', '.join(x for (x, y) in args)
+    args_call = []
+    has_stararg = False
+    for arg_name, default in args:
+        if has_stararg:
+            args_call.append('%s=%s' % (arg_name, arg_name))
+        else:
+            args_call.append(arg_name)
+            if arg_name.startswith('*'):
+                has_stararg = True
+    args_call = ', '.join(args_call)
     lines.append('    return %s(%s)' % (name, args_call))
 
     # Render source code

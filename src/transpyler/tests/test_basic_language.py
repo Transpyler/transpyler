@@ -1,5 +1,5 @@
 #
-# Test common language examples for python language
+# Test common transpyler examples for python transpyler
 #
 import pytest
 
@@ -20,7 +20,7 @@ def test_language_exec_code(python):
 
 
 #
-# Test common language constructs for PyBr language
+# Test common transpyler constructs for PyBr transpyler
 #
 def test_pybr_eval(pybr):
     assert pybr.eval('1 em (1, 2)', {}) is True

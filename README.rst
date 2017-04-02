@@ -5,7 +5,7 @@
     :target: https://coveralls.io/github/fabiommendes/transpyler?branch=master
 
 
-Transpyler is an infrastructure to create simple internationalized versions of
+Transpyler is an infrastructure to create simple localized versions of
 Python. It was originally created as part of the Pytuguês language (Python
 in Portuguese), but it is now abstracted to handle any translation. The
 goal of such specialized languages is to provide a more friendly environment to
@@ -18,10 +18,10 @@ tokens. In transpyler it looks like this:
 
 .. code-block:: python
 
-    from transpyler import Language
+    from transpyler import Transpyler
 
     # Let us define Py-Klingon
-    klingon = Language(
+    klingon = Transpyler(
         name='Py-Klingon',
         translations={
             # Warning: computer-based translation!
@@ -51,7 +51,7 @@ supports a series of nice educational tools inherited from the original Pytuguê
 runtume:
 
 * Support for Jupyter/IPython: we can easily create a Jupyter kernel from a
-  Language instance. This enables nice consoles and notebooks which
+  Transpyler instance. This enables nice consoles and notebooks which
   can be really handy in teaching a new programming language.
 * QCode support and syntax highlight: QCode is a Qt-based widget for coding
   editing.
@@ -70,7 +70,7 @@ another (as opposed to compilation, which translate source code to machine
 code). A **transpylation** is even simpler: it translate a Python-like language
 back to Python (and sometimes execute it directly). This task is not very
 difficult since both languages are similar and we can reuse lots of Python's
-own machinery to anlyze and modify its own source code.
+own machinery to analyze and modify its own source code.
 
 Transpyler acts exclusively at the token level: it modifies the stream of tokens
 from the original translated language to a new stream of tokens that must then
@@ -91,20 +91,20 @@ In English it would be something like this::
         forward(100)
         left(90)
 
-This is translated as::
+This is transpiled to Python as::
 
     for ___ in range(4):
         forward(100)
         left(90)
 
 It is possible to make arbitrary modifications to the list of tokens which in
-principle could allow very different syntax constructs. Notice that tokens still
+principle could allow arbitrary syntactic constructs. Notice that tokens still
 come from the Python tokenizer and hence there are certain hard lexical
 constraints on (including indentation as block delimiter semantics which in
 Python is implemented at the tokenizer level rather than in the grammar).
 
-Transpyler do not implement source code maps because they were not needed by
-Pytuguês and we don't think that simple internationalized Pythons would require
+Transpyler do not implement source code maps because they are not needed by
+Pytuguês and we don't think that simple localized Pythons would require
 it. That said, new grammatical constructs should keep line numbers unaltered.
 
 Remember: transpyler is using your regular vanilla Python interpreter and putting
@@ -119,7 +119,7 @@ And the standard lib?
 I'm glad you asked :). This is by far the most laborious part of doing a decent
 Python translation. Transpyler offers a few helpful tools, but most of the work
 is the inevitable task of translating the names and docstrings of each function
-you want to support into a their internationalized counterparts.
+you want to support into a their localized counterparts.
 
 As a convenience tool, you can list the functions you want to translate and
 we offer a tool that uses Google Translate to create a boilerplate for your
@@ -137,10 +137,12 @@ minimally familiar with Python can help. There is no excuse: just contribute!
 Here is a small list of projects using Transpyler.
 
 * Pytuguês: the original Python to portuguese.
-* Pyella: Python to Spanish.
-* Schlange: a German Python experiment.
-* Pysperanto: Python for a language with no native speakers.
-* Py-Klingon: A silly Python example just for fun :)
+* Pytuñol: Python to Portuñol.
+
+.. * Pyella: Python to Spanish.
+   * Schlange: a German Python experiment.
+   * Pysperanto: Python for a language with no native speakers.
+   * Py-Klingon: A silly Python example just for fun :)
 
 
 How about the builtin types?

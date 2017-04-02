@@ -10,22 +10,22 @@ class TranspylerConsole(code.InteractiveConsole):
     Very simple console for Transpyled languages.
     """
 
-    language_class = None
+    transpyler_class = None
 
     @lazy
-    def language(self):
-        return self.language_class()
+    def transpyler(self):
+        return self.transpyler_class()
 
-    def __init__(self, locals=None, filename='<console>', language=None):
-        if language is not None:
-            self.language = language
+    def __init__(self, locals=None, filename='<console>', transpyler=None):
+        if transpyler is not None:
+            self.transpyler = transpyler
         locals = locals if locals is not None else {}
-        locals.update(self.language.get_builtins_namespace())
+        locals.update(self.transpyler.get_builtins_namespace())
         super().__init__(locals, filename)
 
     def runsource(self, source, filename="<input>", symbol="single"):
         try:
-            source = self.language.transpile(source)
+            source = self.transpyler.transpile(source)
             if source.endswith('\n'):
                 source = source[:-1]
             code = self.compile(source, filename, symbol)
@@ -45,7 +45,7 @@ class TranspylerConsole(code.InteractiveConsole):
 
     def runcode(self, code):
         if isinstance(code, str):
-            code = self.language.transpile(code)
+            code = self.transpyler.transpile(code)
         super().runcode(code)
 
     def showsyntaxerror(self, filename=None):
@@ -80,22 +80,21 @@ class TranspylerConsole(code.InteractiveConsole):
         Starts the console mainloop.
         """
 
-        self.language.init()
+        self.transpyler.init()
         super().interact(banner, exitmsg)
 
 
-def run_console(language=None, banner=None):
+def run_console(transpyler):
     """
     Run the main console.
     """
 
-    console = TranspylerConsole(language=language)
+    console = TranspylerConsole(transpyler=transpyler)
     try:
         import readline
     except ImportError:
         pass
-    if banner is None:
-        banner = language.get_console_banner()
+    banner = transpyler.get_console_banner()
     console.interact(banner)
 
 

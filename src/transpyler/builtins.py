@@ -7,13 +7,13 @@ from lazyutils import lazy
 
 class Builtins:
     """
-    Manage the builtin functions for the new language.
+    Manage the builtin functions for the new transpyler.
     """
 
     @lazy
     def modules(self):
         try:
-            return list(self.language.builtin_modules)
+            return list(self.transpyler.builtin_modules)
         except (AttributeError, TypeError):
             return []
 
@@ -28,8 +28,8 @@ class Builtins:
                 ns[name] = getattr(mod, name)
         return ns
 
-    def __init__(self, language=None):
-        self.language = language
+    def __init__(self, transpyler=None):
+        self.transpyler = transpyler
 
     def get_namespace(self):
         """
@@ -43,9 +43,16 @@ class Builtins:
         Update builtins with new functions.
         """
 
-        self, *args = args
         ns = self._namespace
         ns.update(*args, **kwargs)
+
+    def load_as_builtins(self):
+        """
+        Load all registered builtin functions as Python's builtins.
+        """
+
+        for k, v in self.get_namespace().items():
+            setattr(_builtins, k, v)
 
     @contextlib.contextmanager
     def restore_after(self):

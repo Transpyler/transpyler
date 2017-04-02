@@ -112,6 +112,7 @@ def curse_none_repr(name):
     Change repr of None to the given string.
     """
 
+    name = name or 'None'
     def __repr__():
         return name
 

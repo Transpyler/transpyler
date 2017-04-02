@@ -3,11 +3,12 @@ Makes ipytuga kernel discoverable by Jupyter
 """
 
 import os
+import sys
 
 assets_dir = os.path.join(os.path.dirname(__file__), 'assets')
 
 
-def setup_assets(user=False, ipython_dir=None):
+def setup_assets(transpyler, user=False, ipython_dir=None):
     from ipykernel.kernelspec import KernelSpecManager
     from jupyter_client.kernelspec import install_kernel_spec
 
@@ -17,8 +18,9 @@ def setup_assets(user=False, ipython_dir=None):
         spec = KernelSpecManager(ipython_dir=ipython_dir)
         install = spec.install_kernel_spec
 
-    install(assets_dir, 'pytuga', replace=True, user=user)
+    with transpyler.info.prepare_assets() as path:
+        install(path, transpyler.name, replace=True, user=user)
 
 
 if __name__ == '__main__':
-    setup_assets()
+    setup_assets(user='--user' in sys.argv)

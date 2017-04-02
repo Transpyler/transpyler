@@ -5,7 +5,7 @@ from lazyutils import lazy
 
 class Instrospection:
     """
-    Introspection facilities for a transpyled Language.
+    Introspection facilities for a transpyled Transpyler.
     """
 
     # Original python names

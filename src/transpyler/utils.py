@@ -132,3 +132,62 @@ def keep_spaces(result, src):
     if src[-1].isspace():
         tail = ENDING_SPACE.search(src).group()
     return head + result.strip() + tail
+
+
+def full_class_name(cls):
+    """
+    Return the full class name prepending module paths.
+    """
+
+    return '%s.%s' % (cls.__module__, cls.__name__)
+
+
+class PrettyCallable:
+    """
+    Callable that whose repr() is a given message.
+    """
+
+    def __init__(self, func, name=None, doc=None, str=None,
+                 autoexec=False, autoexec_message=None):
+        self.__func = func
+        self.__autoexec = autoexec
+        self.__autoexec_message = autoexec_message
+        self.__repr = str or 'please call %s()' % self.__name__
+        self.__name__ = name or func.__name__
+        self.__doc__ = doc or func.__doc__
+
+    def __call__(self, *args, **kwargs):
+        return self.__func(*args, **kwargs)
+
+    def __repr__(self):
+        if self.__autoexec:
+            self.__func()
+            return self.__autoexec_message or ''
+        return self.__repr
+
+    def __getattr__(self, attr):
+        return getattr(self.__func, attr)
+
+
+def pretty_callable(str=None, **kwargs):
+    """
+    Decorate function to be a pretty callable.
+
+    Example:
+        >>> @pretty_callable('call exit() to finish interactive shell')
+        ... def exit():
+        ...     raise SystemExit
+    """
+
+    def decorator(func):
+        return PrettyCallable(func, str=str, **kwargs)
+
+    return decorator
+
+
+def for_transpiler(cls, transpiler):
+    """
+    Return a subclass with the transpyler attribute defined.
+    """
+
+    return type(cls.__name__, (cls,), {'transpyler': transpiler})

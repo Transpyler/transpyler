@@ -3,8 +3,9 @@ import codeop
 
 from lazyutils import lazy
 
-from transpyler.builtins import Builtins
-from transpyler.lexer import Lexer
+from .builtins import Builtins
+from .language_info import LanguageInfo
+from .lexer import Lexer
 
 # Save useful builtin functions
 _compile = _builtins.compile
@@ -13,14 +14,16 @@ _eval = _builtins.eval
 _input = _builtins.input
 _print = _builtins.print
 
+INSTANCES_FOR_NAME = {}
 
-class Language:
+
+class Transpyler:
     """
-    Base class for a new transpyled language.
+    Base class for a new transpyled transpyler.
 
-    Very simple Python variations can be created by subclassing Language::
+    Very simple Python variations can be created by subclassing Transpyler::
 
-        class PyBr(Language):
+        class PyBr(Transpyler):
             translations = {
                 'para': 'for',            # single token translations
                 'em': 'in',
@@ -29,7 +32,7 @@ class Language:
             }
 
     Now we can create an object with exec(), eval() and compile() functions that
-    handle the newly defined language:
+    handle the newly defined transpyler:
 
         pybr = PyBr()
         global_ns = {}
@@ -43,11 +46,39 @@ class Language:
         assert globals_ns['x'] == 8
         assert globals_ns['y'] == 13
     """
-    name = None
+
     translations = None
+    invalid_tokens = None
+    language_version = '0.1.0'
+    version = '0.1.0'
+    codemirror_mode = 'python'
+    file_extension = 'py'
+    _compile = _compile
+    _exec = _exec
+    _eval = _eval
+    _input = _input
+    _print = _print
     lexer_factory = Lexer
     builtins_factory = Builtins
-    invalid_tokens = None
+    info_factory = LanguageInfo
+
+    @lazy
+    def name(self):
+        cls_name = self.__class__.__name__.lower()
+        if cls_name == 'Transpyler':
+            return 'transpyler'
+        elif cls_name.endswith('transpyler'):
+            return cls_name[:-10]
+        else:
+            return cls_name
+
+    @lazy
+    def mimetype(self):
+        return 'text/x-%s' % self.name
+
+    @lazy
+    def display_name(self):
+        return self.name.title()
 
     @lazy
     def lexer(self):
@@ -56,6 +87,10 @@ class Language:
     @lazy
     def builtins(self):
         return self.builtins_factory(self)
+
+    @lazy
+    def info(self):
+        return self.info_factory(self)
 
     @lazy
     def _namespace_cache(self):
@@ -67,9 +102,28 @@ class Language:
             setattr(self, k, v)
         self._has_init = False
 
-    def init(self, extra_builtins=None, curses=True):
+        # Check validity
+        if self.name is None:
+            raise ValueError('Transpyler requires a "name" attribute.')
+
+        # Save instance in instance dictionary
+        if self.name not in INSTANCES_FOR_NAME:
+            INSTANCES_FOR_NAME[self.name] = self
+        if type(self) not in INSTANCES_FOR_NAME:
+            INSTANCES_FOR_NAME[type(self)] = self
+
+    def __repr__(self):
+        return '<%s: %r>' % (self.__class__.__name__, self.name)
+
+    def update_user_ns(self, ns):
         """
-        Initializes language runtime.
+        Update user namespace that is initialized when a Transpyled transpyler
+        starts an interactive shell.
+        """
+
+    def init(self, extra_builtins=None, curses=True, apply_builtins=True):
+        """
+        Initializes transpyler runtime.
 
         Args:
             curses:
@@ -83,9 +137,11 @@ class Language:
         if not self._has_init:
             if curses:
                 self.apply_curses()
-            if extra_builtins:
-                self.builtins.update(extra_builtins)
             self._has_init = True
+        if extra_builtins:
+            self.builtins.update(extra_builtins)
+        if apply_builtins:
+            self.builtins.load_as_builtins()
 
     def apply_curses(self):
         """
@@ -118,8 +174,7 @@ class Language:
         """
 
         source = self.transpile(source)
-        if compile_function is None:
-            compile_function = self.compile_function or self._compile
+        compile_function = compile_function or self._compile
         return compile_function(source, filename, mode, flags, dont_inherit)
 
     def exec(self, source, globals=None, locals=None, forbidden=False,
@@ -215,7 +270,30 @@ class Language:
 
     def get_builtins_namespace(self):
         """
-        Return a dictionary with the default builtins get_namespace for language.
+        Return a dictionary with the default builtins get_namespace for transpyler.
         """
 
         return self.builtins.get_namespace()
+
+    def get_console_banner(self):
+        """
+        Return a string with the console banner.
+        """
+
+        try:
+            return self.banner
+        except AttributeError:
+            return 'Warning: please define .get_console_banner() method of your ' \
+                   'transpyler.'
+
+
+def get_transpyler_from_name(key):
+    """
+    Return a transpyler instance for the given transpyler name or type.
+    """
+
+    return INSTANCES_FOR_NAME[key]
+
+
+# Defines the default transpyler instance
+transpyler = Transpyler(name='default_transpyler')

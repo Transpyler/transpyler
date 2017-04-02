@@ -1,16 +1,16 @@
 import pytest
 
-from transpyler import Language
+from transpyler import Transpyler
 
 
 @pytest.fixture
 def python():
     """
-    A new language that makes no changes in comparison with the default
+    A new transpyler that makes no changes in comparison with the default
     interpreter.
     """
 
-    class Python(Language):
+    class Python(Transpyler):
         pass
 
     return Python()
@@ -18,7 +18,7 @@ def python():
 
 @pytest.fixture
 def pybr():
-    class PyBr(Language):
+    class PyBr(Transpyler):
         translations = {
             'para': 'for',
             'em': 'in',
