@@ -1,6 +1,13 @@
 import inspect
+import warnings
 
-from textblob import TextBlob
+
+try:
+    from textblob import TextBlob
+except ImportError:
+    warnings.warn('could not initialize TextBlob. You should check if your '
+                  'nltk installation has all necessary data.')
+    textblob = None
 
 
 def translate_functions(seq, to_lang, from_lang='en'):

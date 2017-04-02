@@ -1,5 +1,4 @@
-import sys
-
+import pytest
 from mock import mock
 
 from transpyler.tools.google_translate import translate_functions, \
