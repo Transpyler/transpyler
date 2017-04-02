@@ -31,16 +31,7 @@ environment:
       TOXENV: 'py36'
 
 install:
-  # Upgrade to the latest version of pip to avoid it displaying warnings
-  # about it being out of date.
-  - "pip install --disable-pip-version-check --user --upgrade pip"
-
-  # Install the build dependencies of the project. If some dependencies contain
-  # compiled extensions and are not provided as pre-built wheel packages,
-  # pip will build them from source using the MSVC compiler matching the
-  # target Python version and architecture
-  - ps: "pip install -e \".[dev]\""
-  #- ps: "pip install -e \".[jupyter]\""
+  - ps: "pip install --disable-pip-version-check --user --upgrade pip"
   - ps: "pip install tox codecov"
 
 build_script:
@@ -51,8 +42,8 @@ test_script:
 
 after_test:
   #- ps: "python setup.py bdist_msi"
-  - ps: "ls C:\Python36-x64\"
-  - ps: "C:\Python36-x64\python.exe setup.py bdist_wininst"
+  - ps: "ls C:\\Python36-x64\\"
+  - ps: "C:\\Python36-x64\\python.exe setup.py bdist_wininst"
   - ps: "ls dist"
 
 artifacts:
