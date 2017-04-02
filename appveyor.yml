@@ -31,8 +31,7 @@ environment:
       TOXENV: 'py36'
 
 install:
-  - ps: "pip install --disable-pip-version-check --user --upgrade pip"
-  - ps: "pip install tox codecov"
+  - ps: "pip install tox"
 
 build_script:
   - ps: "python setup.py build"
@@ -41,9 +40,10 @@ test_script:
   - ps: "tox"
 
 after_test:
-  #- ps: "python setup.py bdist_msi"
-  - ps: "ls C:\\Python36-x64\\"
-  - ps: "C:\\Python36-x64\\python.exe setup.py bdist_wininst"
+  - ps: "C:\\Python36-x64\\python.exe python setup.py bdist_wheel"
+  - ps: "C:\\Python36-x64\\python.exe python setup.py bdist_msi"
+  - ps: "python3 setup.py bdist_wininst"
+  #- ps: "C:\\Python36-x64\\python.exe setup.py bdist_wininst"
   - ps: "ls dist"
 
 artifacts:
