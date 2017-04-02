@@ -1,49 +1,36 @@
 environment:
   matrix:
     - PYTHON: "C:\\Python34"
-      PYTHON_VERSION: "3.4.x"
-      PYTHON_ARCH: "32"
       TOXENV: 'py34'
 
     - PYTHON: "C:\\Python34-x64"
-      PYTHON_VERSION: "3.4.x"
-      PYTHON_ARCH: "64"
       TOXENV: 'py34'
 
     - PYTHON: "C:\\Python35"
-      PYTHON_VERSION: "3.5.x"
-      PYTHON_ARCH: "32"
       TOXENV: 'py35'
 
     - PYTHON: "C:\\Python35-x64"
-      PYTHON_VERSION: "3.5.x"
-      PYTHON_ARCH: "64"
       TOXENV: 'py35'
 
     - PYTHON: "C:\\Python36"
-      PYTHON_VERSION: "3.6.x"
-      PYTHON_ARCH: "32"
       TOXENV: 'py36'
 
     - PYTHON: "C:\\Python36-x64"
-      PYTHON_VERSION: "3.6.x"
-      PYTHON_ARCH: "64"
       TOXENV: 'py36'
 
 install:
-  - ps: "pip install tox wheel"
+  - "%PYTHON%\\python.exe -m pip install tox wheel"
 
 build_script:
-  - ps: "python setup.py build"
+  - "%PYTHON%\\python.exe setup.py build"
 
 test_script:
-  - ps: "tox"
+  - "%PYTHON%\\python.exe -m tox"
 
 after_test:
-  - ps: "C:\\Python36-x64\\python.exe setup.py bdist_msi"
-  - ps: "python3 setup.py bdist_wininst"
-  - ps: "C:\\Python36-x64\\python.exe setup.py bdist_wheel"
-  - ps: "ls dist"
+  - "%PYTHON%\\python.exe setup.py bdist_msi"
+  - "%PYTHON%\\python.exe setup.py bdist_wininst"
+  - "%PYTHON%\\python.exe python.exe setup.py bdist_wheel"
 
 artifacts:
   # Archive the generated packages in the ci.appveyor.com build report.
