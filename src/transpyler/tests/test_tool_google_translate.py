@@ -1,3 +1,4 @@
+import os
 import pytest
 from mock import mock
 
@@ -17,6 +18,8 @@ def test_get_correct_args():
                     ('d', '2'), ('**kwargs', None)]
 
 
+@pytest.skipif(os.name == 'nt',
+               reason='nltk data fails to download on windows (?)')
 def test_google_translate_function():
     # Python 3.3 and 3.4 syntax breaks with complex g function.
 
@@ -26,6 +29,8 @@ def test_google_translate_function():
     compile(src, '<input>', 'exec')
 
 
+@pytest.skipif(os.name == 'nt',
+               reason='nltk data fails to download on windows (?)')
 def test_google_translate_builtin():
     with mock.patch('textblob.TextBlob.translate', lambda x, y, z: str(x)):
         src = translate_functions([dir], 'pt-br')[0]
