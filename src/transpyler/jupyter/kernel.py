@@ -8,7 +8,7 @@ from ipykernel.zmqshell import ZMQInteractiveShell
 from lazyutils import lazy
 from traitlets import Type
 
-from transpyler.utils import for_transpiler
+from transpyler.utils import with_transpyler_attr
 from transpyler.transpyler import get_transpyler_from_name
 
 
@@ -108,7 +108,7 @@ def start_kernel(transpyler):
 
     from ipykernel.kernelapp import IPKernelApp
 
-    kernel_class = for_transpiler(TranspylerKernel, transpyler)
+    kernel_class = with_transpyler_attr(TranspylerKernel, transpyler)
     IPKernelApp.launch_instance(kernel_class=kernel_class)
 
 

@@ -1,4 +1,4 @@
-from transpyler.utils import for_transpiler
+from transpyler.utils import with_transpyler_attr
 
 
 def run_jupyter(transpyler, gui=False):
@@ -24,8 +24,8 @@ def start_console_shell(transpyler):
     from transpyler.jupyter.app import ZMQTerminalTranspylerApp
     from transpyler.jupyter.app import TranspylerKernelManager
 
-    App = for_transpiler(ZMQTerminalTranspylerApp, transpyler)
-    Manager = for_transpiler(TranspylerKernelManager, transpyler)
+    App = with_transpyler_attr(ZMQTerminalTranspylerApp, transpyler)
+    Manager = with_transpyler_attr(TranspylerKernelManager, transpyler)
 
     App.launch_instance(
         kernel_manager=Manager,
@@ -42,8 +42,8 @@ def start_qt_shell(transpyler):
     from transpyler.jupyter.app import ZMQTerminalTranspylerApp
     from transpyler.jupyter.app import TranspylerKernelManager
 
-    App = for_transpiler(ZMQTerminalTranspylerApp, transpyler)
-    Manager = for_transpiler(TranspylerKernelManager, transpyler)
+    App = with_transpyler_attr(ZMQTerminalTranspylerApp, transpyler)
+    Manager = with_transpyler_attr(TranspylerKernelManager, transpyler)
 
     App.launch_instance(
         kernel_manager=Manager,

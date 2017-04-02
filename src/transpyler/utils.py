@@ -14,7 +14,7 @@ __all__ = [
     'normalize_accented_keywords',
 
     # Utility functions
-    'keep_spaces',
+    'keep_spaces', 'pretty_callable', 'with_transpyler_attr',
 ]
 
 HEADING_SPACE = re.compile(r'^\s*')
@@ -30,18 +30,13 @@ def synonyms(*args):
     fmt_args = ['**%s**' % x for x in args]
 
     def decorator(func):
-        if len(args) == 1:
-            data = fmt_args[0]
-        else:
-            data = ', '.join(fmt_args[:-1])
-            data += ' ou ' + fmt_args[-1]
-
+        data = ', '.join(fmt_args[:])
         func.__synonyms__ = args
-        func.__doc__ += (
+        func.__doc__ = (func.__doc__ or '') + (
             '\n\n'
             'Notes\n'
             '-----\n\n'
-            'Também pode ser chamada como ' + data)
+            'Sinônimos: ' + data)
         return func
 
     return decorator
@@ -57,19 +52,16 @@ def collect_synonyms(namespace, add_unaccented=True):
     map = {}
     map.update(collect_aliases(namespace))
     if add_unaccented:
-        map.update(collect_unaccented(namespace))
+        map.update(collect_unaccented(map))
     return map
 
 
 def collect_unaccented(namespace):
     map = {}
-    unaccent = unidecode
-    for name, func in list(map.items()):
-        no_accent = unaccent(name)
+    for name, func in list(namespace.items()):
+        no_accent = unidecode(name)
         if no_accent != name:
-            if no_accent in map:
-                raise ValueError(SYNONYM_ERROR_MSG % (no_accent, name))
-            map[no_accent] = func
+            map.setdefault(no_accent, func)
     return map
 
 
@@ -78,20 +70,18 @@ def collect_aliases(namespace):
     for attr, func in namespace.items():
         try:
             for alias in func.__synonyms__:
-                map[alias] = func
-                if alias in namespace:
-                    raise ValueError(SYNONYM_ERROR_MSG % (alias, attr))
+                map.setdefault(alias, func)
         except AttributeError:
             continue
     return map
 
 
-def register_synonyms(global_ns):
+def register_synonyms(global_ns, add_unaccented=True):
     """
     Register all synonyms in the given get_namespace dictionary.
     """
 
-    D = collect_synonyms(global_ns)
+    D = collect_synonyms(global_ns, add_unaccented=add_unaccented)
     global_ns.update(D)
 
 
@@ -127,8 +117,6 @@ def keep_spaces(result, src):
     head = tail = ''
     if src[0].isspace():
         head = HEADING_SPACE.search(src).group()
-    elif head == src:
-        head, tail = '', head
     if src[-1].isspace():
         tail = ENDING_SPACE.search(src).group()
     return head + result.strip() + tail
@@ -153,8 +141,6 @@ class PrettyCallable:
         self.__autoexec = autoexec
         self.__autoexec_message = autoexec_message
         self.__repr = str or 'please call %s()' % self.__name__
-        self.__name__ = name or func.__name__
-        self.__doc__ = doc or func.__doc__
 
     def __call__(self, *args, **kwargs):
         return self.__func(*args, **kwargs)
@@ -185,7 +171,7 @@ def pretty_callable(str=None, **kwargs):
     return decorator
 
 
-def for_transpiler(cls, transpiler):
+def with_transpyler_attr(cls, transpiler):
     """
     Return a subclass with the transpyler attribute defined.
     """
