@@ -28,7 +28,7 @@ setup(
     author='Fábio Macêdo Mendes',
     author_email='fabiomacedomendes@gmail.com',
     url='',
-    description='A framework for building internationalized Python-like languages.',
+    description='A framework for building localized Python-like languages.',
     long_description=codecs.open('README.rst', 'rb', 'utf8').read(),
 
     # Classifiers (see https://pypi.python.org/pypi?%3Aaction=list_classifiers)
@@ -37,11 +37,11 @@ setup(
         'Intended Audience :: Developers',
         'License :: OSI Approved :: GNU General Public License (GPL)',
         'Operating System :: OS Independent',
-        'Programming Transpyler :: Python',
-        'Programming Transpyler :: Python :: 3',
-        'Programming Transpyler :: Python :: 3.4',
-        'Programming Transpyler :: Python :: 3.5',
-        'Programming Transpyler :: Python :: 3.6',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
         'Topic :: Software Development :: Libraries',
     ],
 
