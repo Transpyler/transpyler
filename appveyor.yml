@@ -56,7 +56,6 @@ after_test:
   #- ps: "python setup.py bdist_wheel"
   #- ps: "python setup.py bdist_wininst"
   #- ps: "python setup.py bdist_msi"
-  - ps: "codecov"
   - ps: "ls dist"
 
 artifacts:
