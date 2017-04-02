@@ -4,6 +4,9 @@
 .. image:: https://codecov.io/gh/fabiommendes/transpyler/branch/master/graph/badge.svg
   :target: https://codecov.io/gh/fabiommendes/transpyler
 
+.. image:: https://ci.appveyor.com/api/projects/status/it45pshyqi76irbx?svg=true
+   :target: https://ci.appveyor.com/project/fabiommendes/transpyler
+
 
 Transpyler is an infrastructure to create simple localized versions of
 Python. It was originally created as part of the Pytuguês language (Python

@@ -4,7 +4,7 @@ import warnings
 
 try:
     from textblob import TextBlob
-except ImportError:
+except (ImportError, ValueError):
     warnings.warn('could not initialize TextBlob. You should check if your '
                   'nltk installation has all necessary data.')
     textblob = None
