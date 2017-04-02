@@ -31,6 +31,7 @@ environment:
       TOXENV: 'py36'
 
 install:
+  - ps: "pip install pip -U --user"
   - ps: "pip install tox"
 
 build_script:
@@ -40,8 +41,8 @@ test_script:
   - ps: "tox"
 
 after_test:
-  - ps: "C:\\Python36-x64\\python.exe setup.py bdist_wheel"
   - ps: "C:\\Python36-x64\\python.exe setup.py bdist_msi"
+  - ps: "C:\\Python36-x64\\python.exe setup.py bdist_wheel"
   - ps: "python3 setup.py bdist_wininst"
   #- ps: "C:\\Python36-x64\\python.exe setup.py bdist_wininst"
   - ps: "ls dist"
