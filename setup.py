@@ -22,10 +22,14 @@ with open(path, 'w') as F:
     F.write(meta)
 
 
+# Reuse dependencies list
 dependencies = {
     'google_translate': ['textblob'],
     'jupyter': ['jupyter', 'jupyter-console', 'ipython'],
+    'dev': ['python-boilerplate[dev]']
 }
+dependencies['dev'] += dependencies['google_translate'] + dependencies['jupyter']
+
 
 setup(
     # Basic info
@@ -51,6 +55,13 @@ setup(
         'Topic :: Software Development :: Libraries',
     ],
 
+    # Package data
+    package_data={
+        'transpyler.jupyter': [
+            'assets/*.*',
+        ],
+    },
+
     # Packages and dependencies
     package_dir={'': 'src'},
     packages=find_packages('src'),
@@ -59,9 +70,7 @@ setup(
         'unidecode',
     ],
     extras_require={
-        'dev': [
-            'python-boilerplate[dev]',
-        ] + dependencies['google_translate'] + dependencies['jupyter'],
+        'dev': dependencies['dev'],
         'google_translate': dependencies['google_translate'],
         'jupypter': dependencies['jupyter'],
     },
