@@ -1,8 +1,10 @@
-import contextlib
 import builtins as _builtins
+import contextlib
 import importlib
 
 from lazyutils import lazy
+
+from transpyler.utils.translate import translate_mod
 
 
 class Builtins:
@@ -11,21 +13,29 @@ class Builtins:
     """
 
     @lazy
-    def modules(self):
-        try:
-            return list(self.transpyler.builtin_modules)
-        except (AttributeError, TypeError):
-            return []
-
-    @lazy
     def _namespace(self):
         ns = {}
-        for mod in self.modules:
+
+        load_modules_queue = []
+
+        # Load modules from list of modules
+        for mod in self.transpyler.builtin_modules:
             mod = importlib.import_module(mod)
+            load_modules_queue.append(mod)
+
+        # Load default translations from i10n_lang if no modules is given
+        if not self.transpyler.builtin_modules and self.transpyler.i10n_lang:
+            lang = self.transpyler.i10n_lang
+            mod = translate_mod()
+            load_modules_queue.append(mod)
+
+        # Load all modules in queue
+        for mod in load_modules_queue:
             for name in dir(mod):
                 if name.startswith('_') or name.isupper():
                     continue
                 ns[name] = getattr(mod, name)
+
         return ns
 
     def __init__(self, transpyler=None):

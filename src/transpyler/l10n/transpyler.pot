@@ -1,0 +1,746 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: fabiomacedomendes@gmail.com\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. concatenate.name
+msgid "concatenate"
+msgstr ""
+
+#. concatenate.doc
+msgid ""
+"Convert argument to string and concatenate.\n"
+"\n"
+"If only one argument is passed, assumes it is a sequence.\n"
+"\n"
+"Examples:\n"
+"    >>> concatenate('x = ', 2)\n"
+"    'x = 2'\n"
+"    >>> concatenate([1, 2, 3, 4])\n"
+"    '1234'"
+msgstr ""
+
+#. concatenate.args
+#. show.args
+#. alert.args
+msgid "args"
+msgstr ""
+
+#. join.name
+#. String:join
+msgid "join"
+msgstr ""
+
+#. join.doc
+msgid ""
+"Similar to concatenate(), but takes an extra separator as first argument\n"
+"argument.\n"
+"\n"
+"Examples:\n"
+"    >>> join(', ', 1, 2, 3)\n"
+"    '1, 2, 3'"
+msgstr ""
+
+#. join.args
+msgid "separator, args"
+msgstr ""
+
+#. format_string.name
+msgid "format_string"
+msgstr ""
+
+#. format_string.doc
+msgid ""
+"Format text inserting parameters in the wildcard positions.\n"
+"\n"
+"There are two different syntax for string formatting. The first is based\n"
+"on C and uses symbols such as %s, %f, %d to delimit insertion points.\n"
+"\n"
+">>> format_string('%i != %.2f', 42, 43)\n"
+"'42 != 43.00'\n"
+"\n"
+"The second uses curly braces.\n"
+"\n"
+">>> format_string('{0} != {1}', 42, 43)\n"
+"'42 != 43'"
+msgstr ""
+
+#. format_string.args
+msgid "string, args, kwargs"
+msgstr ""
+
+#. show.name
+msgid "show"
+msgstr ""
+
+#. show.doc
+msgid ""
+"Shows the object or text provided on the screen.\n"
+"\n"
+"If called with multiple arguments, prints them in sequence, separating\n"
+"them with a white space.\n"
+"\n"
+"Examples:\n"
+"    >>> show(\"Hello world!\")\n"
+"    Hello World!"
+msgstr ""
+
+#. alert.name
+msgid "alert"
+msgstr ""
+
+#. alert.doc
+msgid ""
+"Similar to the `show` function, but displays the resulting message in a\n"
+"dialog box."
+msgstr ""
+
+#. fshow.name
+msgid "fshow"
+msgstr ""
+
+#. fshow.doc
+msgid "Displays a string after applying the provided formatting arguments."
+msgstr ""
+
+#. fshow.args
+msgid "text, args, kwargs"
+msgstr ""
+
+#. read_text.name
+msgid "read_text"
+msgstr ""
+
+#. read_text.doc
+msgid ""
+"Prompts the user for a text entry.\n"
+"\n"
+"Examples:\n"
+"    >>> name = read_text('Your name:')\n"
+"    >>> show(\"Hello,\" + name)  # the user types \"Maria\"\n"
+"    Hello Maria"
+msgstr ""
+
+#. read_text.args
+msgid "message"
+msgstr ""
+
+#. read_number.name
+msgid "read_number"
+msgstr ""
+
+#. read_number.doc
+msgid ""
+"Prompts the user for a numeric entry.\n"
+"\n"
+"Examples:\n"
+"    >>> x = read_number('A number:')  # user types 2...\n"
+"    >>> x + 40\n"
+"    42"
+msgstr ""
+
+#. read_number.args
+msgid "message, text, num"
+msgstr ""
+
+#. read_file.name
+msgid "read_file"
+msgstr ""
+
+#. read_file.doc
+msgid ""
+"Reads the content from a text file and returns it as string.\n"
+"\n"
+"Examples:\n"
+"    >>> data = read_file(\"foo.txt\")"
+msgstr ""
+
+#. read_file.args
+msgid "file"
+msgstr ""
+
+#. save_in_file.name
+msgid "save_in_file"
+msgstr ""
+
+#. save_in_file.doc
+msgid ""
+"Saves the text content to the indicated file, deleting any previous content.\n"
+"\n"
+"WARNING! If the given file exists, this function will overwrite your\n"
+"content without asking!\n"
+"\n"
+"Examples:\n"
+"    >>> save_in_file(data, \"foo.txt\")"
+msgstr ""
+
+#. save_in_file.args
+msgid "text, file, F"
+msgstr ""
+
+#. pause.name
+msgid "pause"
+msgstr ""
+
+#. pause.doc
+msgid "Stops execution until the user presses the <return> key."
+msgstr ""
+
+#. sleep.name
+msgid "sleep"
+msgstr ""
+
+#. sleep.doc
+msgid ""
+"sleep(seconds)\n"
+"\n"
+"Delay execution for a given number of seconds.  The argument may be\n"
+"a floating point number for subsecond precision."
+msgstr ""
+
+#. exit
+msgid "exit"
+msgstr ""
+
+#. integer.name
+msgid "int"
+msgstr ""
+
+#. integer.doc
+msgid ""
+"int(x=0) -> integer\n"
+"int(x, base=10) -> integer\n"
+"\n"
+"Convert a number or string to an integer, or return 0 if no arguments\n"
+"are given.  If x is a number, return x.__int__().  For floating point\n"
+"numbers, this truncates towards zero.\n"
+"\n"
+"If x is not a number or if base is given, then x must be a string,\n"
+"bytes, or bytearray instance representing an integer literal in the\n"
+"given base.  The literal can be preceded by '+' or '-' and be surrounded\n"
+"by whitespace.  The base defaults to 10.  Valid bases are 0 and 2-36.\n"
+"Base 0 means to interpret the base from the string as an integer literal.\n"
+">>> int('0b100', base=0)\n"
+"4"
+msgstr ""
+
+#. integer:bit_length
+#. boolean:bit_length
+msgid "bit_length"
+msgstr ""
+
+#. integer:conjugate
+#. real:conjugate
+#. complex:conjugate
+#. boolean:conjugate
+msgid "conjugate"
+msgstr ""
+
+#. integer:denominator
+#. boolean:denominator
+msgid "denominator"
+msgstr ""
+
+#. integer:from_bytes
+#. boolean:from_bytes
+msgid "from_bytes"
+msgstr ""
+
+#. integer:imag
+#. real:imag
+#. complex:imag
+#. boolean:imag
+msgid "imag"
+msgstr ""
+
+#. integer:numerator
+#. boolean:numerator
+msgid "numerator"
+msgstr ""
+
+#. integer:real
+#. real:real
+#. complex:real
+#. boolean:real
+msgid "real"
+msgstr ""
+
+#. integer:to_bytes
+#. boolean:to_bytes
+msgid "to_bytes"
+msgstr ""
+
+#. real.name
+msgid "float"
+msgstr ""
+
+#. real.doc
+msgid ""
+"float(x) -> floating point number\n"
+"\n"
+"Convert a string or number to a floating point number, if possible."
+msgstr ""
+
+#. real:as_integer_ratio
+msgid "as_integer_ratio"
+msgstr ""
+
+#. real:fromhex
+msgid "fromhex"
+msgstr ""
+
+#. real:hex
+#. hexadecimal.name
+msgid "hex"
+msgstr ""
+
+#. real:is_integer
+msgid "is_integer"
+msgstr ""
+
+#. complex.name
+msgid "complex"
+msgstr ""
+
+#. complex.doc
+msgid ""
+"complex(real[, imag]) -> complex number\n"
+"\n"
+"Create a complex number from a real part and an optional imaginary part.\n"
+"This is equivalent to (real + imag*1j) where imag defaults to 0."
+msgstr ""
+
+#. boolean.name
+msgid "bool"
+msgstr ""
+
+#. boolean.doc
+#. verdadeiro.doc
+#. Verdadeiro.doc
+#. falso.doc
+#. Falso.doc
+msgid ""
+"bool(x) -> bool\n"
+"\n"
+"Returns True when the argument x is true, False otherwise.\n"
+"The builtins True and False are the only two instances of the class bool.\n"
+"The class bool is a subclass of the class int, and cannot be subclassed."
+msgstr ""
+
+#. binary.name
+msgid "bin"
+msgstr ""
+
+#. binary.doc
+msgid ""
+"Return the binary representation of an integer.\n"
+"\n"
+">>> bin(2796202)\n"
+"'0b1010101010101010101010'"
+msgstr ""
+
+#. octal.name
+msgid "oct"
+msgstr ""
+
+#. octal.doc
+msgid ""
+"Return the octal representation of an integer.\n"
+"\n"
+">>> oct(342391)\n"
+"'0o1234567'"
+msgstr ""
+
+#. hexadecimal.doc
+msgid ""
+"Return the hexadecimal representation of an integer.\n"
+"\n"
+">>> hex(12648430)\n"
+"'0xc0ffee'"
+msgstr ""
+
+#. character.name
+msgid "chr"
+msgstr ""
+
+#. character.doc
+msgid ""
+"Return a Unicode string of one character with ordinal i; 0 <= i <= 0x10ffff."
+msgstr ""
+
+#. enumeration.name
+#. enumerate.name
+#. inverted.name
+msgid "<lambda>"
+msgstr ""
+
+#. enumeration.args
+msgid "x, start"
+msgstr ""
+
+#. length.name
+msgid "len"
+msgstr ""
+
+#. length.doc
+msgid "Return the number of items in a container."
+msgstr ""
+
+#. enumerate.args
+#. inverted.args
+msgid "x"
+msgstr ""
+
+#. sorted.name
+msgid "sorted"
+msgstr ""
+
+#. sorted.doc
+msgid ""
+"Return a new list containing all items from the iterable in ascending order.\n"
+"\n"
+"A custom key function can be supplied to customize the sort order, and the\n"
+"reverse flag can be set to request the result in descending order."
+msgstr ""
+
+#. Dictionary.name
+msgid "dict"
+msgstr ""
+
+#. Dictionary.doc
+msgid ""
+"dict() -> new empty dictionary\n"
+"dict(mapping) -> new dictionary initialized from a mapping object's\n"
+"    (key, value) pairs\n"
+"dict(iterable) -> new dictionary initialized as if via:\n"
+"    d = {}\n"
+"    for k, v in iterable:\n"
+"        d[k] = v\n"
+"dict(**kwargs) -> new dictionary initialized with the name=value pairs\n"
+"    in the keyword argument list.  For example:  dict(one=1, two=2)"
+msgstr ""
+
+#. Dictionary:clear
+#. List:clear
+msgid "clear"
+msgstr ""
+
+#. Dictionary:copy
+#. List:copy
+msgid "copy"
+msgstr ""
+
+#. Dictionary:fromkeys
+msgid "fromkeys"
+msgstr ""
+
+#. Dictionary:get
+msgid "get"
+msgstr ""
+
+#. Dictionary:items
+msgid "items"
+msgstr ""
+
+#. Dictionary:keys
+msgid "keys"
+msgstr ""
+
+#. Dictionary:pop
+#. List:pop
+msgid "pop"
+msgstr ""
+
+#. Dictionary:popitem
+msgid "popitem"
+msgstr ""
+
+#. Dictionary:setdefault
+msgid "setdefault"
+msgstr ""
+
+#. Dictionary:update
+msgid "update"
+msgstr ""
+
+#. Dictionary:values
+msgid "values"
+msgstr ""
+
+#. Tuple.name
+msgid "tuple"
+msgstr ""
+
+#. Tuple.doc
+msgid ""
+"tuple() -> empty tuple\n"
+"tuple(iterable) -> tuple initialized from iterable's items\n"
+"\n"
+"If the argument is a tuple, the return value is the same object."
+msgstr ""
+
+#. Tuple:count
+#. List:count
+#. String:count
+msgid "count"
+msgstr ""
+
+#. Tuple:index
+#. List:index
+#. String:index
+msgid "index"
+msgstr ""
+
+#. List.name
+msgid "list"
+msgstr ""
+
+#. List.doc
+msgid ""
+"list() -> new empty list\n"
+"list(iterable) -> new list initialized from iterable's items"
+msgstr ""
+
+#. List:append
+msgid "append"
+msgstr ""
+
+#. List:extend
+msgid "extend"
+msgstr ""
+
+#. List:insert
+msgid "insert"
+msgstr ""
+
+#. List:remove
+msgid "remove"
+msgstr ""
+
+#. List:reverse
+msgid "reverse"
+msgstr ""
+
+#. List:sort
+msgid "sort"
+msgstr ""
+
+#. String.name
+msgid "str"
+msgstr ""
+
+#. String.doc
+msgid ""
+"str(object='') -> str\n"
+"str(bytes_or_buffer[, encoding[, errors]]) -> str\n"
+"\n"
+"Create a new string object from the given object. If encoding or\n"
+"errors is specified, then the object must expose a data buffer\n"
+"that will be decoded using the given encoding and error handler.\n"
+"Otherwise, returns the result of object.__str__() (if defined)\n"
+"or repr(object).\n"
+"encoding defaults to sys.getdefaultencoding().\n"
+"errors defaults to 'strict'."
+msgstr ""
+
+#. String:capitalize
+msgid "capitalize"
+msgstr ""
+
+#. String:casefold
+msgid "casefold"
+msgstr ""
+
+#. String:center
+msgid "center"
+msgstr ""
+
+#. String:encode
+msgid "encode"
+msgstr ""
+
+#. String:endswith
+msgid "endswith"
+msgstr ""
+
+#. String:expandtabs
+msgid "expandtabs"
+msgstr ""
+
+#. String:find
+msgid "find"
+msgstr ""
+
+#. String:format
+msgid "format"
+msgstr ""
+
+#. String:format_map
+msgid "format_map"
+msgstr ""
+
+#. String:isalnum
+msgid "isalnum"
+msgstr ""
+
+#. String:isalpha
+msgid "isalpha"
+msgstr ""
+
+#. String:isdecimal
+msgid "isdecimal"
+msgstr ""
+
+#. String:isdigit
+msgid "isdigit"
+msgstr ""
+
+#. String:isidentifier
+msgid "isidentifier"
+msgstr ""
+
+#. String:islower
+msgid "islower"
+msgstr ""
+
+#. String:isnumeric
+msgid "isnumeric"
+msgstr ""
+
+#. String:isprintable
+msgid "isprintable"
+msgstr ""
+
+#. String:isspace
+msgid "isspace"
+msgstr ""
+
+#. String:istitle
+msgid "istitle"
+msgstr ""
+
+#. String:isupper
+msgid "isupper"
+msgstr ""
+
+#. String:ljust
+msgid "ljust"
+msgstr ""
+
+#. String:lower
+msgid "lower"
+msgstr ""
+
+#. String:lstrip
+msgid "lstrip"
+msgstr ""
+
+#. String:maketrans
+msgid "maketrans"
+msgstr ""
+
+#. String:partition
+msgid "partition"
+msgstr ""
+
+#. String:replace
+msgid "replace"
+msgstr ""
+
+#. String:rfind
+msgid "rfind"
+msgstr ""
+
+#. String:rindex
+msgid "rindex"
+msgstr ""
+
+#. String:rjust
+msgid "rjust"
+msgstr ""
+
+#. String:rpartition
+msgid "rpartition"
+msgstr ""
+
+#. String:rsplit
+msgid "rsplit"
+msgstr ""
+
+#. String:rstrip
+msgid "rstrip"
+msgstr ""
+
+#. String:split
+msgid "split"
+msgstr ""
+
+#. String:splitlines
+msgid "splitlines"
+msgstr ""
+
+#. String:startswith
+msgid "startswith"
+msgstr ""
+
+#. String:strip
+msgid "strip"
+msgstr ""
+
+#. String:swapcase
+msgid "swapcase"
+msgstr ""
+
+#. String:title
+msgid "title"
+msgstr ""
+
+#. String:translate
+msgid "translate"
+msgstr ""
+
+#. String:upper
+msgid "upper"
+msgstr ""
+
+#. String:zfill
+msgid "zfill"
+msgstr ""
+
+#. type.name
+msgid "type"
+msgstr ""
+
+#. type.doc
+msgid ""
+"type(object_or_name, bases, dict)\n"
+"type(object) -> the object's type\n"
+"type(name, bases, dict) -> a new type"
+msgstr ""
+
+#. type:mro
+msgid "mro"
+msgstr ""
+
+#. help.doc
+msgid ""
+"Define the builtin 'help'.\n"
+"\n"
+"This is a wrapper around pydoc.help that provides a helpful message\n"
+"when 'help' is typed at the Python interactive prompt.\n"
+"\n"
+"Calling help() at the Python prompt starts an interactive help session.\n"
+"Calling help(thing) prints help for the python object 'thing'."
+msgstr ""
+
+#. nulo
+msgid "nulo"
+msgstr ""
+
+#. Nulo
+msgid "Nulo"
+msgstr ""

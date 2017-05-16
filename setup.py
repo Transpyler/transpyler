@@ -1,11 +1,3 @@
-# -*- coding: utf-8 -*-
-#
-# This file were created by Python Boilerplate. Use boilerplate to start simple
-# usable and best-practices compliant Python projects.
-#
-# Learn more about it at: http://github.com/fabiommendes/python-boilerplate/
-#
-
 import os
 import codecs
 from setuptools import setup, find_packages
@@ -68,6 +60,9 @@ setup(
     install_requires=[
         'lazyutils',
         'unidecode',
+        'polib',
+        'colortools',
+        'click',
     ],
     extras_require={
         'dev': dependencies['dev'],

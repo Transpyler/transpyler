@@ -7,14 +7,8 @@ from jupyter_console.ptshell import ZMQTerminalInteractiveShell
 
 class TranspylerKernelManager(KernelManager):
     transpyler = None
-
-    @property
-    def kernel_name(self):
-        return self.transpyler.name
-
-    @property
-    def kernel_script_path(self):
-        return os.path.join(os.path.dirname(__file__), 'kernel.py')
+    kernel_script_path = os.path.join(os.path.dirname(__file__), 'kernel.py')
+    kernel_name = property(lambda self: self.transpyler.name)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

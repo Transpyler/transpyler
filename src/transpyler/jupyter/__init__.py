@@ -1,7 +1,7 @@
-from transpyler.utils import with_transpyler_attr
+from transpyler.utils import with_transpyler_attr, clear_argv
 
 
-def run_jupyter(transpyler, gui=False):
+def start_jupyter(transpyler, gui=False):
     """
     Starts a Jupyter console for the given kernel.
     """
@@ -27,6 +27,7 @@ def start_console_shell(transpyler):
     App = with_transpyler_attr(ZMQTerminalTranspylerApp, transpyler)
     Manager = with_transpyler_attr(TranspylerKernelManager, transpyler)
 
+    clear_argv()
     App.launch_instance(
         kernel_manager=Manager,
         kernel_name=transpyler.name,
@@ -39,12 +40,14 @@ def start_qt_shell(transpyler):
     Starts a shell based on QtConsole.
     """
 
+    # Starts qtconsole
     from transpyler.jupyter.app import ZMQTerminalTranspylerApp
     from transpyler.jupyter.app import TranspylerKernelManager
 
     App = with_transpyler_attr(ZMQTerminalTranspylerApp, transpyler)
     Manager = with_transpyler_attr(TranspylerKernelManager, transpyler)
 
+    clear_argv()
     App.launch_instance(
         kernel_manager=Manager,
         kernel_name=transpyler.name,

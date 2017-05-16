@@ -70,6 +70,7 @@ class TranspylerKernel(IPythonKernel):
     def language_info(self):
         transpyler = self.transpyler
         return {
+            'name': transpyler.display_name,
             'mimetype': transpyler.mimetype,
             'file_extension': transpyler.file_extension,
             'codemirror_mode': {

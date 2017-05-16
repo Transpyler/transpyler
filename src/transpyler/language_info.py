@@ -7,6 +7,13 @@ from transpyler.utils import full_class_name
 
 
 class LanguageInfo:
+    """
+    Introspect transpyler to infer userful information.
+
+    All attributes can be accessed directly from the transpyler instance and
+    if it is redefined there it takes precedence. However it is useful to keep
+    all non-trivial inference logic in a separate place.
+    """
 
     def __init__(self, transpyler):
         self.transpyler = transpyler

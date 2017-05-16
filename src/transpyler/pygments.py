@@ -6,32 +6,55 @@ from pygments.lexers.python import Python3Lexer, PythonTracebackLexer
 from pygments.token import Text, Operator, Keyword, Name, String, Number
 from pygments.util import shebang_matches
 
-from pytuga import core as tuga_introspect
-from pytuga import keyword
 
-KEYWORDS = keyword.kwlist
-CONSTANTS = keyword.constants
-EXCEPTIONS = tuga_introspect.py_exceptions + tuga_introspect.exceptions
-BUILTINS = tuga_introspect.py_builtins + tuga_introspect.builtins
-NAME = 'Transpyled'
-ALIASES = ['transpyled']
-FILENAMES = ['pytp']
-MIMETYPES = ['text/x-transpyled', 'application/x-transpyled']
-
-
-class TranspyledLexer(Python3Lexer):
+def transpyler_lexer(transpyler):
     """
-    A lexer for transpyler based languages.
-
-    This is just the standard Python
+    Return a Pygments lexer for the given transpyler.
     """
 
-    name = NAME
-    aliases = ALIASES
-    filenames = FILENAMES
-    mimetypes = MIMETYPES
+    def analyse_text(text):  # @NoSelf
+        return shebang_matches(text, r'pythonw?3(\.\d)?')
 
-    flags = re.MULTILINE | re.UNICODE
+    return type(
+        transpyler.pygments_class_name,
+        (Python3Lexer,),
+        dict(
+            name=transpyler.name,
+            aliases=transpyler.aliases,
+            filenames=transpyler.file_extensions,
+            mimetypes=transpyler.mimetypes,
+            flags=re.MULTILINE | re.UNICODE,
+            uni_name="[%s][%s]*" % (uni.xid_start, uni.xid_continue),
+
+        )
+    )
+
+
+def keywords(transpyler):
+    return []
+
+
+def constants(transpyler):
+    return []
+
+
+def builtins(transpyler):
+    return []
+
+
+def exceptions(exceptions):
+    return []
+
+
+def tokens(transpyler):
+    """
+    Return a list of pygments tokens from a transpyler object.
+    """
+
+    KEYWORDS = keywords(transpyler)
+    CONSTANTS = constants(transpyler)
+    EXCEPTIONS = exceptions(transpyler)
+    BUILTINS = builtins(transpyler)
 
     uni_name = "[%s][%s]*" % (uni.xid_start, uni.xid_continue)
 
@@ -95,10 +118,10 @@ class TranspyledLexer(Python3Lexer):
         (r'%|(\{{1,2})', String)
         # newlines are an error (use "nl" state)
     ]
-
-    def analyse_text(text):  # @NoSelf
-        return shebang_matches(text, r'pythonw?3(\.\d)?')
+    return tokens
 
 
 class PytugaTracebackLexer(PythonTracebackLexer):
-    pass
+    """
+    A lexer for a transpyler traceback.
+    """
