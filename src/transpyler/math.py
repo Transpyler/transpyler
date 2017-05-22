@@ -5,6 +5,7 @@ These functions are used mostly by the turtle interface.
 """
 
 import math as _math
+import random as _random
 from collections import namedtuple as _namedtuple
 
 _dg = _math.pi / 180
@@ -37,6 +38,52 @@ def tan(angle):
     return _math.tan(angle * _dg)
 
 
+def sign(x):
+    """
+    Return 1 if x is positive, -1 if it is negative and 0 if it is null.
+
+    Examples:
+        >>> sign(-32.0)
+        -1
+    """
+    if x == 0:
+        return 0
+    elif x > 0:
+        return 1
+    elif x < 0:
+        return -1
+    else:
+        raise ValueError(sign.ERROR)
+
+
+sign.ERROR = 'argument does not have a well defined sign'
+
+
+def product(seq, start=1.0):
+    """
+    Return the product of all numbers in the sequence.
+    """
+
+    result = start
+    for x in seq:
+        result *= x
+    return result
+
+
+def dice(n=6):
+    """
+    Simulate a dice trow (return a random number between 1 and 6.
+
+    Call with an explicit argument to throw a dice with a different number of
+    faces
+
+    Examples:
+        >>> dice(20)                                            # doctest: +SKIP
+        13
+    """
+    return _random.randint(1, 6)
+
+
 class Vec(_namedtuple('Vec', ['x', 'y'])):
     """
     A tuple-based 2D vector.
@@ -45,14 +92,17 @@ class Vec(_namedtuple('Vec', ['x', 'y'])):
     """
 
     @classmethod
-    def from_angle(cls, angle):
+    def from_angle(cls, angle, length=1):
+        """
+        Creates vector from angle and length.
+        """
         return cls(cos(angle), sin(angle))
 
     def __new__(cls, x, y):
         return super(Vec, cls).__new__(cls, x + 0., y + 0.)
 
     def __repr__(self):
-        return '(%g, %g)' % (type(self).__name__, self.x, self.y)
+        return '(%g, %g)' % (self.x, self.y)
 
     def __add__(self, other):
         x, y = other
@@ -87,14 +137,12 @@ class Vec(_namedtuple('Vec', ['x', 'y'])):
         """
         Vector norm.
         """
-
         return self.__abs__()
 
     def normalized(self):
         """
         Return unity vector.
         """
-
         return self / abs(self)
 
     def perp(self, invert=False):
@@ -141,13 +189,26 @@ def math_namespace(lang=None):
 
     # TODO: translate math functions!
 
-    return {
+    return dict(
         # Trigonometry functions
-        'cos': cos, 'sin': sin, 'tan': tan,
+        cos=cos, sin=sin, tan=tan,
 
         # Other functions
-        'sqrt': _math.sqrt,
+        sqrt=_math.sqrt, exp=_math.exp,
+        log=_math.log, ln=_math.log, log10=_math.log10, log2=_math.log2,
+
+        # Operations on collections of number
+        max=max, min=min, sum=sum, product=product,
+
+        # Rounding
+        abs=abs, round=round, ceil=_math.ceil, trunc=_math.trunc,
+
+        # Random numbers
+        random=_random.random, randint=_random.randint,
 
         # Vectors
-        'vec': vec, 'dot': dot,
-    }
+        vec=vec, dot=dot, Vec=Vec,
+
+        # Constants,
+        pi=_math.pi, e=_math.e,
+    )

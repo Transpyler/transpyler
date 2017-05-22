@@ -1,6 +1,6 @@
 """
-This module is not imported by user, but rather it generates translation
-strings for pytuga functions.
+This module is not imported by the user, but rather it generates translation
+strings for transpyler functions.
 """
 
 import gettext
@@ -18,6 +18,16 @@ from .decorators import synonyms as _synonyms
 from .namespaces import collect_synonyms, collect_mod_namespace
 
 I10N_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'l10n')
+PO_HEADER = """#
+msgid ""
+msgstr ""
+"Project-Id-Version: \\n"
+"Language: %s\\n"
+"MIME-Version: 1.0\\n"
+"Content-Type: text/plain; charset=UTF-8\\n"
+"Content-Transfer-Encoding: 8bit\\n"
+
+"""
 
 
 #
@@ -34,8 +44,12 @@ def gettext_for(lang):
         'olá mundo!'
     """
     lang = lang.replace('-', '_')
-    with open(os.path.join(I10N_PATH, lang + '.mo'), 'rb') as F:
-        result = gettext.GNUTranslations(F)
+
+    try:
+        with open(os.path.join(I10N_PATH, lang + '.mo'), 'rb') as F:
+            result = gettext.GNUTranslations(F)
+    except FileNotFoundError:
+        result = gettext.NullTranslations()
     return result
 
 
@@ -44,8 +58,8 @@ def create_pot_file(translations, path=None):
     Save contents on a POT file from a dictionary of (id, string) translation
     pairs.
 
-    In the framework of POT files, id is a comment and string is the msgid
-    field. The msgstr field of a POT file is always empty.
+    It interprets the id as a comment in the POT file and the string is the
+    msgid field. The msgstr field is always empty.
     """
 
     pot = polib.POFile()
@@ -73,14 +87,15 @@ def create_pot_file(translations, path=None):
 
 
 #
-# Extract translations
+# Extract translations: these functions generate a .pot file from a python
+# module
 #
 def extract_translations(namespace):
     """
-    Extract all translation strings from global_namespace.
+    Extract all translation strings from namespace.
 
     Return a dictionary mapping ids to their corresponding values. The values
-    would typically be inserted in a POT. Translators would then generate
+    would typically be inserted in a POT file. Translators would then generate
     PO files for each desired language.
 
     >>> extract_translations(ns)                                # doctest: +SKIP
@@ -90,11 +105,17 @@ def extract_translations(namespace):
         'cos.doc': 'Returns the cosine of a number',
         ...
     }
+
+    Notes:
+        If the namespace have a 'TRANSLATIONS' key mapping to a dictionary,
+        it is used to update the result. The contents of TRANSLATIONS override
+        any translation string computed automatically.
     """
     result = OrderedDict()
+    extra_translations = namespace.get('TRANSLATIONS', {})
 
     for k, v in namespace.items():
-        if k.startswith('_'):
+        if k.startswith('_') or k == 'TRANSLATIONS':
             continue
 
         translations = extract_translation(v)
@@ -105,6 +126,7 @@ def extract_translations(namespace):
         else:
             result[k] = k
 
+    result.update(extra_translations)
     return result
 
 
@@ -158,10 +180,11 @@ def _(obj):
 
 
 #
-# Translate objects
+# Translate objects: these functions produce translated versions of
+# modules/namespaces from a given translation .po file.
 #
-def translate_mod(lang, mod=lib, path='', builtins=False, synonyms=True,
-                  add_unaccented=True):
+def translate_mod(lang, mod=lib, path='', synonyms=True,
+                  add_unaccented=True, keep_old=True):
     """
     Translates a module and register the translation in the given sys.modules
     path.
@@ -175,44 +198,29 @@ def translate_mod(lang, mod=lib, path='', builtins=False, synonyms=True,
             The desired output language.
         mod:
             Optional module object. If not given, translates transpyler.lib.
-        path:
-            A python name to register lib in sys.modules.
-        builtins:
-            If True, bind names to builtins.
 
     Returns:
         A module object.
     """
 
     new_mod = types.ModuleType(path or mod.__name__)
-    namespace = translated_namespace(lang, mod, synonyms=synonyms,
+    namespace = translated_namespace(lang, mod,
+                                     keep_old=keep_old,
+                                     synonyms=synonyms,
                                      add_unaccented=add_unaccented)
     for k, v in namespace.items():
         setattr(new_mod, k, v)
 
-    if path:
-        sys.modules[path] = new_mod
-    if builtins:
-        import builtins as _builtins
-
-        builtin_names = set(vars(_builtins).keys())
-        new_names = set(namespace)
-        intersect = builtin_names.intersection(new_names)
-        if intersect:
-            raise ValueError('builtins conflict: %s' % intersect)
-
-        for k, v in namespace.items():
-            setattr(_builtins, k, v)
-
     return new_mod
 
 
-def translated_namespace(lang, mod=lib, synonyms=True, add_unaccented=True):
+def translated_namespace(lang, mod=lib, synonyms=True, add_unaccented=True,
+                         keep_old=True):
     """
-    Return a global_namespace that has the given lib translated according to the
-    given language.
+    Return a namespace dict with the given ``lib``` module translated according
+    to the request ``lang``.
 
-    If no lib is given, uses the defaul
+    If no lib is given, uses the default transpyler.lib.
     """
 
     _ = gettext_for(lang).gettext
@@ -225,8 +233,8 @@ def translated_namespace(lang, mod=lib, synonyms=True, add_unaccented=True):
         if v:
             obj_mapping[name]['.'.join(args)] = _(v)
 
-    # Create global_namespace
-    namespace = {}
+    # Create namespace
+    namespace = dict(mod.__dict__) if keep_old else {}
     for k, v in obj_mapping.items():
         name = _(k).partition('\n')[0].strip()
         namespace[name] = translate(k, v)
@@ -244,7 +252,7 @@ def translate(name, data):
     Translate object using a dictionary of (attr, translation) pairs.
     """
 
-    #FIXME: handle class:method names properly
+    # FIXME: handle class:method names properly
     try:
         value = getattr(lib, name)
     except AttributeError:
@@ -331,36 +339,64 @@ def google_translate(lang, verbose=True, prompt=True):
     # Prepare
     google_lang = lang.replace('_', '-')
     popath = os.path.join(I10N_PATH, lang + '.po')
-    echo('Loading file: %r' % popath, '\n\n')
-    pofile = polib.pofile(popath)
+    if os.path.exists(popath):
+        echo('Loading file: %r' % popath, '\n\n')
+        pofile = polib.pofile(popath)
+    else:
+        echo('Creating file: %r' % popath, '\n\n')
+        with open(popath, 'w', encoding='utf-8') as F:
+            F.write(PO_HEADER % lang.replace('-', '_'))
+
+            potpath = os.path.join(I10N_PATH, 'transpyler.pot')
+            with open(potpath, encoding='utf8') as Fpot:
+                save = False
+                for line in Fpot.readlines():
+                    if save:
+                        F.write(line)
+                    elif line.isspace():
+                        save = True
+
+        pofile = polib.pofile(popath)
 
     # Translator functions
     def gtranslate(x):
+        if not x:
+            return ''
         try:
-            return '%s' % Blob(x).translate('en', google_lang)
+            result = '%s' % Blob(x).translate('en', google_lang)
         except NotTranslated:
-            return x
+            result = x
+
+        if x[0].isupper():
+            return result
+        else:
+            return result[0].lower() + result[1:]
 
     def translate(text, id):
         map = {
             'doc': translate_doc,
             'name': translate_name,
-            'arg': translate_name,
+            'args': translate_args,
         }
         return map.get(id, gtranslate)(text)
 
     def translate_doc(text):
         sections = []
-        for section in  split_docstring(text):
+        for section in split_docstring(text):
             translated = gtranslate(section)
             sections.append(translated)
         return '\n\n'.join(map(lambda x: '%s' % x, sections))
 
     def translate_name(name):
-        name = gtranslate(name.replace('_', ' '))
-        if name[0].islower():
-            name = name[0].lower() + name[1:]
-        return name.replace(' ', '_')
+        translated = gtranslate(name.replace('_', ' '))
+        if name.islower():
+            translated = translated.lower()
+        elif name[0].islower():
+            translated = translated[0].lower() + translated[1:]
+        return translated.replace(' ', '_').replace('-', '_')
+
+    def translate_args(text):
+        return ', '.join(map(translate_name, text.split(',')))
 
     # Mainloop: handle all missing translations and pass them to google
     # translate
@@ -387,8 +423,9 @@ def google_translate(lang, verbose=True, prompt=True):
 
 def split_docstring(text):
     """
-    Split docstring in several parts.
+    Split docstring in several sections.
     """
+
     parts = ['']
     text = normalize_docstring(text)
     parts[0], *lines = text.splitlines()

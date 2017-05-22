@@ -79,8 +79,8 @@ class Instrospection:
         #     [name for (name, value) in _names.items() if isinstance(value, _Module)]
         # )
         #
-        # # Builtins
+        # # NamespaceManager
         # builtins = types + functions
         #
-        # # Builtins dictionary
+        # # NamespaceManager dictionary
         # _original_builtins = vars(_builtins)

@@ -1,3 +1,5 @@
+TRANSLATIONS = {}
+
 def concatenate(*args):
     """
     Convert argument to string and concatenate.

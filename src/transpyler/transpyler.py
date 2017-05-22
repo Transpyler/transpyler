@@ -1,11 +1,14 @@
 import builtins as _builtins
 import codeop
+import importlib
+from collections import OrderedDict
 
 import click
 from lazyutils import lazy
 
+from transpyler.utils import pretty_callable
+from transpyler.utils.translate import translate_mod, gettext_for
 from transpyler.utils.utils import has_qt
-from .builtins import Builtins
 from .language_info import LanguageInfo
 from .lexer import Lexer
 
@@ -19,9 +22,24 @@ _print = _builtins.print
 INSTANCES_FOR_NAME = {}
 
 
-class Transpyler:
+class SingletonMeta(type):
+    """
+    Base metaclass for classes that have a single instance.
+    """
+
+    def __call__(cls, *args, **kwargs):
+        try:
+            return cls.__instance
+        except AttributeError:
+            cls.__instance = super().__call__(*args, **kwargs)
+            return cls.__instance
+
+
+class Transpyler(metaclass=SingletonMeta):
     """
     Base class for all new Transpylers.
+
+    A transpyler is a singleton object.
 
     Very simple Python variations can be created by subclassing Transpyler::
 
@@ -58,7 +76,6 @@ class Transpyler:
 
     # Subclasses
     lexer_factory = Lexer
-    builtins_factory = Builtins
 
     # Constants
     i10n_lang = None
@@ -79,10 +96,9 @@ class Transpyler:
 
     # Computed constants
     display_name = lazy(lambda self: self.name.title().replace('_', ' '))
-    lexer = lazy(lambda self: self.lexer_factory(self))
-    builtins_manager = lazy(lambda self: self.builtins_factory(self))
     short_banner = lazy(lambda self: self.display_name)
-    _namespace_cache = lazy(lambda self: self.get_builtins_namespace())
+    lexer = lazy(lambda self: self.lexer_factory(self))
+    gettext = lazy(lambda self: gettext_for(self.i10n_lang or 'en'))
 
     @lazy
     def name(self):
@@ -93,6 +109,10 @@ class Transpyler:
             return cls_name[:-10]
         else:
             return cls_name
+
+    @lazy
+    def namespace(self):
+        return self.make_global_namespace()
 
     def __init__(self, **kwargs):
         self._forbidden = False
@@ -118,36 +138,20 @@ class Transpyler:
     def __repr__(self):
         return '<%s: %r>' % (self.__class__.__name__, self.name)
 
-    def update_user_ns(self, ns):
-        """
-        Update user global_namespace that is initialized when a transpyler starts an
-        interactive shell.
-
-        This function should be overriden by subclasses. It receives the current
-        global_namespace and should update it inplace.
-        """
-
-    def init(self, extra_builtins=None, curses=True, apply_builtins=True):
+    # --------------------------------------------------------------------------
+    # System functions
+    def init(self, ns=None):
         """
         Initializes transpyler runtime.
 
         Args:
-            curses:
-                Load curses that enable translation for builtin python types by
-                hacking them at C-level.
-            extra_builtins (dict):
-                A dictionary with extra builtin functions to be added to the
-                runtime.
+            ns (dict):
+                A dictionary with extra functions to be added to the
+                globals namespace at runtime.
         """
 
-        if not self._has_init:
-            if curses:
-                self.apply_curses()
-            self._has_init = True
-        if extra_builtins:
-            self.builtins_manager.update(extra_builtins)
-        if apply_builtins:
-            self.builtins_manager.load_as_builtins()
+        self.apply_curses()
+        self.namespace.update(ns or {})
 
     def apply_curses(self):
         """
@@ -157,7 +161,7 @@ class Transpyler:
         """
 
     def compile(self, source, filename, mode, flags=0, dont_inherit=False,
-                compile_function=None):
+                compile_function=_compile):
         """
         Similar to the built-in function compile() for Transpyled code.
 
@@ -181,11 +185,10 @@ class Transpyler:
         """
 
         source = self.transpile(source)
-        compile_function = compile_function or self._compile
         return compile_function(source, filename, mode, flags, dont_inherit)
 
-    def exec(self, source, globals=None, locals=None, forbidden=False,
-             exec_function=None, builtins=False, _builtins_to_globals=True):
+    def exec(self, source, globals=None, locals=None,
+             exec_function=None, _builtins_to_globals=True):
         """
         Similar to the built-in function exec() for transpyled code.
 
@@ -197,22 +200,9 @@ class Transpyler:
                 Code to be executed.
             globals, locals:
                 A globals/locals dictionary
-            builtins (bool):
-                If given, execute with builtins injected on Python's builtins
-                module.
-            forbidden (bool):
-                If true, initialize the forbidden lib functionality to enable
-                i18n for Python builtins in C-level.
             exec_function (callable):
                 A possible replacement for Python's built-in exec().
         """
-
-        if builtins:
-            with self.builtins_manager.restore_after():
-                return self.exec(source, globals, locals,
-                                 forbidden=forbidden,
-                                 _builtins_to_globals=False,
-                                 exec_function=exec_function)
 
         exec_function = exec_function or _exec
 
@@ -228,8 +218,7 @@ class Transpyler:
         else:
             return exec_function(code, globals, locals)
 
-    def eval(self, source, globals=None, locals=None, forbidden=False,
-             eval_function=None, builtins=False):
+    def eval(self, source, globals=None, locals=None, eval_function=_eval):
         """
         Similar to the built-in function eval() for transpyled code.
 
@@ -241,18 +230,10 @@ class Transpyler:
                 Code to be executed.
             globals, locals:
                 A globals/locals dictionary
-            builtins (bool):
-                If given, update builtins with functions in tugalib.
-            forbidden (bool):
-                If true, initialize the forbidden lib functionality to enable
-                i18n for Python builtins in C-level.
             eval_function (callable):
                 A possible replacement for Python's built-in eval().
         """
-
-        eval_function = eval_function or _eval
-        return self.exec(source, globals, locals, forbidden=forbidden,
-                         builtins=builtins, exec_function=eval_function)
+        return self.exec(source, globals, locals, exec_function=eval_function)
 
     def transpile(self, src):
         """
@@ -272,10 +253,41 @@ class Transpyler:
             ... should continue here, but user already pressed enter!
         """
 
-        pytuga_src = self.transpile(src)
+        try:
+            pytuga_src = self.transpile(src)
+        except SyntaxError:
+            return True
         return codeop.compile_command(pytuga_src, filename, symbol) is None
 
-    def get_console_banner(self, short=False):
+    def core_functions(self) -> OrderedDict:
+        """
+        Return a namespace dictionary with the the exec/eval/compile/transpile
+        functions.
+
+        This is useful to expose on a module to offer a exec-like interface to
+        users.
+
+        Return:
+            An ordered mapping with the exec, eval, compile and transpile
+            functions.
+        """
+
+        return OrderedDict([
+            ('exec', self.exec),
+            ('eval', self.eval),
+            ('compile', self.compile),
+            ('transpile', self.transpile),
+        ])
+
+    # --------------------------------------------------------------------------
+    # Console helpers
+    def translate(self, st):
+        """
+        Translates string to the requested language.
+        """
+        return self.gettext.gettext(st)
+
+    def console_banner(self, short=False):
         """
         Return a string with the console banner.
         """
@@ -284,31 +296,48 @@ class Transpyler:
             return self.short_banner
         return getattr(self, 'banner', self.short_banner)
 
-    def get_functions(self, module=None):
+    def make_exiter_function(self, function):
         """
-        Return a namespace dictionary with the the exec/eval/compile/transpile
-        functions.
-
-        This is useful to expose on a module to offer a exec-like interface to
-        users.
+        Wraps the exiter function in a nice wrapped
         """
 
-        return {
-            'exec': self.exec,
-            'eval': self.eval,
-            'compile': self.compile,
-            'transpile': self.transpile,
-        }
+        @pretty_callable(self.translate('exiter.doc'))
+        def exit():
+            return function()
 
-    def get_builtins_namespace(self):
-        """
-        Return a dictionary with the default builtins global_namespace for transpyler.
-        """
+        exit.__name__ = self.translate('exiter.name')
+        exit.__doc__ = self.translate('exiter.doc')
+        return exit
 
-        ns = self.builtins_manager.get_namespace()
+    def make_global_namespace(self):
+        """
+        Return a dictionary with the default global namespace for transpyler
+        runtime.
+        """
+        ns = {}
+
+        load_modules_queue = []
+
+        # Load modules from list of modules
+        for mod in self.builtin_modules:
+            mod = importlib.import_module(mod)
+            load_modules_queue.append(mod)
+
+        # Load default translations from using the i10n_lang option
+        if self.i10n_lang:
+            mod = translate_mod(self.i10n_lang)
+            load_modules_queue.append(mod)
+
+        # Load all modules in queue
+        for mod in load_modules_queue:
+            for name in dir(mod):
+                if name.startswith('_') or name.isupper():
+                    continue
+                ns[name] = getattr(mod, name)
+
         return ns
 
-    def get_turtle_namespace(self, backend=None):
+    def make_turtle_namespace(self, backend=None):
         """
         Return a dictionary with all turtle-related functions.
         """
@@ -326,9 +355,8 @@ class Transpyler:
         else:
             raise ValueError('invalid backend: %r' % backend)
 
-    #
+    # --------------------------------------------------------------------------
     # External execution
-    #
     def start_console(self, console='auto', turtle='auto'):
         """
         Starts a regular python console with the current transpyler.
@@ -344,15 +372,33 @@ class Transpyler:
                 'auto'. The defaut strategy (auto) is to try the qt first and
                 fallback to tk.
         """
-        from .jupyter import start_jupyter
 
-        start_jupyter(self, gui=False)
+        # Select the console application
+        if console == 'auto':
+            try:
+                import IPython
+            except ImportError:
+                console = 'console'
+            else:
+                console = 'jupyter'
+
+        if console == 'qtconsole':
+            from .jupyter import start_jupyter
+            start_jupyter(self, gui=True)
+        elif console == 'jupyter':
+            from .jupyter import start_jupyter
+            start_jupyter(self, gui=False)
+        elif console == 'console':
+            from .console import start_console
+            start_console(self)
 
     def start_notebook(self):
         """
         Starts a jupyter notebook with the current transpyler.
         """
-        raise NotImplementedError
+
+        from .jupyter import start_notebook
+        start_notebook(self)
 
     def start_qturtle(self):
         """
@@ -373,13 +419,17 @@ class Transpyler:
         """
 
         @click.command()
-        @click.option('--cli/--no-cli', '-c', default=False,
+        @click.option('--cli', '-c', is_flag=True, default=False,
                       help='start gui-less console.')
+        @click.option('--console', is_flag=True, default=False,
+                      help='start a simple gui-less console.')
         @click.option('--notebook/--no-notebook', '-n', default=False,
                       help='starts notebook server.')
-        def main(cli, notebook):
+        def main(cli, notebook, console):
             if cli:
-                return self.start_console(console='nogui')
+                return self.start_console(console='auto')
+            if console:
+                return self.start_console(console='console')
             if notebook:
                 return self.start_notebook()
 
@@ -411,7 +461,3 @@ def get_transpyler_from_name(key):
             except (ImportError, KeyError):
                 pass
             path, _, _ = path.rpartition('.')
-
-
-# Defines the default transpyler instance
-simple_transpyler = Transpyler(name='transpyled')

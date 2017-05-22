@@ -1,36 +1,40 @@
 from ._lib_str import format_string as _format_string
 
+TRANSLATIONS = {}
 
-def show(*args):
+
+_print = print
+
+def print(*args, **kwargs):
     """
-    Shows the object or text provided on the screen.
+    Prints the object or text provided on the screen.
 
     If called with multiple arguments, prints them in sequence, separating
     them with a white space.
 
     Examples:
-        >>> show("Hello world!")
+        >>> print("Hello world!")
         Hello World!
     """
 
-    print(*args)
+    _print(*args)
 
 
-def alert(*args):
+def alert(*args, **kwargs):
     """
     Similar to the `show` function, but displays the resulting message in a
     dialog box.
     """
 
-    _alert(*args)
+    _alert(*args, **kwargs)
 
 
-def fshow(text, *args, **kwargs):
+def print_formatted(text, *args, **kwargs):
     """
     Displays a string after applying the provided formatting arguments.
     """
 
-    show(_format_string(text, *args, **kwargs))
+    print(_format_string(text, *args, **kwargs))
 
 
 def read_text(message=''):
@@ -111,7 +115,7 @@ def _pause():
 
 
 def _alert(*args):
-    show(*args)
+    print(*args)
 
 
 def _input(*args):

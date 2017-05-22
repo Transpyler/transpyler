@@ -1,6 +1,6 @@
 from transpyler.turtle.utils import turtle_property
-from .turtle import Turtle as _Turtle
 from .state import PropertyState
+from .turtle import Turtle
 
 
 class TkTurtleState(PropertyState):
@@ -46,20 +46,11 @@ class TkTurtleState(PropertyState):
         self.turtle.goto(*pos)
 
 
-class Turtle(_Turtle):
-    """
-    A tk based turtle.
-    """
-
-    _state_factory = TkTurtleState
-
-
-Turtle.__doc__ = _Turtle.__doc__
-
-
 # We load a global namespace if called with the python -m flag.
 if __name__ == '__main__':
     from .turtle import global_namespace as _ns
+
+    Turtle._state_factory = TkTurtleState
 
     del TkTurtleState, PropertyState, turtle_property
 

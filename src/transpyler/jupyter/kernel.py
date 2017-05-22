@@ -24,13 +24,17 @@ class TranspylerShell(ZMQInteractiveShell):
         return self.parent.transpyler
 
     def init_user_ns(self):
-        """
-        Additional symbols for the shell environment.
-        """
-
         super().init_user_ns()
-        ns = self.user_ns
-        self.transpyler.update_user_ns(ns)
+        exiter = self.transpyler.make_exiter_function(self.exiter)
+        self.user_ns[exiter.__name__] = exiter
+
+    def init_create_namespaces(self, user_module=None, user_ns=None):
+        super().init_create_namespaces(user_module, user_ns)
+
+        ns = self.transpyler.namespace
+        self.user_ns.update(ns)
+        self.user_global_ns.update(ns)
+        self.user_module.__dict__.update(ns)
 
     def ex(self, cmd):
         return super().ex(self.transpyler.transpile(cmd))
@@ -64,7 +68,7 @@ class TranspylerKernel(IPythonKernel):
 
     @lazy
     def banner(self):
-        return self.transpyler.get_console_banner()
+        return self.transpyler.console_banner()
 
     @lazy
     def language_info(self):

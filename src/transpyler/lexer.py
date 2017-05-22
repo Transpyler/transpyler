@@ -2,7 +2,7 @@ import tokenize
 
 from lazyutils import lazy
 
-from transpyler.errors import BadSytaxError
+from transpyler.errors import BadSyntaxError
 from transpyler.token import Token, displace_tokens, token_find
 from transpyler.utils import keep_spaces
 
@@ -73,10 +73,6 @@ class Lexer:
 
         current_string = src
 
-        # FIXME: Not reaching here!
-        # if not current_string.endswith('\n'):
-        #    current_string += '\n'
-
         def iterlines():
             nonlocal current_string
 
@@ -86,7 +82,14 @@ class Lexer:
             else:
                 raise StopIteration
 
-        tokens = list(tokenize.generate_tokens(iterlines))
+        iterator = iter(tokenize.generate_tokens(iterlines))
+        tokens = []
+        while True:
+            try:
+                tokens.append(next(iterator))
+            except (StopIteration, tokenize.TokenError):
+                break
+
         tokens = list(map(Token, tokens))
         return tokens
 
@@ -104,8 +107,11 @@ class Lexer:
         """
 
         self.detect_error_sequences(tokens, self.invalid_tokens)
-        tokens = self.replace_sequences(tokens, self.sequence_translations)
-        tokens = self.replace_translations(tokens, self.single_translations)
+        try:
+            tokens = self.replace_sequences(tokens, self.sequence_translations)
+            tokens = self.replace_translations(tokens, self.single_translations)
+        except tokenize.TokenError:
+            raise SyntaxError('unexpected EOF.')
         return tokens
 
     def detect_error_sequences(self, tokens, error_dict):
@@ -125,7 +131,7 @@ class Lexer:
                 idx, match, start, end = next(iterator)
                 msg = error_dict(match)
                 match = ' '.join(match)
-                raise BadSytaxError(msg, from_token=tokens[idx])
+                raise BadSyntaxError(msg, from_token=tokens[idx])
             except StopIteration:
                 break
 

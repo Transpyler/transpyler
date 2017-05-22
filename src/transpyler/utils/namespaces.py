@@ -39,7 +39,7 @@ def collect_synonyms(namespace, add_unaccented=True):
 
 def collect_mod_namespace(mod=None):
     """
-    Return a global_namespace with all the names for the given module.
+    Return a namespace dict with all public names for the given module.
 
     If no module is given, uses transpyler's standard lib.
     """

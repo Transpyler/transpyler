@@ -43,7 +43,7 @@ def test_pybr_code(pybr, pybr_code):
 
 
 def test_pybr_builtins(pybr):
-    ns = pybr.get_builtins_namespace()
+    ns = pybr.make_global_namespace()
     assert 'cos' in ns
 
 

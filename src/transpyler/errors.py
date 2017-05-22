@@ -1,4 +1,4 @@
-class BadSytaxError(SyntaxError):
+class BadSyntaxError(SyntaxError):
     """
     Base class for transpyler syntax errors.
     """

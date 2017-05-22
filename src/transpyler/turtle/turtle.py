@@ -1,8 +1,6 @@
-from functools import wraps
-
 from colortools import Color
+from lazyutils import lazy
 
-from .globalfunctions import GlobalFunctions
 from .utils import vecargsmethod
 from ..math import Vec
 
@@ -17,11 +15,33 @@ class Turtle:
     """
 
     _state_factory = None
-    __slots__ = ('_state',)
+
+    @lazy
+    def _state(self):
+        if self._state_factory is None:
+            try:
+                import PyQt5
+                from transpyler.turtle.state import MailboxState
+                from transpyler.turtle.qt.turtle import start_client
+            except ImportError:
+                try:
+                    import tk
+                    from transpyler.turtle.tk import TkTurtleState
+                except ImportError:
+                    raise RuntimeError('tk or PyQt5 are required to run '
+                                       'the turtle module')
+                else:
+                    Turtle._state_factory = TkTurtleState
+
+            else:
+                Turtle._state_factory = MailboxState
+                start_client()
+
+        return self._state_factory(**self._args)
 
     def __init__(self, pos=None, heading=0.0, *, drawing=True,
-                 color='black', fillcolor='black', width=1, hidden=False):
-        self._state = self._state_factory(
+                 color='black', fillcolor='black', width=2, hidden=False):
+        self._args = dict(
             pos=pos, heading=heading, drawing=drawing, color=color,
             fillcolor=fillcolor, width=width, hidden=hidden
         )
@@ -239,55 +259,3 @@ class Turtle:
     fillcolor = property(getfillcolor, setfillcolor)
     drawing = property(isdown, lambda _, v: _.pendown() if v else _.penup())
     hidden = property(ishidden, lambda _, v: _.hide() if v else _.show())
-
-
-def global_namespace(cls, globals=GlobalFunctions, factory=None):
-    """
-    Return a dictionary with a global global_namespace of client functions from a
-    turtle client class.
-
-    Args:
-        cls:
-            A TurtleClient subclass.
-        factory:
-            A function that returns an initialized turtle instance. If not
-            given, calls the class with no arguments.
-    """
-
-    instance = None
-    factory = factory or cls
-
-    def closure(func):
-        """
-        A closure that returns a new global function from a given turtle method.
-        """
-        nonlocal instance
-
-        @wraps(func)
-        def decorated(*args, **kwargs):
-            nonlocal  instance
-            if instance is None:
-                instance = factory()
-
-            return func(instance, *args, **kwargs)
-
-        return decorated
-
-    def mainturtle():
-        """
-        Return the main turtle object.
-        """
-
-        nonlocal instance
-
-        if instance is None:
-            instance = factory()
-        return instance
-
-    items = ((k, getattr(cls, k)) for k in dir(cls))
-    namespace = {k: closure(v) for k, v in items
-                 if (not isinstance(v, property) and not k.startswith('_'))}
-    namespace.update(globals.global_namespace(cls))
-    namespace['mainturtle'] = mainturtle
-    namespace['Turtle'] = cls
-    return namespace

@@ -20,7 +20,7 @@ class TranspylerConsole(code.InteractiveConsole):
         if transpyler is not None:
             self.transpyler = transpyler
         locals = locals if locals is not None else {}
-        locals.update(self.transpyler.get_builtins_namespace())
+        locals.update(self.transpyler.namespace)
         super().__init__(locals, filename)
 
     def runsource(self, source, filename="<input>", symbol="single"):
@@ -84,15 +84,15 @@ class TranspylerConsole(code.InteractiveConsole):
         super().interact(banner, exitmsg)
 
 
-def run_console(transpyler):
+def start_console(transpyler):
     """
-    Run the main console.
+    Runs the main console.
     """
 
     console = TranspylerConsole(transpyler=transpyler)
-    banner = transpyler.get_console_banner()
+    banner = transpyler.console_banner()
     console.interact(banner)
 
 
 if __name__ == '__main__':
-    run_console()
+    start_console()
