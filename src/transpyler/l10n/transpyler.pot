@@ -25,7 +25,6 @@ msgstr ""
 
 #. range.args
 #. concatenate.args
-#. alert.args
 msgid "args"
 msgstr ""
 
@@ -129,6 +128,7 @@ msgid ""
 msgstr ""
 
 #. print.args
+#. alert.args
 msgid "args, kwargs"
 msgstr ""
 
@@ -991,4 +991,20 @@ msgid ""
 "float(x) -> floating point number\n"
 "\n"
 "Convert a string or number to a floating point number, if possible."
+msgstr ""
+
+#. exiter.name
+msgid "quit"
+msgstr ""
+
+#. exiter.doc
+msgid "Type quit() to leave."
+msgstr ""
+
+#. cls.name
+msgid "cls"
+msgstr ""
+
+#. cls.doc
+msgid "Clear screen"
 msgstr ""

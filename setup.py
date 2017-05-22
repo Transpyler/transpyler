@@ -52,6 +52,14 @@ setup(
         'transpyler.jupyter': [
             'assets/*.*',
         ],
+        'transpyler.turtle': [
+            'data/*.*',
+        ],
+        'transpyler.l10n': [
+            '*.po',
+            '*.mo',
+            '*.pot',
+        ],
     },
 
     # Packages and dependencies

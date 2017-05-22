@@ -58,11 +58,10 @@ class TestTranslateModule:
         from transpyler.tests import mod
 
         new_mod = translate_mod('pt_BR', mod)
-
-        assert dir(new_mod) == [
-            '__doc__', '__loader__', '__name__', '__package__', '__spec__',
-            'cos', 'max', 'mostrar', 'mostre',
-        ]
+        public_names = {x for x in dir(new_mod) if not x.startswith('_')}
+        assert public_names == {
+            'cos', 'mostrar', 'mostre', 'print',
+        }
 
         assert new_mod.mostre.__doc__.startswith(
             'Mostra o objeto ou texto fornecido na tela.')
@@ -78,4 +77,4 @@ class TestTranslateModule:
         mod = translate_mod('es_BR')
 
         print('\n'.join(dir(mod)))
-        assert mod.mostrar
+        assert mod.imprimir

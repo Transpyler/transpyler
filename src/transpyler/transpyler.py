@@ -29,10 +29,10 @@ class SingletonMeta(type):
 
     def __call__(cls, *args, **kwargs):
         try:
-            return cls.__instance
+            return cls._instance
         except AttributeError:
-            cls.__instance = super().__call__(*args, **kwargs)
-            return cls.__instance
+            Transpyler._instance = super().__call__(*args, **kwargs)
+            return cls._instance
 
 
 class Transpyler(metaclass=SingletonMeta):
@@ -187,8 +187,7 @@ class Transpyler(metaclass=SingletonMeta):
         source = self.transpile(source)
         return compile_function(source, filename, mode, flags, dont_inherit)
 
-    def exec(self, source, globals=None, locals=None,
-             exec_function=None, _builtins_to_globals=True):
+    def exec(self, source, globals=None, locals=None, exec_function=None):
         """
         Similar to the built-in function exec() for transpyled code.
 
@@ -205,13 +204,9 @@ class Transpyler(metaclass=SingletonMeta):
         """
 
         exec_function = exec_function or _exec
-
-        if globals is None:
-            globals = _builtins.globals()
-        if _builtins_to_globals:
-            globals.update(self._namespace_cache)
-
         code = self.transpile(source) if isinstance(source, str) else source
+        globals = {} if globals is None else globals
+        globals.update(self.namespace)
 
         if locals is None:
             return exec_function(code, globals)
@@ -442,22 +437,3 @@ class Transpyler(metaclass=SingletonMeta):
 
         return main()
 
-
-def get_transpyler_from_name(key):
-    """
-    Return a transpyler instance for the given transpyler name or type.
-    """
-
-    try:
-        return INSTANCES_FOR_NAME[key]
-    except:
-        import importlib
-
-        path = key
-        while path:
-            try:
-                importlib.import_module(path)
-                return INSTANCES_FOR_NAME[key]
-            except (ImportError, KeyError):
-                pass
-            path, _, _ = path.rpartition('.')

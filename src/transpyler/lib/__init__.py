@@ -52,9 +52,14 @@ _translations.update(TRANSLATIONS)
 
 
 # Math functions
-from transpyler.math import math_namespace as _math_namespace
-
-globals().update(_math_namespace())
-
+from transpyler.math import (
+    pi, e,
+    sin, cos, tan,
+    sqrt, exp, log, ln, log10, log2, sign,
+    abs, round, ceil, trunc,
+    sum, product, min, max,
+    dice, random, randint,
+    Vec, vec, dot,
+)
 
 TRANSLATIONS = _translations

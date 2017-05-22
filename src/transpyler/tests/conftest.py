@@ -3,7 +3,7 @@ import pytest
 from transpyler import Transpyler
 
 
-@pytest.fixture
+@pytest.yield_fixture
 def python():
     """
     A new transpyler that makes no changes in comparison with the default
@@ -13,10 +13,11 @@ def python():
     class Python(Transpyler):
         pass
 
-    return Python()
+    yield Python()
+    del Transpyler._instance
 
 
-@pytest.fixture
+@pytest.yield_fixture
 def pybr():
     class PyBr(Transpyler):
         translations = {
@@ -25,9 +26,10 @@ def pybr():
             ('para', 'cada'): 'for',
             ('faça', ':'): ':',
         }
-        builtin_modules = ['math']
+        i10n_lang = 'pt_BR'
 
-    return PyBr()
+    yield PyBr()
+    del Transpyler._instance
 
 
 @pytest.fixture

@@ -9,7 +9,6 @@ from lazyutils import lazy
 from traitlets import Type
 
 from transpyler.utils import with_transpyler_attr
-from transpyler.transpyler import get_transpyler_from_name
 
 
 class TranspylerShell(ZMQInteractiveShell):
@@ -133,4 +132,4 @@ if __name__ == '__main__':
     transpyler_class = sys.argv.pop(idx)
     path, _, name = transpyler_class.rpartition('.')
     transpyler_class = getattr(importlib.import_module(path), name)
-    start_kernel(get_transpyler_from_name(transpyler_class))
+    start_kernel(transpyler_class())

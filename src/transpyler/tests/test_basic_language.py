@@ -42,19 +42,14 @@ def test_pybr_code(pybr, pybr_code):
     assert D['y'] == 13
 
 
-def test_pybr_builtins(pybr):
+def test_pybr_namespace(pybr):
     ns = pybr.make_global_namespace()
     assert 'cos' in ns
+    assert 'mostre' in ns
 
 
 def test_pybr_exec_with_builtins(pybr):
     assert pybr.eval('cos(0)', {}) == 1
-
-
-def test_pybr_exec_with_temp_builtins(pybr):
-    D = {}
-    assert pybr.eval('cos(0)', D, builtins=True) == 1
-    assert 'cos' not in D
 
 
 #
@@ -66,4 +61,4 @@ def test_empty_code_string(pybr):
 
 def test_invalid_keywords_tokens(pybr):
     with pytest.raises(SyntaxError):
-        pybr.exec('Retornar 1', {})
+        pybr.exec('retornar 1', {})

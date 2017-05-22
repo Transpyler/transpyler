@@ -14,6 +14,71 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 2.0.1\n"
 
+#. range.name
+msgid "range"
+msgstr "intervalo"
+
+#. range.doc
+msgid ""
+"range(stop) -> range object\n"
+"range(start, stop[, step]) -> range object\n"
+"\n"
+"Return an object that produces a sequence of integers from start (inclusive)\n"
+"to stop (exclusive) by step.  range(i, j) produces i, i+1, i+2, ..., j-1.\n"
+"start defaults to 0, and stop is omitted!  range(4) produces 0, 1, 2, 3.\n"
+"These are exactly the valid indices for a list of 4 elements.\n"
+"When step is given, it specifies the increment (or decrement)."
+msgstr ""
+"Retorna uma lista de inteiros. Pode ser chamada de 3 maneiras diferentes:\n"
+"\n"
+"intervalo(n) -> [0, 1, ..., n - 1]\n"
+"intervalo(a, b) -> [a, a + 1, ..., b - 1]\n"
+"intervalo(a, b, x) -> [a, a + x, ..., b - 1]\n"
+"\n"
+"\n"
+"Exemplos:\n"
+"    >>> intervalo(5)\n"
+"    [0, 1, 2, 3, 4]\n"
+"    >>> intervalo(2, 5)\n"
+"    [2, 3, 4]\n"
+"    >>> intervalo(0, 5, 2)\n"
+"    [0, 2, 4]"
+
+#. range.args
+#. concatenate.args
+#. alert.args
+msgid "args"
+msgstr "args"
+
+#. sleep.name
+msgid "sleep"
+msgstr "dormir"
+
+#. sleep.doc
+msgid ""
+"sleep(seconds)\n"
+"\n"
+"Delay execution for a given number of seconds.  The argument may be\n"
+"a floating point number for subsecond precision."
+msgstr ""
+"Dormir (segundos)\n"
+"\n"
+"Atrasa a execução por um dado número de segundos. O argumento não precisa ser um número inteiro."
+
+#. exit.name
+msgid "exit"
+msgstr ""
+"sair\n"
+"saia"
+
+#. exit.doc
+msgid "Finish program execution."
+msgstr "Concluir a execução do programa."
+
+#. exit.args
+msgid "msg"
+msgstr "mensagem"
+
 #. concatenate.name
 msgid "concatenate"
 msgstr ""
@@ -42,14 +107,7 @@ msgstr ""
 "    >>> concatenar([1, 2, 3, 4])\n"
 "    '1234'"
 
-#. concatenate.args
-#. show.args
-#. alert.args
-msgid "args"
-msgstr "args"
-
 #. join.name
-#. String:join
 msgid "join"
 msgstr ""
 "juntar\n"
@@ -113,21 +171,21 @@ msgstr ""
 msgid "string, args, kwargs"
 msgstr "texto, args, kwargs"
 
-#. show.name
-msgid "show"
+#. print.name
+msgid "print"
 msgstr ""
 "mostrar\n"
 "mostre"
 
-#. show.doc
+#. print.doc
 msgid ""
-"Shows the object or text provided on the screen.\n"
+"Prints the object or text provided on the screen.\n"
 "\n"
 "If called with multiple arguments, prints them in sequence, separating\n"
 "them with a white space.\n"
 "\n"
 "Examples:\n"
-"    >>> show(\"Hello world!\")\n"
+"    >>> print(\"Hello world!\")\n"
 "    Hello World!"
 msgstr ""
 "Mostra o objeto ou texto fornecido na tela.\n"
@@ -137,6 +195,10 @@ msgstr ""
 "Exemplos:\n"
 "    >>> mostrar(\"Olá mundo!\")\n"
 "    Olá Mundo!"
+
+#. print.args
+msgid "args, kwargs"
+msgstr "args, kwargs"
 
 #. alert.name
 msgid "alert"
@@ -148,17 +210,15 @@ msgid ""
 "dialog box."
 msgstr "Semelhante à função `mostrar`, mas exibe a mensagem resultante em uma caixa de diálogo."
 
-#. fshow.name
-msgid "fshow"
-msgstr ""
-"mostrar_formatado\n"
-"mostre_formatado"
+#. print_formatted.name
+msgid "print_formatted"
+msgstr "mostrar_formatado"
 
-#. fshow.doc
+#. print_formatted.doc
 msgid "Displays a string after applying the provided formatting arguments."
 msgstr "Exibe uma sequência depois de aplicar os argumentos de formatação fornecidos."
 
-#. fshow.args
+#. print_formatted.args
 msgid "text, args, kwargs"
 msgstr "texto, args, kwargs"
 
@@ -274,108 +334,947 @@ msgstr ""
 msgid "Stops execution until the user presses the <return> key."
 msgstr "Interrompe a execução até que o usuário pressione a tecla <enter>."
 
-#. sleep.name
-msgid "sleep"
-msgstr "dormir"
+#. Turtle.name
+msgid "Turtle"
+msgstr "Tuga"
 
-#. sleep.doc
+#. Turtle.doc
+msgid ""
+"Turtle representation on client.\n"
+"\n"
+"Client knows the pos, heading, avatar and a dictionary of arbitrary meta\n"
+"values. The client holds a reference to a connection and each method simply\n"
+"sends messages through this connection object."
+msgstr "Uma nova instância do Tuga para desenhar na tela."
+
+#. Turtle:back.name
+#. Turtle:backward.name
+#. Turtle:bk.name
+#. backward.name
+msgid "backward"
+msgstr "trás"
+
+#. Turtle:back.doc
+#. Turtle:backward.doc
+#. Turtle:bk.doc
+#. backward.doc
+msgid ""
+"Move the turtle backward by the given step size (in pixels).\n"
+"\n"
+"Aliases: backward | back | bk"
+msgstr "Move o Tuga para trás pelo passo fornecido em pixels."
+
+#. Turtle:back.args
+#. Turtle:backward.args
+#. Turtle:bk.args
+#. Turtle:fd.args
+#. Turtle:forward.args
+msgid "self, step"
+msgstr "self, passo"
+
+#. Turtle:clear.name
+#. clear.name
+msgid "clear"
+msgstr "limpar"
+
+#. Turtle:clear.doc
+#. clear.doc
+msgid "Clear all drawings made by turtle."
+msgstr "Limpa todos os desenhos feitos pelo tuga."
+
+#. Turtle:clear.args
+#. Turtle:getavatar.args
+#. Turtle:getcolor.args
+#. Turtle:getfillcolor.args
+#. Turtle:getheading.args
+#. Turtle:getpos.args
+#. Turtle:getwidth.args
+#. Turtle:hide.args
+#. Turtle:isdown.args
+#. Turtle:ishidden.args
+#. Turtle:isvisible.args
+#. Turtle:pd.args
+#. Turtle:pendown.args
+#. Turtle:penup.args
+#. Turtle:pu.args
+#. Turtle:reset.args
+#. Turtle:show.args
+#. Vec:norm.args
+#. Vec:normalized.args
+msgid "self"
+msgstr "self"
+
+#. Turtle:color
+msgid "color"
+msgstr "cor"
+
+#. Turtle:drawing
+msgid "drawing"
+msgstr "desenhando"
+
+#. Turtle:fd.name
+#. Turtle:forward.name
+#. forward.name
+msgid "forward"
+msgstr "frente"
+
+#. Turtle:fd.doc
+#. Turtle:forward.doc
+#. forward.doc
+msgid ""
+"Move the turtle forward by the given step size (in pixels).\n"
+"\n"
+"Aliases: forward | fd"
+msgstr "Mova o Tuga para frente pelo passo dado em pixels."
+
+#. Turtle:fillcolor
+msgid "fillcolor"
+msgstr "cor_preenchimento"
+
+#. Turtle:getavatar.name
+#. getavatar.name
+msgid "getavatar"
+msgstr ""
+"obter_avatar\n"
+"obtenha_avatar"
+
+#. Turtle:getavatar.doc
+#. getavatar.doc
+msgid "Return a string with the name of the current avatar."
+msgstr "Retorna o nome do avatar atual."
+
+#. Turtle:getcolor.name
+#. getcolor.name
+msgid "getcolor"
+msgstr ""
+"obter_cor\n"
+"obtenha_cor"
+
+#. Turtle:getcolor.doc
+#. getcolor.doc
+msgid "Return a tuple of (R, G, B) with the current pen color."
+msgstr "Retorna  a cor de desenho atual."
+
+#. Turtle:getfillcolor.name
+#. getfillcolor.name
+msgid "getfillcolor"
+msgstr "obter_cor_preenchimento"
+
+#. Turtle:getfillcolor.doc
+#. getfillcolor.doc
+#, fuzzy
+msgid "Return a tuple of (R, G, B) with the current fill color."
+msgstr "Retornar uma tupla de (R, G, B) com a cor de preenchimento atual."
+
+#. Turtle:getheading.name
+#. getheading.name
+#, fuzzy
+msgid "getheading"
+msgstr "começando"
+
+#. Turtle:getheading.doc
+#. getheading.doc
+#, fuzzy
+msgid "Return current heading of the turtle (in degrees)."
+msgstr "Retorna o título atual da tartaruga (em graus)."
+
+#. Turtle:getpos.name
+#. getpos.name
+#, fuzzy
+msgid "getpos"
+msgstr "getpos"
+
+#. Turtle:getpos.doc
+#. getpos.doc
+#, fuzzy
+msgid "Return a vector (x, y) with turtle's position (in pixels)."
+msgstr "Retorna um vetor (x, y) com a posição da tartaruga (em pixels)."
+
+#. Turtle:getwidth.name
+#. getwidth.name
+#, fuzzy
+msgid "getwidth"
+msgstr "getwidth"
+
+#. Turtle:getwidth.doc
+#. getwidth.doc
+#, fuzzy
+msgid "Return the pen width (in pixels):"
+msgstr "Retorna a largura da caneta (em pixels):"
+
+#. Turtle:goto.name
+#. goto.name
+#, fuzzy
+msgid "goto"
+msgstr "vamos_para"
+
+#. Turtle:goto.doc
+#. goto.doc
 #, fuzzy
 msgid ""
-"sleep(seconds)\n"
+"Goes to the given position.\n"
 "\n"
-"Delay execution for a given number of seconds.  The argument may be\n"
-"a floating point number for subsecond precision."
+"If the pen is down, it draws a line."
 msgstr ""
-"Dormir (segundos)\n"
+"Vai para a posição dada.\n"
 "\n"
-"Atrasa a execução por um dado número de segundos. O argumento pode ser um número de ponto flutuante para a precisão do subsegundo."
+"Se a caneta está para baixo, desenha uma linha."
 
-#. exit
-msgid "exit"
+#. Turtle:goto.args
+#. Turtle:jump.args
+#. Turtle:setpos.args
+#, fuzzy
+msgid "self, x, y, kwds"
+msgstr "auto, x, y, kwds"
+
+#. Turtle:heading
+#, fuzzy
+msgid "heading"
+msgstr "posição"
+
+#. Turtle:hidden
+#, fuzzy
+msgid "hidden"
+msgstr "escondido"
+
+#. Turtle:hide.name
+#. hide.name
+#, fuzzy
+msgid "hide"
+msgstr "ocultar"
+
+#. Turtle:hide.doc
+#. hide.doc
+#, fuzzy
+msgid "Hide turtle."
+msgstr "Esconda a tartaruga."
+
+#. Turtle:isdown.name
+#. isdown.name
+#, fuzzy
+msgid "isdown"
+msgstr "está_acabado"
+
+#. Turtle:isdown.doc
+#. isdown.doc
+#, fuzzy
+msgid "Return True if the pen is down or False otherwise."
+msgstr "Retorna True se a caneta estiver desativada ou False caso contrário."
+
+#. Turtle:ishidden.name
+#. ishidden.name
+#, fuzzy
+msgid "ishidden"
+msgstr "está_escondido"
+
+#. Turtle:ishidden.doc
+#. ishidden.doc
+#, fuzzy
+msgid "Return True if the turtle is not visible."
+msgstr "Retorna True se a tartaruga não estiver visível."
+
+#. Turtle:isvisible.name
+#. isvisible.name
+#, fuzzy
+msgid "isvisible"
+msgstr "é_visível"
+
+#. Turtle:isvisible.doc
+#. isvisible.doc
+#, fuzzy
+msgid "Return True if the turtle is visible."
+msgstr "Retornar verdadeiro se a tartaruga for visível."
+
+#. Turtle:jump.name
+#. jump.name
+#, fuzzy
+msgid "jump"
+msgstr "saltar"
+
+#. Turtle:jump.doc
+#. jump.doc
+#, fuzzy
+msgid ""
+"Relative movement by the desired position. It *never* draw as line even\n"
+"if the pen is down."
+msgstr "Movimento relativo pela posição desejada. Ele * nunca * desenhar como linha, mesmo se a caneta está para baixo."
+
+#. Turtle:left.name
+#. Turtle:lt.name
+#. left.name
+#, fuzzy
+msgid "left"
+msgstr "esquerda"
+
+#. Turtle:left.doc
+#. Turtle:lt.doc
+#. left.doc
+#, fuzzy
+msgid ""
+"Rotate the turtle counter-clockwise by the given angle.\n"
+"\n"
+"Aliases: left | lt\n"
+"\n"
+"Negative angles produces clockwise rotation."
 msgstr ""
-"sair\n"
-"saia"
+"Gire a tartaruga no sentido anti-horário pelo ângulo dado.\n"
+"\n"
+"Aliases: left | Lt\n"
+"\n"
+"Os ângulos negativos produzem rotação no sentido horário."
 
-#. integer.name
-msgid "int"
+#. Turtle:left.args
+#. Turtle:lt.args
+#. Turtle:right.args
+#. Turtle:rt.args
+#, fuzzy
+msgid "self, angle"
+msgstr "auto, ângulo"
+
+#. Turtle:pd.name
+#. Turtle:pendown.name
+#. pendown.name
+#, fuzzy
+msgid "pendown"
+msgstr "acrescentar"
+
+#. Turtle:pd.doc
+#. Turtle:pendown.doc
+#. pendown.doc
+#, fuzzy
+msgid ""
+"Lower the turtle pen so it can draw in the screen.\n"
+"\n"
+"Aliases: pendown | pd"
+msgstr ""
+"Abaixe a caneta de tartaruga para que ele possa desenhar na tela.\n"
+"\n"
+"Aliases: pendown | Pd"
+
+#. Turtle:penup.name
+#. Turtle:pu.name
+#. penup.name
+#, fuzzy
+msgid "penup"
+msgstr "penup"
+
+#. Turtle:penup.doc
+#. Turtle:pu.doc
+#. penup.doc
+#, fuzzy
+msgid ""
+"Raises the turtle pen so it stops drawing.\n"
+"\n"
+"Aliases: penup | pu"
+msgstr ""
+"Levanta a pena de tartaruga para que pare de desenhar.\n"
+"\n"
+"Aliases: penup | Pu"
+
+#. Turtle:pos
+msgid "pos"
+msgstr "posição"
+
+#. Turtle:reset.name
+#. reset.name
+#, fuzzy
+msgid "reset"
+msgstr "restabelecer"
+
+#. Turtle:reset.doc
+#. reset.doc
+#, fuzzy
+msgid "Clear all drawings and reset turtle to initial position."
+msgstr "Limpe todos os desenhos e reponha a tartaruga na posição inicial."
+
+#. Turtle:right.name
+#. Turtle:rt.name
+#. right.name
+#, fuzzy
+msgid "right"
+msgstr "certo"
+
+#. Turtle:right.doc
+#. Turtle:rt.doc
+#. right.doc
+#, fuzzy
+msgid ""
+"Rotate the turtle clockwise by the given angle.\n"
+"\n"
+"Aliases: right | rt\n"
+"\n"
+"Negative angles produces counter-clockwise rotation. Return final\n"
+"heading."
+msgstr ""
+"Gire a tartaruga no sentido horário pelo ângulo dado.\n"
+"\n"
+"Aliases: right | Rt\n"
+"\n"
+"Os ângulos negativos produzem rotação no sentido anti-horário. Retornar título final."
+
+#. Turtle:setavatar.name
+#. setavatar.name
+#, fuzzy
+msgid "setavatar"
+msgstr "setavatar"
+
+#. Turtle:setavatar.doc
+#. setavatar.doc
+#, fuzzy
+msgid "Modifies the turtle avatar."
+msgstr "Modifica o avatar da tartaruga."
+
+#. Turtle:setavatar.args
+#. Turtle:setcolor.args
+#. Turtle:setfillcolor.args
+#. Turtle:setheading.args
+#. Turtle:setwidth.args
+#, fuzzy
+msgid "self, value"
+msgstr "auto, valor"
+
+#. Turtle:setcolor.name
+#. setcolor.name
+#, fuzzy
+msgid "setcolor"
+msgstr "setcolor"
+
+#. Turtle:setcolor.doc
+#. setcolor.doc
+#, fuzzy
+msgid ""
+"Modifies the pen color.\n"
+"\n"
+"Color can be specified as an (R, G, B) tuple or as a hex string or by\n"
+"name."
+msgstr ""
+"Modifica a cor da caneta.\n"
+"\n"
+"A cor pode ser especificada como uma tupla (R, G, B) ou como uma cadeia hexadecimal ou por nome."
+
+#. Turtle:setfillcolor.name
+#. setfillcolor.name
+#, fuzzy
+msgid "setfillcolor"
+msgstr "setfillcolor"
+
+#. Turtle:setfillcolor.doc
+#. setfillcolor.doc
+#, fuzzy
+msgid ""
+"Modifies the fill color.\n"
+"\n"
+"Color can be specified as an (R, G, B) tuple or as a hex string or by\n"
+"name."
+msgstr ""
+"Modifica a cor de preenchimento.\n"
+"\n"
+"A cor pode ser especificada como uma tupla (R, G, B) ou como uma cadeia hexadecimal ou por nome."
+
+#. Turtle:setheading.name
+#. setheading.name
+#, fuzzy
+msgid "setheading"
+msgstr "setheading"
+
+#. Turtle:setheading.doc
+#. setheading.doc
+#, fuzzy
+msgid "Sets turtle's heading (in degrees)."
+msgstr "Define a posição da tartaruga (em graus)."
+
+#. Turtle:setpos.name
+#. setpos.name
+#, fuzzy
+msgid "setpos"
+msgstr "setpos"
+
+#. Turtle:setpos.doc
+#. setpos.doc
+#, fuzzy
+msgid ""
+"Modifies turtle's position (in pixels)\n"
+"\n"
+"User can pass the x, y coordinates of the new position or a tuple of\n"
+"(x, y) values. This method never draws a line."
+msgstr ""
+"Modifica a posição da tartaruga (em pixels)\n"
+"\n"
+"O usuário pode passar as coordenadas x, y da nova posição ou uma tupla de valores (x, y). Esse método nunca desenha uma linha."
+
+#. Turtle:setwidth.name
+#. setwidth.name
+#, fuzzy
+msgid "setwidth"
+msgstr "setwidth"
+
+#. Turtle:setwidth.doc
+#. setwidth.doc
+#, fuzzy
+msgid "Modifies the pen width (in pixels)"
+msgstr "Modifica a largura da caneta (em pixels)"
+
+#. Turtle:show.name
+#. show.name
+msgid "show"
+msgstr ""
+"mostrar\n"
+"mostre"
+
+#. Turtle:show.doc
+#. show.doc
+#, fuzzy
+msgid "Shows a hidden turtle."
+msgstr "Mostra uma tartaruga oculta."
+
+#. Turtle:width
+#, fuzzy
+msgid "width"
+msgstr "largura"
+
+#. mainturtle.name
+#, fuzzy
+msgid "mainturtle"
+msgstr "mainturtle"
+
+#. mainturtle.doc
+#, fuzzy
+msgid "Returns the main turtle object."
+msgstr "Retorna o objeto principal da tartaruga."
+
+#. getpos.args
+#. setpos.args
+#. getheading.args
+#. setheading.args
+#. getwidth.args
+#. setwidth.args
+#. getcolor.args
+#. setcolor.args
+#. getfillcolor.args
+#. setfillcolor.args
+#. getavatar.args
+#. setavatar.args
+#. penup.args
+#. pendown.args
+#. isdown.args
+#. isvisible.args
+#. ishidden.args
+#. hide.args
+#. show.args
+#. clear.args
+#. reset.args
+#. goto.args
+#. jump.args
+#. forward.args
+#. backward.args
+#. left.args
+#. right.args
+#, fuzzy
+#| msgid "text, args, kwargs"
+msgid "args, kwargs, turtle"
+msgstr "texto, args, kwargs"
+
+#. cos.name
+#, fuzzy
+msgid "cos"
+msgstr "cos"
+
+#. cos.doc
+#, fuzzy
+msgid "Cosine of an angle (in degrees)"
+msgstr "Coseno de um ângulo (em graus)"
+
+#. cos.args
+#. sin.args
+#. tan.args
+#, fuzzy
+msgid "angle"
+msgstr "ângulo"
+
+#. sin.name
+#, fuzzy
+#| msgid "int"
+msgid "sin"
 msgstr "inteiro"
 
-#. integer.doc
+#. sin.doc
+#, fuzzy
+msgid "Sine of an angle (in degrees)"
+msgstr "Seno de um ângulo (em graus)"
+
+#. tan.name
+#, fuzzy
+msgid "tan"
+msgstr "bronzeado"
+
+#. tan.doc
+#, fuzzy
+msgid "Tangent of an angle (in degrees)"
+msgstr "Tangente de um ângulo (em graus)"
+
+#. sqrt.name
+#, fuzzy
+msgid "sqrt"
+msgstr "sqrt"
+
+#. sqrt.doc
 #, fuzzy
 msgid ""
-"int(x=0) -> integer\n"
-"int(x, base=10) -> integer\n"
+"sqrt(x)\n"
 "\n"
-"Convert a number or string to an integer, or return 0 if no arguments\n"
-"are given.  If x is a number, return x.__int__().  For floating point\n"
-"numbers, this truncates towards zero.\n"
-"\n"
-"If x is not a number or if base is given, then x must be a string,\n"
-"bytes, or bytearray instance representing an integer literal in the\n"
-"given base.  The literal can be preceded by '+' or '-' and be surrounded\n"
-"by whitespace.  The base defaults to 10.  Valid bases are 0 and 2-36.\n"
-"Base 0 means to interpret the base from the string as an integer literal.\n"
-">>> int('0b100', base=0)\n"
-"4"
+"Return the square root of x."
 msgstr ""
-"Int (x = 0) -> integer int (x, base = 10) -> inteiro\n"
+"sqrt (x)\n"
 "\n"
-"Converter um número ou seqüência de caracteres para um inteiro, ou retornar 0 se nenhum argumento for dado. Se x for um número, devolva x .__ int __ (). Para números de ponto flutuante, isto trunca para zero.\n"
-"\n"
-"Se x não é um número ou se base é dada, então x deve ser uma seqüência de caracteres, bytes ou bytearray instância representando um literal inteiro na base dada. O literal pode ser precedido por '+' ou '-' e ser cercado por espaços em branco. A base padrão é 10. As bases válidas são 0 e 2-36. Base 0 significa interpretar a base da string como um literal inteiro. >>> int ('0b100', base = 0) 4"
+"Retorna a raiz quadrada de x."
 
-#. integer:bit_length
-#. boolean:bit_length
+#. exp.name
 #, fuzzy
-msgid "bit_length"
-msgstr "Comprimento de bit"
+#| msgid "hex"
+msgid "exp"
+msgstr "hexadecimal"
 
-#. integer:conjugate
-#. real:conjugate
-#. complex:conjugate
-#. boolean:conjugate
-msgid "conjugate"
-msgstr "conjugado"
+#. exp.doc
+#, fuzzy
+msgid ""
+"exp(x)\n"
+"\n"
+"Return e raised to the power of x."
+msgstr ""
+"exp (x)\n"
+"\n"
+"Retorno e elevado à potência de x."
 
-#. integer:denominator
-#. boolean:denominator
-msgid "denominator"
-msgstr "denominador"
+#. log.name
+#. ln.name
+#, fuzzy
+msgid "log"
+msgstr "registro"
 
-#. integer:from_bytes
-#. boolean:from_bytes
-msgid "from_bytes"
+#. log.doc
+#. ln.doc
+#, fuzzy
+msgid ""
+"log(x[, base])\n"
+"\n"
+"Return the logarithm of x to the given base.\n"
+"If the base not specified, returns the natural logarithm (base e) of x."
+msgstr ""
+"log (x [, base])\n"
+"\n"
+"Retornar o logaritmo de x para a base dada. Se a base não especificada, retorna o logaritmo natural (base e) de x."
+
+#. log10.name
+#, fuzzy
+msgid "log10"
+msgstr "log10"
+
+#. log10.doc
+#, fuzzy
+msgid ""
+"log10(x)\n"
+"\n"
+"Return the base 10 logarithm of x."
+msgstr ""
+"log10 (x)\n"
+"\n"
+"Retorna o logaritmo de base 10 de x."
+
+#. log2.name
+#, fuzzy
+msgid "log2"
+msgstr "log2"
+
+#. log2.doc
+#, fuzzy
+msgid ""
+"log2(x)\n"
+"\n"
+"Return the base 2 logarithm of x."
+msgstr ""
+"log2 (x)\n"
+"\n"
+"Retorna o logaritmo de base 2 de x."
+
+#. max.name
+#, fuzzy
+msgid "max"
+msgstr "máximo"
+
+#. max.doc
+#, fuzzy
+msgid ""
+"max(iterable, *[, default=obj, key=func]) -> value\n"
+"max(arg1, arg2, *args, *[, key=func]) -> value\n"
+"\n"
+"With a single iterable argument, return its biggest item. The\n"
+"default keyword-only argument specifies an object to return if\n"
+"the provided iterable is empty.\n"
+"With two or more arguments, return the largest argument."
+msgstr ""
+"max (iterável, * [, padrão = obj, chave = func]) -> valor máximo (arg1, arg2, * args, * [, key = func]\n"
+"\n"
+"Com um único argumento iterável, retornar seu item maior. O argumento padrão somente palavra-chave especifica um objeto a ser retornado se o iterável fornecido estiver vazio. Com dois ou mais argumentos, retornar o maior argumento."
+
+#. min.name
+#, fuzzy
+#| msgid "int"
+msgid "min"
+msgstr "inteiro"
+
+#. min.doc
+#, fuzzy
+msgid ""
+"min(iterable, *[, default=obj, key=func]) -> value\n"
+"min(arg1, arg2, *args, *[, key=func]) -> value\n"
+"\n"
+"With a single iterable argument, return its smallest item. The\n"
+"default keyword-only argument specifies an object to return if\n"
+"the provided iterable is empty.\n"
+"With two or more arguments, return the smallest argument."
+msgstr ""
+"min (iterable, * [, default = obj, key = func]) -> valor min (arg1, arg2, * args, * [, key = func]\n"
+"\n"
+"Com um único argumento iterável, retornar seu menor item. O argumento padrão somente palavra-chave especifica um objeto a ser retornado se o iterável fornecido estiver vazio. Com dois ou mais argumentos, devolva o menor argumento."
+
+#. sum.name
+#, fuzzy
+msgid "sum"
+msgstr "Isnum"
+
+#. sum.doc
+#, fuzzy
+msgid ""
+"Return the sum of a 'start' value (default: 0) plus an iterable of numbers\n"
+"\n"
+"When the iterable is empty, return the start value.\n"
+"This function is intended specifically for use with numeric values and may\n"
+"reject non-numeric types."
+msgstr ""
+"Retorna a soma de um valor 'start' (padrão: 0) mais um iterável de números\n"
+"\n"
+"Quando o iterável estiver vazio, devolva o valor inicial. Esta função destina-se especificamente para uso com valores numéricos e pode rejeitar tipos não-numéricos."
+
+#. product.name
+#, fuzzy
+msgid "product"
+msgstr "produtos"
+
+#. product.doc
+#, fuzzy
+msgid "Return the product of all numbers in the sequence."
+msgstr "Retornar o produto de todos os números na seqüência."
+
+#. product.args
+#, fuzzy
+msgid "seq, start, result, x"
+msgstr "seq, começar, resultado, x"
+
+#. abs.name
+#, fuzzy
+msgid "abs"
+msgstr "abs"
+
+#. abs.doc
+#, fuzzy
+msgid "Return the absolute value of the argument."
+msgstr "Retorna o valor absoluto do argumento."
+
+#. round.name
+#, fuzzy
+msgid "round"
+msgstr "volta"
+
+#. round.doc
+#, fuzzy
+msgid ""
+"round(number[, ndigits]) -> number\n"
+"\n"
+"Round a number to a given precision in decimal digits (default 0 digits).\n"
+"This returns an int when called with one argument, otherwise the\n"
+"same type as the number. ndigits may be negative."
+msgstr ""
+"round (número [, ndigits]) -> número\n"
+"\n"
+"Arredonde um número para uma dada precisão em dígitos decimais (padrão 0 dígitos). Isso retorna um int quando chamado com um argumento, caso contrário, o mesmo tipo como o número. Ndigits podem ser negativos."
+
+#. ceil.name
+#, fuzzy
+msgid "ceil"
+msgstr "ceil"
+
+#. ceil.doc
+#, fuzzy
+msgid ""
+"ceil(x)\n"
+"\n"
+"Return the ceiling of x as an Integral.\n"
+"This is the smallest integer >= x."
+msgstr ""
+"ceil (x)\n"
+"\n"
+"Retornar o teto de x como um Integral. Este é o menor inteiro> = x."
+
+#. trunc.name
+#, fuzzy
+msgid "trunc"
+msgstr "trunc"
+
+#. trunc.doc
+#, fuzzy
+msgid ""
+"trunc(x:Real) -> Integral\n"
+"\n"
+"Truncates x to the nearest Integral toward 0. Uses the __trunc__ magic method."
+msgstr ""
+"trunc (x: Real) -> Integral\n"
+"\n"
+"Trunca x para o Integral mais próximo em direção a 0. Usa o método mágico __trunc__."
+
+#. random.name
+#, fuzzy
+msgid "random"
+msgstr "aleatória"
+
+#. random.doc
+#, fuzzy
+msgid "random() -> x in the interval [0, 1)."
+msgstr "random () -> x no intervalo [0, 1]."
+
+#. randint.name
+#, fuzzy
+msgid "randint"
+msgstr "randint"
+
+#. randint.doc
+#, fuzzy
+msgid "Return random integer in range [a, b], including both end points."
+msgstr "Retorna o inteiro aleatório no intervalo [a, b], incluindo ambos os pontos finais."
+
+#. vec.name
+#, fuzzy
+msgid "vec"
+msgstr "vec"
+
+#. vec.doc
+#, fuzzy
+msgid "Return a vector with the given (x, y) components."
+msgstr "Retorna um vetor com as componentes (x, y) fornecidas."
+
+#. vec.args
+#, fuzzy
+msgid "x, y"
+msgstr "x, y"
+
+#. dot.name
+#, fuzzy
+#| msgid "oct"
+msgid "dot"
+msgstr "octal"
+
+#. dot.doc
+#, fuzzy
+msgid "The dot product (scalar product) of two vectors."
+msgstr "O produto ponto (produto escalar) de dois vetores."
+
+#. dot.args
+#, fuzzy
+msgid "u, v"
+msgstr "você, v"
+
+#. Vec.name
+#, fuzzy
+msgid "Vec"
+msgstr "Vec"
+
+#. Vec.doc
+#, fuzzy
+msgid ""
+"A tuple-based 2D vector.\n"
+"\n"
+"Supports all basic arithmetic operations."
+msgstr ""
+"Um vetor 2D baseado em tupla.\n"
+"\n"
+"Suporta todas as operações aritméticas básicas."
+
+#. Vec:count
+#, fuzzy
+msgid "count"
+msgstr "contagem"
+
+#. Vec:from_angle
+#, fuzzy
+#| msgid "from_bytes"
+msgid "from_angle"
 msgstr "de_bytes"
 
-#. integer:imag
-#. real:imag
-#. complex:imag
-#. boolean:imag
-msgid "imag"
-msgstr "imaginário"
+#. Vec:index
+#, fuzzy
+msgid "index"
+msgstr "índice"
 
-#. integer:numerator
-#. boolean:numerator
-msgid "numerator"
-msgstr "numerador"
+#. Vec:norm.name
+#, fuzzy
+msgid "norm"
+msgstr "norma"
 
-#. integer:real
-#. real:real
-#. complex:real
-#. boolean:real
-msgid "real"
-msgstr "real"
+#. Vec:norm.doc
+#, fuzzy
+msgid "Vector norm."
+msgstr "Norma do vetor."
 
-#. integer:to_bytes
-#. boolean:to_bytes
-msgid "to_bytes"
-msgstr "para_bytes"
+#. Vec:normalized.name
+#, fuzzy
+msgid "normalized"
+msgstr "normalizado"
 
-#. real.name
-msgid "float"
-msgstr "real"
+#. Vec:normalized.doc
+#, fuzzy
+msgid "Return unity vector."
+msgstr "Retorna o vetor unidade."
 
-#. real.doc
+#. Vec:perp.name
+#, fuzzy
+msgid "perp"
+msgstr "perp"
+
+#. Vec:perp.doc
+#, fuzzy
+msgid "Returns a perpendicular vector rotated 90 degrees counter clockwise."
+msgstr "Retorna um vetor perpendicular girado 90 graus no sentido anti-horário."
+
+#. Vec:perp.args
+#, fuzzy
+msgid "self, invert"
+msgstr "auto, invertido"
+
+#. Vec:rotate.name
+#, fuzzy
+msgid "rotate"
+msgstr "girar"
+
+#. Vec:rotate.doc
+#, fuzzy
+msgid "Return rotated vector by the given angle."
+msgstr "Retorna o vetor girado pelo ângulo dado."
+
+#. Vec:rotate.args
+#, fuzzy
+msgid "self, theta, x, y, c, s"
+msgstr "auto, teta, x, y, c, s"
+
+#. Vec:x
+msgid "x"
+msgstr "x"
+
+#. Vec:y
+#, fuzzy
+msgid "y"
+msgstr "y"
+
+#. pi.doc
+#. e.doc
 #, fuzzy
 msgid ""
 "float(x) -> floating point number\n"
@@ -386,571 +1285,474 @@ msgstr ""
 "\n"
 "Converta uma seqüência de caracteres ou número para um número de ponto flutuante, se possível."
 
-#. real:as_integer_ratio
-msgid "as_integer_ratio"
-msgstr "razão_de_inteiros"
+#~ msgid "fshow"
+#~ msgstr ""
+#~ "mostrar_formatado\n"
+#~ "mostre_formatado"
 
-#. real:fromhex
-msgid "fromhex"
-msgstr "de_hexadecimal"
-
-#. real:hex
-#. hexadecimal.name
-msgid "hex"
-msgstr "hexadecimal"
-
-#. real:is_integer
-msgid "is_integer"
-msgstr "é_inteiro"
-
-#. complex.name
-msgid "complex"
-msgstr "complexo"
-
-#. complex.doc
-msgid ""
-"complex(real[, imag]) -> complex number\n"
-"\n"
-"Create a complex number from a real part and an optional imaginary part.\n"
-"This is equivalent to (real + imag*1j) where imag defaults to 0."
-msgstr ""
-"Complexo (real [, imag]) -> número complexo\n"
-"\n"
-"Crie um número complexo a partir de uma parte real e uma parte imaginária opcional. Equivalente a (real + imag * 1j) em que imag assume o valor padrão de 0."
-
-#. boolean.name
-msgid "bool"
-msgstr ""
-"booleano\n"
-"lógico"
-
-#. boolean.doc
-#. verdadeiro.doc
-#. Verdadeiro.doc
-#. falso.doc
-#. Falso.doc
-msgid ""
-"bool(x) -> bool\n"
-"\n"
-"Returns True when the argument x is true, False otherwise.\n"
-"The builtins True and False are the only two instances of the class bool.\n"
-"The class bool is a subclass of the class int, and cannot be subclassed."
-msgstr ""
-"booleano(x) -> lógico\n"
-"\n"
-"Converte valor para uma variável lógica (verdadeiro/falso).\n"
-"\n"
-"Quase todos objetos são avaliados como verdadeiros, exceto:\n"
-"* O número zero\n"
-"* Uma string, lista, conjunto, dicionário ou tupla vazia\n"
-"* A constante Nulo"
-
-#. binary.name
-msgid "bin"
-msgstr "binário"
-
-#. binary.doc
-msgid ""
-"Return the binary representation of an integer.\n"
-"\n"
-">>> bin(2796202)\n"
-"'0b1010101010101010101010'"
-msgstr ""
-"Retorna a representação binária de um inteiro.\n"
-"\n"
-">>> binário(2796202) \n"
-"'0b1010101010101010101010'"
-
-#. octal.name
-msgid "oct"
-msgstr "octal"
-
-#. octal.doc
-msgid ""
-"Return the octal representation of an integer.\n"
-"\n"
-">>> oct(342391)\n"
-"'0o1234567'"
-msgstr ""
-"Retorna a representação octal de um inteiro.\n"
-"\n"
-">>> octal(342391) \n"
-"'0o1234567'"
-
-#. hexadecimal.doc
-msgid ""
-"Return the hexadecimal representation of an integer.\n"
-"\n"
-">>> hex(12648430)\n"
-"'0xc0ffee'"
-msgstr ""
-"Retorna a representação hexadecimal de um inteiro.\n"
-"\n"
-">>> hexadecimal(12648430) \n"
-"'0xc0ffee'"
-
-#. character.name
-msgid "chr"
-msgstr "caractere"
-
-#. character.doc
-msgid "Return a Unicode string of one character with ordinal i; 0 <= i <= 0x10ffff."
-msgstr ""
-"Retorna um texto com um único caractere a partir do valor numérico na tabela unicode; \n"
-"\n"
-"A tabela unicode contêm todos símbolos utilizados em diversas linguagens. O valor de n está na faixa 0 <= n <= 0x10ffff (111411)."
-
-#. enumeration.name
-#. enumerate.name
-#. inverted.name
-msgid "<lambda>"
-msgstr "<lambda>"
-
-#. enumeration.args
-msgid "x, start"
-msgstr "x, começo"
-
-#. length.name
-msgid "len"
-msgstr "tamanho"
-
-#. length.doc
-msgid "Return the number of items in a container."
-msgstr "Retorna o número de elementos de um objeto."
-
-#. enumerate.args
-#. inverted.args
-msgid "x"
-msgstr "x"
-
-#. sorted.name
-msgid "sorted"
-msgstr "ordenado"
-
-#. sorted.doc
-msgid ""
-"Return a new list containing all items from the iterable in ascending order.\n"
-"\n"
-"A custom key function can be supplied to customize the sort order, and the\n"
-"reverse flag can be set to request the result in descending order."
-msgstr ""
-"Retornar uma nova lista contendo todos os itens do argumento organizados em ordem crescente.\n"
-"\n"
-"Uma função opcional pode ser fornecida para personalizar a ordem de classificação."
-
-#. Dictionary.name
-msgid "dict"
-msgstr "dicionário"
-
-#. Dictionary.doc
 #, fuzzy
-msgid ""
-"dict() -> new empty dictionary\n"
-"dict(mapping) -> new dictionary initialized from a mapping object's\n"
-"    (key, value) pairs\n"
-"dict(iterable) -> new dictionary initialized as if via:\n"
-"    d = {}\n"
-"    for k, v in iterable:\n"
-"        d[k] = v\n"
-"dict(**kwargs) -> new dictionary initialized with the name=value pairs\n"
-"    in the keyword argument list.  For example:  dict(one=1, two=2)"
-msgstr ""
-"Dict () -> novo dicionário vazio dict (mapping) -> novo dicionário inicializado a partir de um objeto de mapeamento\n"
-"    (Chave, valor) pairs dict (iterable) -> novo dicionário inicializado como se via:\n"
-"    D = {}\n"
-"    Para k, v em iterável:\n"
-"        D [k] = v dict (** kwargs) -> novo dicionário inicializado com os pares nome = valor\n"
-"    Na lista de argumentos de palavras-chave. Por exemplo: dict (um = 1, dois = 2)"
+#~ msgid ""
+#~ "int(x=0) -> integer\n"
+#~ "int(x, base=10) -> integer\n"
+#~ "\n"
+#~ "Convert a number or string to an integer, or return 0 if no arguments\n"
+#~ "are given.  If x is a number, return x.__int__().  For floating point\n"
+#~ "numbers, this truncates towards zero.\n"
+#~ "\n"
+#~ "If x is not a number or if base is given, then x must be a string,\n"
+#~ "bytes, or bytearray instance representing an integer literal in the\n"
+#~ "given base.  The literal can be preceded by '+' or '-' and be surrounded\n"
+#~ "by whitespace.  The base defaults to 10.  Valid bases are 0 and 2-36.\n"
+#~ "Base 0 means to interpret the base from the string as an integer literal.\n"
+#~ ">>> int('0b100', base=0)\n"
+#~ "4"
+#~ msgstr ""
+#~ "Int (x = 0) -> integer int (x, base = 10) -> inteiro\n"
+#~ "\n"
+#~ "Converter um número ou seqüência de caracteres para um inteiro, ou retornar 0 se nenhum argumento for dado. Se x for um número, devolva x .__ int __ (). Para números de ponto flutuante, isto trunca para zero.\n"
+#~ "\n"
+#~ "Se x não é um número ou se base é dada, então x deve ser uma seqüência de caracteres, bytes ou bytearray instância representando um literal inteiro na base dada. O literal pode ser precedido por '+' ou '-' e ser cercado por espaços em branco. A base padrão é 10. As bases válidas são 0 e 2-36. Base 0 significa interpretar a base da string como um literal inteiro. >>> int ('0b100', base = 0) 4"
 
-#. Dictionary:clear
-#. List:clear
-msgid "clear"
-msgstr "limpar"
-
-#. Dictionary:copy
-#. List:copy
-msgid "copy"
-msgstr "cópia"
-
-#. Dictionary:fromkeys
 #, fuzzy
-msgid "fromkeys"
-msgstr "Das teclas"
+#~ msgid "bit_length"
+#~ msgstr "Comprimento de bit"
 
-#. Dictionary:get
+#~ msgid "conjugate"
+#~ msgstr "conjugado"
+
+#~ msgid "denominator"
+#~ msgstr "denominador"
+
+#~ msgid "imag"
+#~ msgstr "imaginário"
+
+#~ msgid "numerator"
+#~ msgstr "numerador"
+
+#~ msgid "real"
+#~ msgstr "real"
+
+#~ msgid "to_bytes"
+#~ msgstr "para_bytes"
+
+#~ msgid "float"
+#~ msgstr "real"
+
+#~ msgid "as_integer_ratio"
+#~ msgstr "razão_de_inteiros"
+
+#~ msgid "fromhex"
+#~ msgstr "de_hexadecimal"
+
+#~ msgid "is_integer"
+#~ msgstr "é_inteiro"
+
+#~ msgid "complex"
+#~ msgstr "complexo"
+
+#~ msgid ""
+#~ "complex(real[, imag]) -> complex number\n"
+#~ "\n"
+#~ "Create a complex number from a real part and an optional imaginary part.\n"
+#~ "This is equivalent to (real + imag*1j) where imag defaults to 0."
+#~ msgstr ""
+#~ "Complexo (real [, imag]) -> número complexo\n"
+#~ "\n"
+#~ "Crie um número complexo a partir de uma parte real e uma parte imaginária opcional. Equivalente a (real + imag * 1j) em que imag assume o valor padrão de 0."
+
+#~ msgid "bool"
+#~ msgstr ""
+#~ "booleano\n"
+#~ "lógico"
+
+#~ msgid ""
+#~ "bool(x) -> bool\n"
+#~ "\n"
+#~ "Returns True when the argument x is true, False otherwise.\n"
+#~ "The builtins True and False are the only two instances of the class bool.\n"
+#~ "The class bool is a subclass of the class int, and cannot be subclassed."
+#~ msgstr ""
+#~ "booleano(x) -> lógico\n"
+#~ "\n"
+#~ "Converte valor para uma variável lógica (verdadeiro/falso).\n"
+#~ "\n"
+#~ "Quase todos objetos são avaliados como verdadeiros, exceto:\n"
+#~ "* O número zero\n"
+#~ "* Uma string, lista, conjunto, dicionário ou tupla vazia\n"
+#~ "* A constante Nulo"
+
+#~ msgid "bin"
+#~ msgstr "binário"
+
+#~ msgid ""
+#~ "Return the binary representation of an integer.\n"
+#~ "\n"
+#~ ">>> bin(2796202)\n"
+#~ "'0b1010101010101010101010'"
+#~ msgstr ""
+#~ "Retorna a representação binária de um inteiro.\n"
+#~ "\n"
+#~ ">>> binário(2796202) \n"
+#~ "'0b1010101010101010101010'"
+
+#~ msgid ""
+#~ "Return the octal representation of an integer.\n"
+#~ "\n"
+#~ ">>> oct(342391)\n"
+#~ "'0o1234567'"
+#~ msgstr ""
+#~ "Retorna a representação octal de um inteiro.\n"
+#~ "\n"
+#~ ">>> octal(342391) \n"
+#~ "'0o1234567'"
+
+#~ msgid ""
+#~ "Return the hexadecimal representation of an integer.\n"
+#~ "\n"
+#~ ">>> hex(12648430)\n"
+#~ "'0xc0ffee'"
+#~ msgstr ""
+#~ "Retorna a representação hexadecimal de um inteiro.\n"
+#~ "\n"
+#~ ">>> hexadecimal(12648430) \n"
+#~ "'0xc0ffee'"
+
+#~ msgid "chr"
+#~ msgstr "caractere"
+
+#~ msgid "Return a Unicode string of one character with ordinal i; 0 <= i <= 0x10ffff."
+#~ msgstr ""
+#~ "Retorna um texto com um único caractere a partir do valor numérico na tabela unicode; \n"
+#~ "\n"
+#~ "A tabela unicode contêm todos símbolos utilizados em diversas linguagens. O valor de n está na faixa 0 <= n <= 0x10ffff (111411)."
+
+#~ msgid "<lambda>"
+#~ msgstr "<lambda>"
+
+#~ msgid "x, start"
+#~ msgstr "x, começo"
+
+#~ msgid "len"
+#~ msgstr "tamanho"
+
+#~ msgid "Return the number of items in a container."
+#~ msgstr "Retorna o número de elementos de um objeto."
+
+#~ msgid "sorted"
+#~ msgstr "ordenado"
+
+#~ msgid ""
+#~ "Return a new list containing all items from the iterable in ascending order.\n"
+#~ "\n"
+#~ "A custom key function can be supplied to customize the sort order, and the\n"
+#~ "reverse flag can be set to request the result in descending order."
+#~ msgstr ""
+#~ "Retornar uma nova lista contendo todos os itens do argumento organizados em ordem crescente.\n"
+#~ "\n"
+#~ "Uma função opcional pode ser fornecida para personalizar a ordem de classificação."
+
+#~ msgid "dict"
+#~ msgstr "dicionário"
+
 #, fuzzy
-msgid "get"
-msgstr "obter"
+#~ msgid ""
+#~ "dict() -> new empty dictionary\n"
+#~ "dict(mapping) -> new dictionary initialized from a mapping object's\n"
+#~ "    (key, value) pairs\n"
+#~ "dict(iterable) -> new dictionary initialized as if via:\n"
+#~ "    d = {}\n"
+#~ "    for k, v in iterable:\n"
+#~ "        d[k] = v\n"
+#~ "dict(**kwargs) -> new dictionary initialized with the name=value pairs\n"
+#~ "    in the keyword argument list.  For example:  dict(one=1, two=2)"
+#~ msgstr ""
+#~ "Dict () -> novo dicionário vazio dict (mapping) -> novo dicionário inicializado a partir de um objeto de mapeamento\n"
+#~ "    (Chave, valor) pairs dict (iterable) -> novo dicionário inicializado como se via:\n"
+#~ "    D = {}\n"
+#~ "    Para k, v em iterável:\n"
+#~ "        D [k] = v dict (** kwargs) -> novo dicionário inicializado com os pares nome = valor\n"
+#~ "    Na lista de argumentos de palavras-chave. Por exemplo: dict (um = 1, dois = 2)"
 
-#. Dictionary:items
-msgid "items"
-msgstr "itens"
+#~ msgid "copy"
+#~ msgstr "cópia"
 
-#. Dictionary:keys
 #, fuzzy
-msgid "keys"
-msgstr "chaves"
+#~ msgid "fromkeys"
+#~ msgstr "Das teclas"
 
-#. Dictionary:pop
-#. List:pop
 #, fuzzy
-msgid "pop"
-msgstr "Pop"
+#~ msgid "get"
+#~ msgstr "obter"
 
-#. Dictionary:popitem
+#~ msgid "items"
+#~ msgstr "itens"
+
 #, fuzzy
-msgid "popitem"
-msgstr "Popitem"
+#~ msgid "keys"
+#~ msgstr "chaves"
 
-#. Dictionary:setdefault
-msgid "setdefault"
-msgstr "definir_padrão"
-
-#. Dictionary:update
-msgid "update"
-msgstr "atualizar"
-
-#. Dictionary:values
 #, fuzzy
-msgid "values"
-msgstr "Valores"
+#~ msgid "popitem"
+#~ msgstr "Popitem"
 
-#. Tuple.name
+#~ msgid "setdefault"
+#~ msgstr "definir_padrão"
+
+#~ msgid "update"
+#~ msgstr "atualizar"
+
 #, fuzzy
-msgid "tuple"
-msgstr "Tupla"
+#~ msgid "values"
+#~ msgstr "Valores"
 
-#. Tuple.doc
 #, fuzzy
-msgid ""
-"tuple() -> empty tuple\n"
-"tuple(iterable) -> tuple initialized from iterable's items\n"
-"\n"
-"If the argument is a tuple, the return value is the same object."
-msgstr ""
-"Tuple () -> tupla vazia tupla (iterável) -> tupla inicializada a partir de itens iteráveis\n"
-"\n"
-"Se o argumento for uma tupla, o valor de retorno é o mesmo objeto."
+#~ msgid "tuple"
+#~ msgstr "Tupla"
 
-#. Tuple:count
-#. List:count
-#. String:count
 #, fuzzy
-msgid "count"
-msgstr "contagem"
+#~ msgid ""
+#~ "tuple() -> empty tuple\n"
+#~ "tuple(iterable) -> tuple initialized from iterable's items\n"
+#~ "\n"
+#~ "If the argument is a tuple, the return value is the same object."
+#~ msgstr ""
+#~ "Tuple () -> tupla vazia tupla (iterável) -> tupla inicializada a partir de itens iteráveis\n"
+#~ "\n"
+#~ "Se o argumento for uma tupla, o valor de retorno é o mesmo objeto."
 
-#. Tuple:index
-#. List:index
-#. String:index
 #, fuzzy
-msgid "index"
-msgstr "índice"
+#~ msgid "list"
+#~ msgstr "Lista"
 
-#. List.name
 #, fuzzy
-msgid "list"
-msgstr "Lista"
+#~ msgid ""
+#~ "list() -> new empty list\n"
+#~ "list(iterable) -> new list initialized from iterable's items"
+#~ msgstr "List () -> nova lista de lista vazia (iterável) -> nova lista inicializada a partir de itens de iterable"
 
-#. List.doc
 #, fuzzy
-msgid ""
-"list() -> new empty list\n"
-"list(iterable) -> new list initialized from iterable's items"
-msgstr "List () -> nova lista de lista vazia (iterável) -> nova lista inicializada a partir de itens de iterable"
+#~ msgid "extend"
+#~ msgstr "ampliar"
 
-#. List:append
 #, fuzzy
-msgid "append"
-msgstr "acrescentar"
+#~ msgid "insert"
+#~ msgstr "inserir"
 
-#. List:extend
 #, fuzzy
-msgid "extend"
-msgstr "ampliar"
+#~ msgid "remove"
+#~ msgstr "remover"
 
-#. List:insert
 #, fuzzy
-msgid "insert"
-msgstr "inserir"
+#~ msgid "reverse"
+#~ msgstr "marcha ré"
 
-#. List:remove
 #, fuzzy
-msgid "remove"
-msgstr "remover"
+#~ msgid "sort"
+#~ msgstr "ordenar"
 
-#. List:reverse
 #, fuzzy
-msgid "reverse"
-msgstr "marcha ré"
+#~ msgid "str"
+#~ msgstr "Str"
 
-#. List:sort
 #, fuzzy
-msgid "sort"
-msgstr "ordenar"
+#~ msgid ""
+#~ "str(object='') -> str\n"
+#~ "str(bytes_or_buffer[, encoding[, errors]]) -> str\n"
+#~ "\n"
+#~ "Create a new string object from the given object. If encoding or\n"
+#~ "errors is specified, then the object must expose a data buffer\n"
+#~ "that will be decoded using the given encoding and error handler.\n"
+#~ "Otherwise, returns the result of object.__str__() (if defined)\n"
+#~ "or repr(object).\n"
+#~ "encoding defaults to sys.getdefaultencoding().\n"
+#~ "errors defaults to 'strict'."
+#~ msgstr ""
+#~ "Str (object = '') -> str str (bytes_or_buffer [, codificação [, erros]]) -> str\n"
+#~ "\n"
+#~ "Crie um novo objeto de seqüência de caracteres a partir do objeto fornecido. Se codificação ou erros for especificado, o objeto deve expor um buffer de dados que será decodificado usando a codificação e manipulador de erro. Caso contrário, retorna o resultado do objeto .__ str __ () (se definido) ou repr (objeto). A codificação padrão é sys.getdefaultencoding (). Erros padrão é 'estrito'."
 
-#. String.name
 #, fuzzy
-msgid "str"
-msgstr "Str"
+#~ msgid "capitalize"
+#~ msgstr "capitalizar"
 
-#. String.doc
 #, fuzzy
-msgid ""
-"str(object='') -> str\n"
-"str(bytes_or_buffer[, encoding[, errors]]) -> str\n"
-"\n"
-"Create a new string object from the given object. If encoding or\n"
-"errors is specified, then the object must expose a data buffer\n"
-"that will be decoded using the given encoding and error handler.\n"
-"Otherwise, returns the result of object.__str__() (if defined)\n"
-"or repr(object).\n"
-"encoding defaults to sys.getdefaultencoding().\n"
-"errors defaults to 'strict'."
-msgstr ""
-"Str (object = '') -> str str (bytes_or_buffer [, codificação [, erros]]) -> str\n"
-"\n"
-"Crie um novo objeto de seqüência de caracteres a partir do objeto fornecido. Se codificação ou erros for especificado, o objeto deve expor um buffer de dados que será decodificado usando a codificação e manipulador de erro. Caso contrário, retorna o resultado do objeto .__ str __ () (se definido) ou repr (objeto). A codificação padrão é sys.getdefaultencoding (). Erros padrão é 'estrito'."
+#~ msgid "casefold"
+#~ msgstr "Caixa"
 
-#. String:capitalize
 #, fuzzy
-msgid "capitalize"
-msgstr "capitalizar"
+#~ msgid "center"
+#~ msgstr "centro"
 
-#. String:casefold
 #, fuzzy
-msgid "casefold"
-msgstr "Caixa"
+#~ msgid "encode"
+#~ msgstr "codificar"
 
-#. String:center
 #, fuzzy
-msgid "center"
-msgstr "centro"
+#~ msgid "endswith"
+#~ msgstr "termina com"
 
-#. String:encode
 #, fuzzy
-msgid "encode"
-msgstr "codificar"
+#~ msgid "expandtabs"
+#~ msgstr "Expandida"
 
-#. String:endswith
+#~ msgid "find"
+#~ msgstr "encontrar"
+
+#~ msgid "format"
+#~ msgstr ""
+#~ "formatar\n"
+#~ "formate"
+
+#~ msgid "format_map"
+#~ msgstr ""
+#~ "formatar_mapa\n"
+#~ "formate_mapa"
+
 #, fuzzy
-msgid "endswith"
-msgstr "termina com"
+#~ msgid "isalpha"
+#~ msgstr "Isalpa"
 
-#. String:expandtabs
 #, fuzzy
-msgid "expandtabs"
-msgstr "Expandida"
+#~ msgid "isdecimal"
+#~ msgstr "Isdcimal"
 
-#. String:find
-msgid "find"
-msgstr "encontrar"
-
-#. String:format
-msgid "format"
-msgstr ""
-"formatar\n"
-"formate"
-
-#. String:format_map
-msgid "format_map"
-msgstr ""
-"formatar_mapa\n"
-"formate_mapa"
-
-#. String:isalnum
 #, fuzzy
-msgid "isalnum"
-msgstr "Isnum"
+#~ msgid "isdigit"
+#~ msgstr "É um dígito"
 
-#. String:isalpha
 #, fuzzy
-msgid "isalpha"
-msgstr "Isalpa"
+#~ msgid "isidentifier"
+#~ msgstr "Isidentifier"
 
-#. String:isdecimal
 #, fuzzy
-msgid "isdecimal"
-msgstr "Isdcimal"
+#~ msgid "islower"
+#~ msgstr "é inferior"
 
-#. String:isdigit
+#~ msgid "isnumeric"
+#~ msgstr "é_numérico"
+
 #, fuzzy
-msgid "isdigit"
-msgstr "É um dígito"
+#~ msgid "isspace"
+#~ msgstr "Isspace"
 
-#. String:isidentifier
 #, fuzzy
-msgid "isidentifier"
-msgstr "Isidentifier"
+#~ msgid "istitle"
+#~ msgstr "É legítimo"
 
-#. String:islower
 #, fuzzy
-msgid "islower"
-msgstr "é inferior"
+#~ msgid "isupper"
+#~ msgstr "É melhor"
 
-#. String:isnumeric
-msgid "isnumeric"
-msgstr "é_numérico"
-
-#. String:isprintable
 #, fuzzy
-msgid "isprintable"
-msgstr "É imprimível"
+#~ msgid "ljust"
+#~ msgstr "Apenas"
 
-#. String:isspace
 #, fuzzy
-msgid "isspace"
-msgstr "Isspace"
+#~ msgid "lower"
+#~ msgstr "mais baixo"
 
-#. String:istitle
 #, fuzzy
-msgid "istitle"
-msgstr "É legítimo"
+#~ msgid "lstrip"
+#~ msgstr "Lstrip"
 
-#. String:isupper
 #, fuzzy
-msgid "isupper"
-msgstr "É melhor"
+#~ msgid "maketrans"
+#~ msgstr "Maketrans"
 
-#. String:ljust
 #, fuzzy
-msgid "ljust"
-msgstr "Apenas"
+#~ msgid "partition"
+#~ msgstr "Partição"
 
-#. String:lower
 #, fuzzy
-msgid "lower"
-msgstr "mais baixo"
+#~ msgid "replace"
+#~ msgstr "substituir"
 
-#. String:lstrip
 #, fuzzy
-msgid "lstrip"
-msgstr "Lstrip"
+#~ msgid "rfind"
+#~ msgstr "Rfind"
 
-#. String:maketrans
 #, fuzzy
-msgid "maketrans"
-msgstr "Maketrans"
+#~ msgid "rindex"
+#~ msgstr "Rindex"
 
-#. String:partition
 #, fuzzy
-msgid "partition"
-msgstr "Partição"
+#~ msgid "rjust"
+#~ msgstr "Apenas"
 
-#. String:replace
 #, fuzzy
-msgid "replace"
-msgstr "substituir"
+#~ msgid "rpartition"
+#~ msgstr "Repartição"
 
-#. String:rfind
 #, fuzzy
-msgid "rfind"
-msgstr "Rfind"
+#~ msgid "rsplit"
+#~ msgstr "Rsplit"
 
-#. String:rindex
 #, fuzzy
-msgid "rindex"
-msgstr "Rindex"
+#~ msgid "rstrip"
+#~ msgstr "Rstrip"
 
-#. String:rjust
+#~ msgid "split"
+#~ msgstr "dividir"
+
 #, fuzzy
-msgid "rjust"
-msgstr "Apenas"
+#~ msgid "splitlines"
+#~ msgstr "Linhas de divisão"
 
-#. String:rpartition
+#~ msgid "startswith"
+#~ msgstr "começa_com"
+
 #, fuzzy
-msgid "rpartition"
-msgstr "Repartição"
+#~ msgid "strip"
+#~ msgstr "faixa"
 
-#. String:rsplit
 #, fuzzy
-msgid "rsplit"
-msgstr "Rsplit"
+#~ msgid "swapcase"
+#~ msgstr "Swapcase"
 
-#. String:rstrip
 #, fuzzy
-msgid "rstrip"
-msgstr "Rstrip"
+#~ msgid "title"
+#~ msgstr "título"
 
-#. String:split
-msgid "split"
-msgstr "dividir"
-
-#. String:splitlines
 #, fuzzy
-msgid "splitlines"
-msgstr "Linhas de divisão"
+#~ msgid "translate"
+#~ msgstr "traduzir"
 
-#. String:startswith
-msgid "startswith"
-msgstr "começa_com"
-
-#. String:strip
 #, fuzzy
-msgid "strip"
-msgstr "faixa"
+#~ msgid "zfill"
+#~ msgstr "Zfill"
 
-#. String:swapcase
+#~ msgid "type"
+#~ msgstr "tipo"
+
+#~ msgid ""
+#~ "type(object_or_name, bases, dict)\n"
+#~ "type(object) -> the object's type\n"
+#~ "type(name, bases, dict) -> a new type"
+#~ msgstr "Tipo (object_or_name, bases, dict) tipo (objeto) -> tipo de objeto tipo (nome, bases, dict) -> um novo tip"
+
+#~ msgid "mro"
+#~ msgstr "mro"
+
 #, fuzzy
-msgid "swapcase"
-msgstr "Swapcase"
+#~ msgid ""
+#~ "Define the builtin 'help'.\n"
+#~ "\n"
+#~ "This is a wrapper around pydoc.help that provides a helpful message\n"
+#~ "when 'help' is typed at the Python interactive prompt.\n"
+#~ "\n"
+#~ "Calling help() at the Python prompt starts an interactive help session.\n"
+#~ "Calling help(thing) prints help for the python object 'thing'."
+#~ msgstr ""
+#~ "Defina a 'ajuda' integrada.\n"
+#~ "\n"
+#~ "Este é um wrapper em torno de pydoc.help que fornece uma mensagem útil quando 'help' é digitado no prompt interativo do Python.\n"
+#~ "\n"
+#~ "Chamar help () no prompt Python inicia uma sessão de ajuda interativa. Chamando ajuda (coisa) imprime ajuda para o objeto python 'coisa'."
 
-#. String:title
 #, fuzzy
-msgid "title"
-msgstr "título"
+#~ msgid "nulo"
+#~ msgstr "Nulo"
 
-#. String:translate
 #, fuzzy
-msgid "translate"
-msgstr "traduzir"
-
-#. String:upper
-msgid "upper"
-msgstr ""
-
-#. String:zfill
-#, fuzzy
-msgid "zfill"
-msgstr "Zfill"
-
-#. type.name
-msgid "type"
-msgstr "tipo"
-
-#. type.doc
-msgid ""
-"type(object_or_name, bases, dict)\n"
-"type(object) -> the object's type\n"
-"type(name, bases, dict) -> a new type"
-msgstr "Tipo (object_or_name, bases, dict) tipo (objeto) -> tipo de objeto tipo (nome, bases, dict) -> um novo tip"
-
-#. type:mro
-msgid "mro"
-msgstr "mro"
-
-#. help.doc
-#, fuzzy
-msgid ""
-"Define the builtin 'help'.\n"
-"\n"
-"This is a wrapper around pydoc.help that provides a helpful message\n"
-"when 'help' is typed at the Python interactive prompt.\n"
-"\n"
-"Calling help() at the Python prompt starts an interactive help session.\n"
-"Calling help(thing) prints help for the python object 'thing'."
-msgstr ""
-"Defina a 'ajuda' integrada.\n"
-"\n"
-"Este é um wrapper em torno de pydoc.help que fornece uma mensagem útil quando 'help' é digitado no prompt interativo do Python.\n"
-"\n"
-"Chamar help () no prompt Python inicia uma sessão de ajuda interativa. Chamando ajuda (coisa) imprime ajuda para o objeto python 'coisa'."
-
-#. nulo
-#, fuzzy
-msgid "nulo"
-msgstr "Nulo"
-
-#. Nulo
-#, fuzzy
-msgid "Nulo"
-msgstr "Nulo"
+#~ msgid "Nulo"
+#~ msgstr "Nulo"

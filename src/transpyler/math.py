@@ -7,10 +7,14 @@ These functions are used mostly by the turtle interface.
 import math as _math
 import random as _random
 from collections import namedtuple as _namedtuple
+from numbers import Number, Real
 
 _dg = _math.pi / 180
+pi = _math.pi
+e = _math.e
 
 
+# Trigonometric functions
 def cos(angle):
     """Cosine of an angle (in degrees)"""
 
@@ -38,6 +42,47 @@ def tan(angle):
     return _math.tan(angle * _dg)
 
 
+# Other functions
+def sqrt(x: Real) -> Real:
+    """
+    Return the square root of a positive number.
+    """
+    return _math.sqrt(x)
+
+
+def exp(x: Real) -> Real:
+    """
+    Return the exponential of a number.
+    """
+    return _math.exp(x)
+
+
+def log(x: Real) -> Real:
+    """
+    Return the natural logarithm of x.
+
+    Aliases: log | ln
+    """
+    return _math.log(x)
+
+
+ln = log
+
+
+def log10(x: Real) -> Real:
+    """
+    Return the logarithm of x in base 10.
+    """
+    return _math.log10(x)
+
+
+def log2(x: Real) -> Real:
+    """
+    Return the logarithm of x in base 2.
+    """
+    return _math.log2(x)
+
+
 def sign(x):
     """
     Return 1 if x is positive, -1 if it is negative and 0 if it is null.
@@ -58,6 +103,58 @@ def sign(x):
 
 sign.ERROR = 'argument does not have a well defined sign'
 
+# Rounding
+_abs, _round = abs, round
+
+
+def abs(x) -> Number:
+    """
+    Return the absolute value of the argument.
+    """
+    return _abs(x)
+
+
+def round(number: Number, ndigits=None) -> Number:
+    """
+    Round a number to a given precision in decimal digits (default 0 digits).
+    ndigits may be negative.
+
+    Examples:
+        >>> round(1.9)
+        2
+        >>> round(3.141516, 2)
+        3.14
+    """
+    if ndigits is None:
+        return _round(number)
+    return _round(number, ndigits)
+
+
+def ceil(number: Real) -> int:
+    """
+    Return the ceiling of x as an Integral.
+    This is the smallest integer >= x.
+    """
+    return _math.ceil(number)
+
+
+def trunc(number: Real) -> int:
+    """
+    Truncates x to the nearest Integral toward 0.
+    """
+    return _math.trunc(number)
+
+
+# Operations on collections of numbers
+_min, _max, _sum = min, max, sum
+
+
+def sum(seq, start=0.0):
+    """
+    Return the sum of all numbers in the sequence.
+    """
+    return _sum(seq, start)
+
 
 def product(seq, start=1.0):
     """
@@ -70,6 +167,25 @@ def product(seq, start=1.0):
     return result
 
 
+def min(*args, **kwargs):
+    """
+    Return the minimum value in the arguments.
+
+    It called with a single sequence, return the minimum value on that sequence.
+    """
+    return _min(*args)
+
+
+def max(*args, **kwargs):
+    """
+    Return the maximum value in the arguments.
+
+    It called with a single sequence, return the maximum value on that sequence.
+    """
+    return _max(*args)
+
+
+# Random numbers
 def dice(n=6):
     """
     Simulate a dice trow (return a random number between 1 and 6.
@@ -84,6 +200,21 @@ def dice(n=6):
     return _random.randint(1, 6)
 
 
+def random():
+    """
+    Return a random number between 0 and 1.
+    """
+    return _random.random()
+
+
+def randint(a, b):
+    """
+    Return a random integer between a and b (inclusive).
+    """
+    return _random.randint(a, b)
+
+
+# Vectors and linear algebra
 class Vec(_namedtuple('Vec', ['x', 'y'])):
     """
     A tuple-based 2D vector.
@@ -147,20 +278,20 @@ class Vec(_namedtuple('Vec', ['x', 'y'])):
 
     def perp(self, invert=False):
         """
-        Returns a perpendicular vector rotated 90 degrees counter clockwise.
+        Returns a perpendicular vector rotated 90 degrees counter-clockwise.
         """
 
         if invert:
             return Vec(self.y, -self.x)
         return Vec(-self.y, self.x)
 
-    def rotate(self, theta):
+    def rotate(self, angle):
         """
         Return rotated vector by the given angle.
         """
 
         x, y = self
-        c, s = cos(theta), sin(theta)
+        c, s = cos(angle), sin(angle)
         return Vec(x * c - y * s, x * s + y * c)
 
 
@@ -178,37 +309,4 @@ def dot(u, v):
     """
     The dot product (scalar product) of two vectors.
     """
-
-    return sum(x * y for (x, y) in zip(u, v))
-
-
-def math_namespace(lang=None):
-    """
-    Return a dictionary with the global_namespace for mathematical functions.
-    """
-
-    # TODO: translate math functions!
-
-    return dict(
-        # Trigonometry functions
-        cos=cos, sin=sin, tan=tan,
-
-        # Other functions
-        sqrt=_math.sqrt, exp=_math.exp,
-        log=_math.log, ln=_math.log, log10=_math.log10, log2=_math.log2,
-
-        # Operations on collections of number
-        max=max, min=min, sum=sum, product=product,
-
-        # Rounding
-        abs=abs, round=round, ceil=_math.ceil, trunc=_math.trunc,
-
-        # Random numbers
-        random=_random.random, randint=_random.randint,
-
-        # Vectors
-        vec=vec, dot=dot, Vec=Vec,
-
-        # Constants,
-        pi=_math.pi, e=_math.e,
-    )
+    return _sum(x * y for (x, y) in zip(u, v))
