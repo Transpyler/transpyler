@@ -19,9 +19,6 @@ _eval = _builtins.eval
 _input = _builtins.input
 _print = _builtins.print
 
-INSTANCES_FOR_NAME = {}
-
-
 class SingletonMeta(type):
     """
     Base metaclass for classes that have a single instance.
@@ -78,7 +75,7 @@ class Transpyler(metaclass=SingletonMeta):
     lexer_factory = Lexer
 
     # Constants
-    i10n_lang = None
+    lang = None
     standard_lib = None
     translations = None
     invalid_tokens = None
@@ -98,13 +95,13 @@ class Transpyler(metaclass=SingletonMeta):
     display_name = lazy(lambda self: self.name.title().replace('_', ' '))
     short_banner = lazy(lambda self: self.display_name)
     lexer = lazy(lambda self: self.lexer_factory(self))
-    gettext = lazy(lambda self: gettext_for(self.i10n_lang or 'en'))
+    gettext = lazy(lambda self: gettext_for(self.lang or 'en'))
 
     @lazy
     def name(self):
         cls_name = self.__class__.__name__.lower()
         if cls_name == 'Transpyler':
-            raise AttributeError('must define a .name attribute')
+            return 'transpyler'
         elif cls_name.endswith('transpyler'):
             return cls_name[:-10]
         else:
@@ -119,21 +116,6 @@ class Transpyler(metaclass=SingletonMeta):
         for k, v in kwargs.items():
             setattr(self, k, v)
         self._has_init = False
-
-        # Check validity
-        if self.name is None:
-            raise ValueError('Transpyler requires a "name" attribute.')
-
-        # Save instance in instance dictionary
-        if self.name not in INSTANCES_FOR_NAME:
-            INSTANCES_FOR_NAME[self.name] = self
-        if type(self) not in INSTANCES_FOR_NAME:
-            INSTANCES_FOR_NAME[type(self)] = self
-        if type(self).__module__ not in INSTANCES_FOR_NAME:
-            path = type(self).__module__
-            while path:
-                INSTANCES_FOR_NAME[path] = self
-                path, _, _ = path.rpartition('.')
 
     def __repr__(self):
         return '<%s: %r>' % (self.__class__.__name__, self.name)
@@ -208,10 +190,8 @@ class Transpyler(metaclass=SingletonMeta):
         globals = {} if globals is None else globals
         globals.update(self.namespace)
 
-        if locals is None:
-            return exec_function(code, globals)
-        else:
-            return exec_function(code, globals, locals)
+        args = (globals,) if locals is None else (globals, locals)
+        return exec_function(code, *args)
 
     def eval(self, source, globals=None, locals=None, eval_function=_eval):
         """
@@ -253,26 +233,6 @@ class Transpyler(metaclass=SingletonMeta):
         except SyntaxError:
             return True
         return codeop.compile_command(pytuga_src, filename, symbol) is None
-
-    def core_functions(self) -> OrderedDict:
-        """
-        Return a namespace dictionary with the the exec/eval/compile/transpile
-        functions.
-
-        This is useful to expose on a module to offer a exec-like interface to
-        users.
-
-        Return:
-            An ordered mapping with the exec, eval, compile and transpile
-            functions.
-        """
-
-        return OrderedDict([
-            ('exec', self.exec),
-            ('eval', self.eval),
-            ('compile', self.compile),
-            ('transpile', self.transpile),
-        ])
 
     # --------------------------------------------------------------------------
     # Console helpers
@@ -318,9 +278,9 @@ class Transpyler(metaclass=SingletonMeta):
             mod = importlib.import_module(mod)
             load_modules_queue.append(mod)
 
-        # Load default translations from using the i10n_lang option
-        if self.i10n_lang:
-            mod = translate_mod(self.i10n_lang)
+        # Load default translations from using the lang option
+        if self.lang:
+            mod = translate_mod(self.lang)
             load_modules_queue.append(mod)
 
         # Load all modules in queue
@@ -436,4 +396,3 @@ class Transpyler(metaclass=SingletonMeta):
                 return self.start_console(console='nogui')
 
         return main()
-

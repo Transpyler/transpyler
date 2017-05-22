@@ -1,3 +1,5 @@
+import pytest
+
 from transpyler import math
 from transpyler.math import sin, cos, tan, sign, product, Vec, vec, dot
 
@@ -29,14 +31,28 @@ class TestMathFunctions:
         assert math.round(1.9) == 2
         assert math.ceil(1.2) == 2.0
 
+    def test_seq_funcs(self):
+        assert math.sum([1, 2, 3, 4]) == 10
+        assert math.sum([]) == 0
+        assert product([1, 2, 3]) == 6
+        assert product([]) == 1
+        assert min([1, 2, 3]) == 1
+        assert min(1, 2, 3) == 1
+        assert max([1, 2, 3]) == 3
+        assert max(1, 2, 3) == 3
+
+    def test_random_functions(self):
+        for _ in range(30):
+            assert 1 <= math.dice() <= 6
+            assert 0 <= math.random() <= 1.0
+            assert 1 <= math.randint(1, 10) <= 10
+
+        assert {math.randint(1, 2) for _ in range(20)} == {1, 2}
+
     def test_sign(self):
         assert sign(0) == 0
         assert sign(1) == sign(1.5) == 1
         assert sign(-1) == sign(-1.5) == -1
-
-    def test_product(self):
-        assert product([1, 2, 3]) == 6
-        assert product([]) == 1
 
     def test_basic_vec_properties(self):
         u = Vec(1, 0)
@@ -51,9 +67,17 @@ class TestMathFunctions:
         assert u == (2 * u).normalized()
         assert u.rotate(90) == v
         assert u.perp() == v
+        assert Vec.from_angle(90) == v
+        assert (1, 0) + u == 2 * u
+        assert (1, 0) - u == 0 * u
+        assert u.perp() == -u.perp(invert=True)
 
     def test_vec_function(self):
         assert vec((1, 2)) == vec(1, 2) == Vec(1, 2)
 
     def test_dot_product(self):
         assert dot(vec(0, 1), vec(1, 0)) == 0
+
+    def test_sign_error(self):
+        with pytest.raises(ValueError):
+            sign([])

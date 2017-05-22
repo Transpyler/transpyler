@@ -1,7 +1,7 @@
 import pytest
 
 from transpyler.utils.translate import extract_translation, \
-    extract_translations, translate_mod, translate
+    extract_translations, translate_mod
 
 
 class TestExtractTranslations:
@@ -60,12 +60,12 @@ class TestTranslateModule:
         new_mod = translate_mod('pt_BR', mod)
         public_names = {x for x in dir(new_mod) if not x.startswith('_')}
         assert public_names == {
-            'cos', 'mostrar', 'mostre', 'print',
+            'cos', 'coseno', 'mostrar', 'mostre', 'print',
         }
 
         assert new_mod.mostre.__doc__.startswith(
             'Mostra o objeto ou texto fornecido na tela.')
-        #assert new_mod.cos.__doc__ == ''
+            # assert new_mod.cos.__doc__ == ''
 
     def test_translate_standard_module_to_pt_BR(self):
         mod = translate_mod('pt_BR')

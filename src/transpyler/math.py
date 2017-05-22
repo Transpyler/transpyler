@@ -91,14 +91,16 @@ def sign(x):
         >>> sign(-32.0)
         -1
     """
-    if x == 0:
-        return 0
-    elif x > 0:
-        return 1
-    elif x < 0:
-        return -1
-    else:
-        raise ValueError(sign.ERROR)
+    try:
+        if x == 0:
+            return 0
+        elif x > 0:
+            return 1
+        elif x < 0:
+            return -1
+    except TypeError:
+        pass
+    raise ValueError(sign.ERROR)
 
 
 sign.ERROR = 'argument does not have a well defined sign'

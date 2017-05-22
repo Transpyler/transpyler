@@ -23,3 +23,7 @@ We have a few use cases:
   can be used to generate output in static file formats or even to implement an
   online judge for turtle-based programs.
 """
+
+from .turtle import Turtle
+from .turtlegroup import TurtleGroup
+from . import state

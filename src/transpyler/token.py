@@ -14,8 +14,8 @@ class Token:
     @classmethod
     def from_strings(cls, start, *strings):
         """
-        Return a list of strings starting at the given starting point and
-        return the corresponding strings with the correct start/end positions
+        Return a list of tokens that begins at the given starting
+        point. The resulting token elements have consistent start/end positions.
         """
 
         tk_list = []
