@@ -1,8 +1,8 @@
-.. image:: https://travis-ci.org/transpyler/transpyler.svg?branch=master
-    :target: https://travis-ci.org/transpyler/transpyler
+.. image:: https://travis-ci.org/Transpyler/transpyler.svg?branch=master
+    :target: https://travis-ci.org/Transpyler/transpyler
 
-.. image:: https://codecov.io/gh/transpyler/transpyler/branch/master/graph/badge.svg
-  :target: https://codecov.io/gh/transpyler/transpyler
+.. image:: https://codecov.io/gh/Transpyler/transpyler/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/Transpyler/transpyler
 
 .. image:: https://ci.appveyor.com/api/projects/status/it45pshyqi76irbx?svg=true
    :target: https://ci.appveyor.com/project/fabiommendes/transpyler
