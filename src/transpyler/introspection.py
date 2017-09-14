@@ -1,14 +1,17 @@
 import builtins as _builtins
+from types import ModuleType
 
 from lazyutils import lazy
 
 
-class Instrospection:
+class Introspection:
     """
     Introspection facilities for a transpyled Transpyler.
     """
 
-    # Original python names
+    #
+    # Original python names and constants
+    #
     py_constants = ['True', 'False', 'None']
 
     @lazy
@@ -16,71 +19,94 @@ class Instrospection:
         return [
             name for (name, value) in vars(_builtins).items()
             if isinstance(value, type) and issubclass(value, Exception)
-        ]
+            ]
 
     @lazy
     def py_types(self):
         return [
             name for (name, value) in vars(_builtins).items()
             if isinstance(value, type) and not issubclass(value, Exception)
-        ]
+            ]
 
     @lazy
     def py_functions(self):
         return [
             name for (name, value) in vars(_builtins).items()
             if name not in self.py_types and name not in self.py_exceptions
-        ]
+            ]
 
     @lazy
     def py_builtins(self):
         return self.py_types + self.py_functions
 
-    def __init__(self, language):
-        self.language = language
+    py_submodules = []
+    py_keywords = []
 
-        # def _filtering_out(self, names):
-        #     """
-        #     Remove name from global _names variable
-        #     """
-        #
-        #     for name in names:
-        #         del _names[name]
-        #     return names
-        #
-        # all_names = [name for name in dir(tugalib) if not name.startswith('_')]
-        # get_namespace = {name: getattr(tugalib, name) for name in all_names}
-        # _names = get_namespace.copy()
-        #
-        # # Classify names according to type: constants
-        # constants = _filtering_out(
-        #     [name for (name, value) in _names.items()
-        #      if value in _py_constants or isinstance(value, (int, float))]
-        # )
-        #
-        # # Exceptions
-        # exceptions = _filtering_out(
-        #     [name for (name, value) in _names.items()
-        #      if isinstance(value, type) and issubclass(value, Exception)]
-        # )
-        #
-        # # Types
-        # types = _filtering_out(
-        #     [name for (name, value) in _names.items() if isinstance(value, type)]
-        # )
-        #
-        # # Functions
-        # functions = _filtering_out(
-        #     [name for (name, value) in _names.items() if callable(value)]
-        # )
-        #
-        # # Modules
-        # submodules = _filtering_out(
-        #     [name for (name, value) in _names.items() if isinstance(value, _Module)]
-        # )
-        #
-        # # NamespaceManager
-        # builtins = types + functions
-        #
-        # # NamespaceManager dictionary
-        # _original_builtins = vars(_builtins)
+    #
+    # Names derived from the transpyler
+    #
+    namespace = lazy(lambda self: self.transpyler.namespace)
+    all_names = lazy(lambda self: list(self.namespace))
+    constants = lazy(
+        lambda self:
+        [name for (name, value) in self.namespace.items()
+         if isinstance(value, (int, float, bool))]
+    )
+    exceptions = lazy(
+        lambda self:
+        [name for (name, value) in self.namespace.items()
+         if isinstance(value, type) and issubclass(value, Exception)]
+    )
+    types = lazy(
+        lambda self:
+        [name for (name, value) in self.namespace.items()
+         if isinstance(value, type) and not issubclass(value, Exception)]
+    )
+    functions = lazy(
+        lambda self:
+        [name for (name, value) in self.namespace.items()
+         if not isinstance(value, type) and callable(value)]
+    )
+    submodules = lazy(
+        lambda self:
+        [name for (name, value) in self.namespace.items()
+         if isinstance(value, ModuleType)]
+    )
+    builtins = lazy(lambda self: self.functions + self.types)
+    keywords = []
+
+    #
+    # Combined lists
+    #
+    all_constants = lazy(
+        lambda self: unique(self.constants + self.py_constants)
+    )
+    all_exceptions = lazy(
+        lambda self: unique(self.exceptions + self.py_exceptions)
+    )
+    all_types = lazy(
+        lambda self: unique(self.types + self.py_types)
+    )
+    all_functions = lazy(
+        lambda self: unique(self.functions + self.py_functions)
+    )
+    all_submodules = lazy(
+        lambda self: unique(self.submodules + self.py_submodules)
+    )
+    all_builtins = lazy(
+        lambda self: unique(self.builtins + self.py_builtins)
+    )
+    all_keywords = lazy(
+        lambda self: unique(self.keywords + self.py_keywords)
+    )
+
+    def __init__(self, transpyler):
+        self.transpyler = transpyler
+
+
+def unique(lst):
+    out = []
+    for x in lst:
+        if x not in out:
+            out.append(x)
+    return out

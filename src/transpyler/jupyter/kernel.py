@@ -4,42 +4,11 @@ from ast import PyCF_ONLY_AST
 from IPython.core.compilerop import CachingCompiler
 from IPython.utils import py3compat
 from ipykernel.ipkernel import IPythonKernel
-from ipykernel.zmqshell import ZMQInteractiveShell
 from lazyutils import lazy
 from traitlets import Type
 
+from .shell import TranspylerShell
 from transpyler.utils import with_transpyler_attr
-
-
-class TranspylerShell(ZMQInteractiveShell):
-    """
-    A IPython based shell for transpyled languages.
-
-    A shell is used by the kernel to interact with code.
-    """
-
-    @lazy
-    def transpyler(self):
-        return self.parent.transpyler
-
-    def init_user_ns(self):
-        super().init_user_ns()
-        exiter = self.transpyler.make_exiter_function(self.exiter)
-        self.user_ns[exiter.__name__] = exiter
-
-    def init_create_namespaces(self, user_module=None, user_ns=None):
-        super().init_create_namespaces(user_module, user_ns)
-
-        ns = self.transpyler.namespace
-        self.user_ns.update(ns)
-        self.user_global_ns.update(ns)
-        self.user_module.__dict__.update(ns)
-
-    def ex(self, cmd):
-        return super().ex(self.transpyler.transpile(cmd))
-
-    def ev(self, cmd):
-        return super().ev(self.transpyler.transpile(cmd))
 
 
 class TranspylerKernel(IPythonKernel):
@@ -48,41 +17,12 @@ class TranspylerKernel(IPythonKernel):
     """
 
     transpyler = None
-
-    @lazy
-    def implementation(self):
-        return 'i' + self.transpyler.name
-
-    @lazy
-    def implementation_version(self):
-        return self.transpyler.version
-
-    @lazy
-    def language(self):
-        return self.transpyler.name
-
-    @lazy
-    def language_version(self):
-        return self.transpyler.language_version
-
-    @lazy
-    def banner(self):
-        return self.transpyler.console_banner()
-
-    @lazy
-    def language_info(self):
-        transpyler = self.transpyler
-        return {
-            'name': transpyler.display_name,
-            'mimetype': transpyler.mimetype,
-            'file_extension': transpyler.file_extension,
-            'codemirror_mode': {
-                "version": 3,
-                "name": "ipython"
-            },
-            'pygments_lexer': 'python',
-        }
-
+    implementation = lazy(lambda self: 'i' + self.transpyler.name)
+    implementation_version = lazy(lambda self: self.transpyler.version)
+    language = lazy(lambda self: self.transpyler.name)
+    language_version = lazy(lambda self: self.transpyler.language_version)
+    banner = lazy(lambda self: self.transpyler.console_banner())
+    language_info = lazy(lambda self: self.transpyler.info.get_language_info())
     shell_class = Type(TranspylerShell)
 
     def __init__(self, *args, **kwargs):
@@ -102,7 +42,7 @@ class TranspylerKernel(IPythonKernel):
 
 def start_kernel(transpyler):
     """
-    Start Pytuga Jupyter kernel.
+    Start Jupyter kernel.
     """
 
     from ipykernel.kernelapp import IPKernelApp
@@ -129,7 +69,7 @@ if __name__ == '__main__':
 
     idx = sys.argv.index('--type')
     sys.argv.pop(idx)
-    transpyler_class = sys.argv.pop(idx)
-    path, _, name = transpyler_class.rpartition('.')
+    transpyler_class_name = sys.argv.pop(idx)
+    path, _, name = transpyler_class_name.rpartition('.')
     transpyler_class = getattr(importlib.import_module(path), name)
     start_kernel(transpyler_class())

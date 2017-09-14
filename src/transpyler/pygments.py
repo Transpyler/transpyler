@@ -2,59 +2,44 @@ import re
 
 from pygments import unistring as uni
 from pygments.lexer import bygroups, default, words
-from pygments.lexers.python import Python3Lexer, PythonTracebackLexer
+from pygments.lexers.python import Python3Lexer
 from pygments.token import Text, Operator, Keyword, Name, String, Number
 from pygments.util import shebang_matches
 
 
-def transpyler_lexer(transpyler):
+def transpyler_lexer_factory(transpyler):
     """
-    Return a Pygments lexer for the given transpyler.
+    Return a Pygments lexer class for the given transpyler.
     """
 
-    def analyse_text(text):  # @NoSelf
+    def analyse_text(text):
         return shebang_matches(text, r'pythonw?3(\.\d)?')
 
     return type(
         transpyler.pygments_class_name,
         (Python3Lexer,),
         dict(
+            analyse_text=analyse_text,
             name=transpyler.name,
-            aliases=transpyler.aliases,
+            aliases=[transpyler.display_name],
             filenames=transpyler.file_extensions,
             mimetypes=transpyler.mimetypes,
             flags=re.MULTILINE | re.UNICODE,
             uni_name="[%s][%s]*" % (uni.xid_start, uni.xid_continue),
-
+            tokens=make_tokens(transpyler),
         )
     )
 
 
-def keywords(transpyler):
-    return []
-
-
-def constants(transpyler):
-    return []
-
-
-def builtins(transpyler):
-    return []
-
-
-def exceptions(exceptions):
-    return []
-
-
-def tokens(transpyler):
+def make_tokens(transpyler):
     """
-    Return a list of pygments tokens from a transpyler object.
+    Return a list of pygments make_tokens from a transpyler object.
     """
 
-    KEYWORDS = keywords(transpyler)
-    CONSTANTS = constants(transpyler)
-    EXCEPTIONS = exceptions(transpyler)
-    BUILTINS = builtins(transpyler)
+    KEYWORDS = transpyler.introspection.all_keywords
+    CONSTANTS = transpyler.introspection.all_constants
+    EXCEPTIONS = transpyler.introspection.all_exceptions
+    BUILTINS = transpyler.introspection.all_builtins
 
     uni_name = "[%s][%s]*" % (uni.xid_start, uni.xid_continue)
 
@@ -119,9 +104,3 @@ def tokens(transpyler):
         # newlines are an error (use "nl" state)
     ]
     return tokens
-
-
-class PytugaTracebackLexer(PythonTracebackLexer):
-    """
-    A lexer for a transpyler traceback.
-    """

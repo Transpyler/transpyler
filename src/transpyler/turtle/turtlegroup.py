@@ -7,6 +7,8 @@ from ..math import Vec
 class TurtleGroup(collections.MutableSequence):
     """
     A synchronized group of turtles.
+
+    Functions are broadcasted to all turtles belonging to the group.
     """
 
     _state_class = None

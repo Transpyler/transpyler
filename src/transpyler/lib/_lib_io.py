@@ -1,9 +1,5 @@
 from ._lib_str import format_string as _format_string
 
-TRANSLATIONS = {}
-
-
-_print = print
 
 def print(*args, **kwargs):
     """
@@ -105,8 +101,11 @@ def pause():
     _pause()
 
 
-# These functions can be replaced/mocked by the Qt GUI and have a proper
-# behavior in a graphical environment or in tests.
+# These functions can be replaced/mocked and have a proper behavior in a
+# graphical environment or in tests.
+_print = print
+
+
 def _pause():
     """
     Press <return> to continue

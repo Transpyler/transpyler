@@ -4,6 +4,8 @@ import traceback
 
 from lazyutils import lazy
 
+from transpyler import get_transpyler
+
 
 class TranspylerConsole(code.InteractiveConsole):
     """
@@ -20,7 +22,7 @@ class TranspylerConsole(code.InteractiveConsole):
         if transpyler is not None:
             self.transpyler = transpyler
         locals = locals if locals is not None else {}
-        locals.update(self.transpyler.namespace)
+        locals = dict(self.transpyler.namespace, **locals)
         super().__init__(locals, filename)
 
     def runsource(self, source, filename="<input>", symbol="single"):
@@ -84,12 +86,13 @@ class TranspylerConsole(code.InteractiveConsole):
         super().interact(banner, exitmsg)
 
 
-def start_console(transpyler):
+def start_console(namespace=None, transpyler=None):
     """
     Runs the main console.
     """
 
-    console = TranspylerConsole(transpyler=transpyler)
+    transpyler = transpyler or get_transpyler()
+    console = TranspylerConsole(namespace, transpyler=transpyler)
     banner = transpyler.console_banner()
     console.interact(banner)
 

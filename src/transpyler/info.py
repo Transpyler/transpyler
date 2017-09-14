@@ -6,9 +6,9 @@ from contextlib import contextmanager
 from transpyler.utils import full_class_name
 
 
-class LanguageInfo:
+class Info:
     """
-    Introspect transpyler to infer userful information.
+    Introspect transpyler to infer useful information.
 
     All attributes can be accessed directly from the transpyler instance and
     if it is redefined there it takes precedence. However it is useful to keep
@@ -23,9 +23,9 @@ class LanguageInfo:
         Return the list of arguments to be passed to initialize the kernel.
         """
         return [
-            "python3", "-m", "transpyler.jupyter.kernel",
-            "-f", "{connection_file}",
-            "--type", full_class_name(type(self.transpyler)),
+            'python3', '-m', 'transpyler.jupyter.kernel',
+            '-f', '{connection_file}',
+            '--type', full_class_name(type(self.transpyler)),
         ]
 
     def get_pygments_lexer(self):
@@ -37,29 +37,40 @@ class LanguageInfo:
         """
 
         transpyler = self.transpyler
+        _ = transpyler.translate
         return {
-            "argv": self.get_argv(),
-            "display_name": transpyler.display_name,
-            "language": transpyler.name,
-            "codemirror_mode": transpyler.codemirror_mode,
-            "language_info": {
-                "name": transpyler.display_name,
-                "codemirror_mode": {
-                    "name": transpyler.codemirror_mode,
-                },
-                "mimetype": transpyler.mimetype,
-                "pygments_lexer": self.get_pygments_lexer(),
-            },
-            "help_links": [
+            'argv': self.get_argv(),
+            'display_name': transpyler.display_name,
+            'language': transpyler.name,
+            'codemirror_mode': transpyler.codemirror_mode,
+            'language_info': self.get_language_info(),
+            'help_links': [
                 {
-                    "text": "Documentação do Pytuguês",
-                    "link": "http://pytuga.readthedocs.io/pt/latest/"
+                    'text': _('%s Documentation' % self.display_name),
+                    'link': transpyler.link_docs,
                 },
                 {
-                    "text": "Github",
-                    "link": "http://github.com/transpyler/transpyler/"
+                    'text': 'Github',
+                    'link': transpyler.link_github,
                 }
             ]
+        }
+
+    def get_language_info(self):
+        """
+        Return basic language info as JSON-like data.
+        """
+
+        transpyler = self.transpyler
+        return {
+            'name': transpyler.display_name,
+            'mimetype': transpyler.mimetype,
+            'file_extension': transpyler.file_extension,
+            'codemirror_mode': {
+                'version': 3,
+                'name': 'ipython'
+            },
+            'pygments_lexer': 'python',
         }
 
     def get_assets(self):

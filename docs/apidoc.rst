@@ -4,5 +4,16 @@ API Reference
 
 API documentation for the transpyler module.
 
-.. automodule:: transpyler
+
+Transpyler class
+================
+
+.. autoclass:: transpyler.transpyler.Transpyler
+   :members:
+
+
+Turtle graphics
+===============
+
+.. automodule:: transpyler.turtle
    :members:

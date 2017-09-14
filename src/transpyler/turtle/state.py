@@ -11,7 +11,7 @@ class TurtleState:
     An object that stores the turtle state. Users interact with Turtle
     instances that manipulates a state object. The state can be local and
     apply changes immediately or it can be remote and echo to a state stored
-    in a different process/machine.
+    in a different process/machine/thread.
     """
 
     valid_avatars = ['default']
@@ -135,6 +135,8 @@ class PropertyState(TurtleState):
     """
     A Turtle state in which all attributes are properties that expose a
     getter/setter interface.
+
+    This state class is used by the Tk implementation.
     """
 
     # Position
@@ -180,10 +182,24 @@ class PropertyState(TurtleState):
 
 class RemoteState(TurtleState):
     """
-    A turtle that stores state remotely and pipes all requests to a
-    `.send(msg)` method.
+    An abstract state class that stores information remotely and pipes all
+    requests to a `.send(msg)` method. Subclass must implement the .send()
+    method accordingly.
 
-    The actual state info is stored on another thread/process.
+    The message is an S-expression:
+
+    ['get', id, attr]:
+        Get an state attribute
+    ['set', id, attr, value]:
+        Set an state attribute to a given value
+    ['step', id, length]:
+        Steps forward for the given length.
+    ['rotate', id, angle]:
+        Rotates by the given angle.
+    ['move', id, pos]:
+        Moves turtle to the given position.
+
+    The actual state info is stored on another thread or process.
     """
 
     pos = ipc_property('pos', vec, tuple)
@@ -233,7 +249,7 @@ class MailboxState(RemoteState):
     processes.
 
     The communication uses an inbox/outbox model. The client puts a message in
-    the outbox and the server responds with a message in the outbox.
+    the outbox and the server responds with a message in the inbox.
     """
 
     inbox_factory = lambda self: Queue()
@@ -280,6 +296,8 @@ class MailboxState(RemoteState):
 class MirrorState(RemoteState):
     """
     A remote turtle that stores a copy of state in itself.
+
+    This state is used by the QTurtle application in the kernel process.
     """
 
     def __init__(self, **kwargs):

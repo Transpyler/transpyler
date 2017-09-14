@@ -4,7 +4,7 @@ from multiprocessing import Queue
 
 from PyQt5 import QtWidgets, QtCore
 
-from transpyler.turtle.qt.state import QGraphicsSceneGroup
+from .state import QGraphicsSceneGroup
 
 
 class TurtleScene(QtWidgets.QGraphicsScene):
@@ -28,8 +28,8 @@ class TurtleScene(QtWidgets.QGraphicsScene):
         self.restartScreenSignal.connect(self.restartScreen)
 
         # Creates mail boxes
-        self._inbox = Queue() if inbox is None else inbox
-        self._outbox = Queue() if inbox is None else outbox
+        self._inbox = inbox = Queue() if inbox is None else inbox
+        self._outbox = outbox = Queue() if outbox is None else outbox
 
         # Init
         self._turtles = QGraphicsSceneGroup(self, inbox=inbox, outbox=outbox)
@@ -77,13 +77,14 @@ class TurtleScene(QtWidgets.QGraphicsScene):
     #
     def newTurtle(self, *, default=False, **kwds):
         """
-        Adds new turtle to the scene.
+        Adds new turtle to the scene and return it.
         """
 
         turtle = self._turtles.new_turtle(**kwds)
         self.addItem(turtle.graphic_item)
         if default:
             self.setTurtle(turtle)
+        return turtle
 
     def turtle(self):
         """
@@ -100,19 +101,19 @@ class TurtleScene(QtWidgets.QGraphicsScene):
     #
     # Turtle visibility
     #
-    def isTurtleVisible(self):
-        return not self.isTurtleHidden()
+    def isActiveTurtleVisible(self):
+        return not self.isActiveTurtleHidden()
 
-    def isTurtleHidden(self):
+    def isActiveTurtleHidden(self):
         if self._turtle is None:
             return True
         return self._turtle.hidden
 
-    def hideTurtle(self):
+    def hideActiveTurtle(self):
         if self._turtle is not None:
             self._turtle.hide()
 
-    def showTurtle(self):
+    def showActiveTurtle(self):
         if self._turtle is None:
             raise ValueError('no turtle defined')
         self._turtle.show()
@@ -128,7 +129,7 @@ class TurtleScene(QtWidgets.QGraphicsScene):
         pass
 
 
-def start_qt_scene_app(inbox=None, outbox=None, ping=False):
+def start_qt_scene_app(transpyler, inbox=None, outbox=None, ping=False):
     """
     Starts a simple QtApp with a TurtleScene widget.
 
@@ -149,8 +150,3 @@ def start_qt_scene_app(inbox=None, outbox=None, ping=False):
     window.show()
     sys.exit(app.exec_())
 
-
-if __name__ == '__main__':
-    from transpyler.transpyler import simple_transpyler
-
-    start_qt_scene_app(simple_transpyler)

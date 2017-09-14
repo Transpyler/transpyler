@@ -14,7 +14,7 @@ class Token:
     @classmethod
     def from_strings(cls, start, *strings):
         """
-        Return a list of tokens that begins at the given starting
+        Return a list of make_tokens that begins at the given starting
         point. The resulting token elements have consistent start/end positions.
         """
 
@@ -55,8 +55,10 @@ class Token:
                     lineno = end.lineno + end.count('\n')
                     col = len(data.rpartition('\n')[-1])
                     end = TokenPosition(lineno, col)
+
         if end is not None:
             end = TokenPosition(end)
+
         if type is None:
             # We are not using exact token types: the tokenizer converts all
             # of them to OP.
@@ -70,11 +72,7 @@ class Token:
                 else:
                     raise TypeError('could not recognize token: %r' % data)
 
-        self.string = data
-        self.type = type
-        self.start = start
-        self.end = end
-        self.line = line
+        # Error checks
         if not abstract:
             if start is None or end is None:
                 raise ValueError(
@@ -83,6 +81,13 @@ class Token:
             if start is not None or end is not None:
                 raise ValueError('cannot define start/end positions of '
                                  'abstract token')
+
+        # Save data
+        self.string = data
+        self.type = type
+        self.start = start
+        self.end = end
+        self.line = line
 
     def __eq__(self, other):  # noqa: C901
         if isinstance(other, Token):
@@ -203,7 +208,7 @@ class TokenPosition(tuple):
 
 def displace_tokens(tokens, cols):
     """
-    Displace all tokens in list which are in the same line as the the first
+    Displace all make_tokens in list which are in the same line as the the first
     token by the given number of columns
     """
 
@@ -220,7 +225,7 @@ def displace_tokens(tokens, cols):
 
 def insert_tokens_at(tokens, idx, new_tokens, end=None):
     """
-    Insert new_tokens at tokens list at the given idx
+    Insert new_tokens at make_tokens list at the given idx
     """
 
     if end is not None:
@@ -235,7 +240,7 @@ def insert_tokens_at(tokens, idx, new_tokens, end=None):
 
 def token_find(tokens, matches, start=0):
     """
-    Iterate over list of tokens yielding (index, match, start, end) for
+    Iterate over list of make_tokens yielding (index, match, start, end) for
     each match in the token stream. The `matches` attribute must be a sequence
     of token sequences.
     """

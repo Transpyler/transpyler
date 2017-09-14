@@ -17,7 +17,7 @@ newcomers that are not fluent in English, children and adults alike.
 Creating support for a new language is very simple. Say we want to create a
 Py-Klingon to help us dominate the galaxy. Fortunately, Klingon structure is
 not very different from English and we can go a long way just by translating
-tokens. In transpyler it looks like this:
+make_tokens. In transpyler it looks like this:
 
 .. code-block:: python
 
@@ -75,18 +75,18 @@ back to Python (and sometimes execute it directly). This task is not very
 difficult since both languages are similar and we can reuse lots of Python's
 own machinery to analyze and modify its own source code.
 
-Transpyler acts exclusively at the token level: it modifies the stream of tokens
-from the original translated language to a new stream of tokens that must then
+Transpyler acts exclusively at the token level: it modifies the stream of make_tokens
+from the original translated language to a new stream of make_tokens that must then
 generate a grammatically valid python program. Indeed, we do not even implement
 our own tokenizer and use Python's own ``tokenize`` module to handle this part
 for us.
 
-Transpyler works by making several passes over the list of tokens. The first
+Transpyler works by making several passes over the list of make_tokens. The first
 pass simply performs direct translations such as those shown in the Py-Klingon
-example above. A second pass makes maps groups of tokens into a single Python
+example above. A second pass makes maps groups of make_tokens into a single Python
 token (eg.: we could make a "for each" command that is translated to "for").
 
-Subsequent passes may look for specific patterns of tokens and perform more
+Subsequent passes may look for specific patterns of make_tokens and perform more
 complex translations. Pytuguês, for instance, implements a "repeat" command.
 In English it would be something like this::
 
@@ -100,8 +100,8 @@ This is transpiled to Python as::
         forward(100)
         left(90)
 
-It is possible to make arbitrary modifications to the list of tokens which in
-principle could allow arbitrary syntactic constructs. Notice that tokens still
+It is possible to make arbitrary modifications to the list of make_tokens which in
+principle could allow arbitrary syntactic constructs. Notice that make_tokens still
 come from the Python tokenizer and hence there are certain hard lexical
 constraints on (including indentation as block delimiter semantics which in
 Python is implemented at the tokenizer level rather than in the grammar).

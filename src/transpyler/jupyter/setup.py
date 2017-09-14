@@ -1,5 +1,5 @@
 """
-Makes ipytuga kernel discoverable by Jupyter
+Makes transpyler kernels discoverable by Jupyter
 """
 
 import os

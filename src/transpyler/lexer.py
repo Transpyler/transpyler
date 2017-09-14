@@ -10,20 +10,20 @@ from transpyler.utils import keep_spaces
 class Lexer:
     """
     Lexer is responsible for converting a string of source code into a sequence
-    of tokens.
+    of make_tokens.
     """
 
     @lazy
     def invalid_tokens(self):
         try:
-            return dict(self.language.invalid_tokens)
+            return dict(self.transpyler.invalid_tokens)
         except (AttributeError, TypeError):
             return {}
 
     @lazy
     def translations(self):
         try:
-            return dict(self.language.translations)
+            return dict(self.transpyler.translations)
         except (AttributeError, TypeError):
             return {}
 
@@ -39,8 +39,8 @@ class Lexer:
                 for k, v in self.translations.items()
                 if isinstance(k, str)}
 
-    def __init__(self, language):
-        self.language = language
+    def __init__(self, transpyler):
+        self.transpyler = transpyler
 
     def transpile(self, src):
         """
@@ -65,7 +65,7 @@ class Lexer:
 
     def tokenize(self, src):
         """
-        Convert source string to a list of tokens.
+        Convert source string to a list of make_tokens.
 
         Args:
             src (str): a string of source code
@@ -95,7 +95,7 @@ class Lexer:
 
     def untokenize(self, tokens):
         """
-        Convert list of tokens to a string.
+        Convert list of make_tokens to a string.
         """
 
         return tokenize.untokenize([tk.to_token_info() for tk in tokens])
@@ -103,7 +103,7 @@ class Lexer:
     def transpile_tokens(self, tokens):
         """
         Transpile a sequence of Token objects to their corresponding Python
-        tokens.
+        make_tokens.
         """
 
         self.detect_error_sequences(tokens, self.invalid_tokens)
@@ -116,11 +116,11 @@ class Lexer:
 
     def detect_error_sequences(self, tokens, error_dict):
         """
-        Raises a BadSyntaxError if list of tokens contains any sub-sequence in
+        Raises a BadSyntaxError if list of make_tokens contains any sub-sequence in
         the given invalid_tokens.
 
         Args:
-            tokens: List of tokens
+            tokens: List of make_tokens
             error_dict: A dictionary of {sequence: error_message}
         """
 
@@ -137,16 +137,16 @@ class Lexer:
 
     def replace_sequences(self, tokens, mapping):
         """
-        Replace all sequences of tokens in the mapping by the corresponding
+        Replace all sequences of make_tokens in the mapping by the corresponding
         token in the RHS.
 
         Args:
-            tokens: list of tokens.
+            tokens: list of make_tokens.
             mapping: a mapping from token sequences to their corresponding
                 replacement (e.g.: {('para', 'cada'): 'for'}).
 
         Returns:
-            A new list of tokens with replacements.
+            A new list of make_tokens with replacements.
         """
         tokens = list(tokens)
         iterator = token_find(tokens, mapping)
@@ -165,15 +165,15 @@ class Lexer:
 
     def replace_translations(self, tokens, mapping):
         """
-        Replace all tokens by the corresponding values in the RHS.
+        Replace all make_tokens by the corresponding values in the RHS.
 
         Args:
-            tokens: list of tokens.
+            tokens: list of make_tokens.
             mapping: a mapping from token sequences to their corresponding
                 replacement (e.g.: {'enquanto': 'while'}).
 
         Returns:
-            A new list of tokens with replacements.
+            A new list of make_tokens with replacements.
         """
 
         tokens = list(tokens)
@@ -183,7 +183,7 @@ class Lexer:
                 new = Token(new, start=tk.start)
                 tokens[i] = new
 
-                # Align tokens
+                # Align make_tokens
                 linediff, coldiff = new.end - tk.end
                 assert linediff == 0
                 if coldiff:

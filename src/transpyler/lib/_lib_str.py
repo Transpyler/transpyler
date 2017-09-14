@@ -1,5 +1,3 @@
-TRANSLATIONS = {}
-
 def concatenate(*args):
     """
     Convert argument to string and concatenate.
@@ -55,13 +53,3 @@ def format_string(string, *args, **kwargs):
         return string % args
     except TypeError:
         return string.format(*args, **kwargs)
-
-
-# String methods
-_names = {
-    # Put names that should be replaced
-}
-for _name in dir(str):
-    if _name.startswith('_'):
-        continue
-    # globals()[_names.get(_name, _name)] = getattr(str, _name)

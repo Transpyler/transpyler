@@ -1,12 +1,9 @@
 import time as _time
-import builtins as _builtins
 
-TRANSLATIONS = {}
 
-# -----------------------------------------------------------------------------
+#
 # Standard Python functions
-_range = _builtins.range
-
+#
 def range(*args):
     """
     range(stop) -> range object
@@ -20,126 +17,92 @@ def range(*args):
     """
     return _range(*args)
 
-# -----------------------------------------------------------------------------
+
+#
 # Time control
-sleep = _time.sleep
-
-
-def exit(msg=1):
+#
+def sleep(seconds):
     """
-    Finish program execution.
+    Delay execution for a given number of seconds.
+
+    The argument may be a floating point number for subsecond precision.
     """
-    raise SystemExit(msg)
+    return _sleep(seconds)
 
 
-# Sleep
-"""
-Permanece sem fazer nada o intervalo de tempo fornecido (em segundos).
-"""
+def exit(msg=0):
+    """
+    Finish program execution and provides an exit code.
 
-# Exit
-"""
-Termina a execução do programa fornecendo um código de erro ou código
-de saída.
+    If msg is not given, the program finishes in a successful state. An
+    exit code different from zero or a string tells that there were an error
+    during execution.
+    """
+    return _exit(msg)
 
-Um ``código_erro=0`` sinaliza que o programa terminou com sucesso. Qualquer
-outro número ou um texto representa falha.
-"""
 
-# -----------------------------------------------------------------------------
+#
 # Conversions/representations of numerical types
-# integer = _b_alias(int)
-# real = _b_alias(float)
-# complex = _b_alias(complex)
-# boolean = _b_alias(bool)
-# binary = _b_alias(bin)
-# octal = _b_alias(oct)
-# hexadecimal = _b_alias(hex)
-# character = _b_alias(chr)
+#
+def integer(x):
+    "Converts argument to an integer."
+    return _integer(x)
 
-# -----------------------------------------------------------------------------
-# Sequence operations
-# enumeration = _b_alias(
-#     lambda x, start=0: list(enumerate(x, start=0)),
-#     example= \
-#         """
-#         >>> music = ['uni', 'duni', 'te']
-#         >>> enumeration(música))
-#         [(0, 'uni'), (1, 'duni'), (2, 'te')]
-#         """
-# )
-#
-# length = _b_alias(
-#     len,
-#     example= \
-#         """
-#         >>> L = [1, 2, 3, 4]
-#         >>> length(L)
-#         4
-#         """
-# )
-# enumerate = _b_alias(lambda x: list(enumerate))
-#
-# inverted = _b_alias(
-#     lambda x: list(reversed(x)),
-#     example= \
-#         """
-#         >>> música = ['uni', 'duni', 'te']
-#         >>> listar_invertido(música)
-#         ['te', 'duni', 'uni']
-#         """
-# )
-#
-# sorted = _b_alias(
-#     sorted,
-#     example= \
-#         """
-#         >>> sorted([5, 2, 3, 1, 4])
-#         [1, 2, 3, 4, 5]
-#         """,
-# )
 
-# -----------------------------------------------------------------------------
-# Builtin types
-# Dictionary = _b_alias(
-#     dict,
-#     aliases=('dictionary'),
-#     example= \
-#         """
-#         >>> dictionary([(0, 'zero'), (1, 'um'), (2, 'dois')])
-#         {0: 'zero', 1: 'um', 2: 'dois'}
-#         """,
-# )
-#
-# Tuple = _b_alias(
-#     tuple,
-#     example= \
-#         """
-#         >>> tupla([1, 2, 3])
-#         (1, 2, 3)
-#         """,
-# )
-#
-# List = _b_alias(
-#     list,
-# )
-#
-# String = _b_alias(
-#     str,
-#     aliases=('string',),
-#     example= \
-#         """
-#         >>> string(42)
-#         '42'
-#         """
-# )
+def real(x):
+    "Convert argument to a real number (number with decimal places)."
+    return _real(x)
 
-# -----------------------------------------------------------------------------
-# Other functions
-# type = _b_alias(type)
-# help = _b_alias(help)
 
-# Singleton objects
-# verdadeiro = Verdadeiro = True
-# falso = Falso = False
-# nulo = Nulo = None
+def complex(x):
+    "Convert argument to a complex number."
+    return _complex(x)
+
+
+def boolean(x):
+    """Convert argument to a boolean value.
+
+    Zero and empty sequences are converted to False. All other values are True.
+    """
+    return _boolean(x)
+
+
+def binary(x):
+    "Convert integer to a string with its binary representation."
+    return _binary(x)
+
+
+def octal(x):
+    "Convert integer to a string with its octal representation."
+    return _octal(x)
+
+
+def hexadecimal(x):
+    "Convert integer to a string with its hexadecimal representation"
+    return _hexadecimal(x)
+
+
+def character(x):
+    """
+    Convert number to its corresponding character in the ASCII/Unicode tables.
+    """
+    return _character(x)
+
+
+# These functions can be replaced/mocked and have a proper behavior in a
+# graphical environment or in tests.
+_range = range
+_sleep = _time.sleep
+_integer = int
+_real = float
+_complex = complex
+_string = str
+_boolean = bool
+_binary = bin
+_octal = oct
+_hexadecimal = hex
+_character = chr
+
+
+def _exit(msg):
+    raise SystemExit(msg)

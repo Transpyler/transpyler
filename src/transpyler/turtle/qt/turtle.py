@@ -1,9 +1,6 @@
 from multiprocessing import Process, Queue
 
-from transpyler.turtle.state import MailboxState
-from ..turtle import Turtle
-
-__all__ = ['turtle', 'start_server', 'start_client']
+from .. import Turtle, MailboxState
 
 
 #
@@ -20,7 +17,7 @@ def start_server(inbox, outbox):
     on an outbox.
     """
 
-    from transpyler.turtle.qt.scene import start_qt_scene_app
+    from .scene import start_qt_scene_app
 
     start_qt_scene_app(inbox=inbox, outbox=outbox, ping=True)
 

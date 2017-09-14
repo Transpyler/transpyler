@@ -1,6 +1,6 @@
-from transpyler.turtle.utils import turtle_property
-from .state import PropertyState
-from .turtle import Turtle
+from .utils import turtle_property
+from .namespace import TurtleNamespace
+from . import Turtle as BaseTurtle, PropertyState
 
 
 class TkTurtleState(PropertyState):
@@ -8,8 +8,9 @@ class TkTurtleState(PropertyState):
     A turtle state class for Python's builtin turtle module.
     """
 
-    valid_avatars = ['classic', 'arrow', 'turtle', 'circle', 'square',
-                     'triangle']
+    valid_avatars = [
+        'classic', 'arrow', 'turtle', 'circle', 'square', 'triangle'
+    ]
 
     pos = _pos = turtle_property('pos', 'setpos')
     heading = _heading = turtle_property('heading', 'setheading')
@@ -46,12 +47,32 @@ class TkTurtleState(PropertyState):
         self.turtle.goto(*pos)
 
 
+# The tk turtle class
+class Turtle(BaseTurtle):
+    """
+    Represents a turtle.
+    """
+
+    _state_factory = TkTurtleState
+
+
+def make_turtle_namespace():
+    """
+    Returns a dictionary with the namespace of turtle functions.
+    """
+
+    return dict(TurtleNamespace(Turtle))
+
+
+def start_console(transpyler=None):
+    """
+    Starts a console with turtle functions based on the Tk module.
+    """
+
+    from transpyler.console import start_console
+    start_console(make_turtle_namespace(), transpyler=transpyler)
+
+
 # We load a global namespace if called with the python -m flag.
 if __name__ == '__main__':
-    from .turtle import global_namespace as _ns
-
-    Turtle._state_factory = TkTurtleState
-
-    del TkTurtleState, PropertyState, turtle_property
-
-    globals().update(_ns(Turtle))
+    start_console()

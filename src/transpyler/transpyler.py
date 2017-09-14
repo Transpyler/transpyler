@@ -1,16 +1,16 @@
 import builtins as _builtins
 import codeop
 import importlib
-from collections import OrderedDict
 
-import click
 from lazyutils import lazy
 
-from transpyler.utils import pretty_callable
-from transpyler.utils.translate import translate_mod, gettext_for
-from transpyler.utils.utils import has_qt
-from .language_info import LanguageInfo
+from .utils import pretty_callable
+from .utils.translate import translate_mod, gettext_for
+from .utils.utils import has_qt
+from .info import Info
 from .lexer import Lexer
+from .introspection import Introspection
+
 
 # Save useful builtin functions
 _compile = _builtins.compile
@@ -19,10 +19,17 @@ _eval = _builtins.eval
 _input = _builtins.input
 _print = _builtins.print
 
+
 class SingletonMeta(type):
     """
     Base metaclass for classes that have a single instance.
     """
+
+    _subclasses = []
+
+    def __init__(cls, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        type(cls)._subclasses.append(cls)
 
     def __call__(cls, *args, **kwargs):
         try:
@@ -71,11 +78,13 @@ class Transpyler(metaclass=SingletonMeta):
     _input = _input
     _print = _print
 
-    # Subclasses
+    # Factories and subclasses
     lexer_factory = Lexer
+    info_factory = Info
+    introspection_factory = Introspection
 
     # Constants
-    lang = None
+    lang = 'en'
     standard_lib = None
     translations = None
     invalid_tokens = None
@@ -85,22 +94,35 @@ class Transpyler(metaclass=SingletonMeta):
     file_extension = 'py'
     builtin_modules = ()
 
-    # Language info
-    info_factory = LanguageInfo
+    # Language info and instrospection
+    introspection = lazy(lambda self: self.introspection_factory)
     info = lazy(lambda self: self.info_factory(self))
-    mimetype = lazy(lambda self: 'text/x-%s' % self.name)
     mimetypes = lazy(lambda self: [self.mimetype])
+    mimetype = lazy(lambda self: 'text/x-%s' % self.name)
+    link_docs = lazy(
+        lambda self:
+            "http://%s.readthedocs.io/%s/latest/" % (self.name, self.lang)
+    )
+    link_github = lazy(
+        lambda self: "http://github.com/transpyler/%s/" % self.name
+    )
 
     # Computed constants
     display_name = lazy(lambda self: self.name.title().replace('_', ' '))
-    short_banner = lazy(lambda self: self.display_name)
+    short_banner = lazy(
+        lambda self: self.translate(
+            '%s %s\n'
+            'Type "help", "copyright" or "license" for more information.' %
+            (self.display_name, self.version))
+    )
+    long_banner = lazy(lambda self: self.short_banner)
     lexer = lazy(lambda self: self.lexer_factory(self))
-    gettext = lazy(lambda self: gettext_for(self.lang or 'en'))
+    gettext = lazy(lambda self: gettext_for(self.lang))
 
     @lazy
     def name(self):
         cls_name = self.__class__.__name__.lower()
-        if cls_name == 'Transpyler':
+        if cls_name == 'transpyler':
             return 'transpyler'
         elif cls_name.endswith('transpyler'):
             return cls_name[:-10]
@@ -117,11 +139,14 @@ class Transpyler(metaclass=SingletonMeta):
             setattr(self, k, v)
         self._has_init = False
 
+        assert self.name, 'Name cannot be empty'
+
     def __repr__(self):
         return '<%s: %r>' % (self.__class__.__name__, self.name)
 
-    # --------------------------------------------------------------------------
-    # System functions
+    #
+    #  System functions
+    #
     def init(self, ns=None):
         """
         Initializes transpyler runtime.
@@ -234,14 +259,18 @@ class Transpyler(metaclass=SingletonMeta):
             return True
         return codeop.compile_command(pytuga_src, filename, symbol) is None
 
-    # --------------------------------------------------------------------------
-    # Console helpers
+    #
+    # Utilities
+    #
     def translate(self, st):
         """
         Translates string to the requested language.
         """
         return self.gettext.gettext(st)
 
+    #
+    # Console helpers
+    #
     def console_banner(self, short=False):
         """
         Return a string with the console banner.
@@ -251,9 +280,10 @@ class Transpyler(metaclass=SingletonMeta):
             return self.short_banner
         return getattr(self, 'banner', self.short_banner)
 
-    def make_exiter_function(self, function):
+    def make_exit_function(self, function):
         """
-        Wraps the exiter function in a nice wrapped
+        Wraps the exit function into a callable object that prints a nice
+        message for its repr.
         """
 
         @pretty_callable(self.translate('exiter.doc'))
@@ -266,8 +296,8 @@ class Transpyler(metaclass=SingletonMeta):
 
     def make_global_namespace(self):
         """
-        Return a dictionary with the default global namespace for transpyler
-        runtime.
+        Return a dictionary with the default global namespace for the
+        transpyler runtime.
         """
         ns = {}
 
@@ -292,26 +322,27 @@ class Transpyler(metaclass=SingletonMeta):
 
         return ns
 
-    def make_turtle_namespace(self, backend=None):
+    def make_turtle_namespace(self, backend):
         """
         Return a dictionary with all turtle-related functions.
         """
 
         if backend == 'tk':
-            from transpyler.turtle.tk import namespace
+            from transpyler.turtle.tk import make_turtle_namespace
 
-            return namespace()
+            return make_turtle_namespace()
 
         elif backend == 'qt':
-            from transpyler.turtle.qt import namespace
+            from transpyler.turtle.qt import make_turtle_namespace
 
-            return namespace
+            return make_turtle_namespace
 
         else:
             raise ValueError('invalid backend: %r' % backend)
 
-    # --------------------------------------------------------------------------
+    #
     # External execution
+    #
     def start_console(self, console='auto', turtle='auto'):
         """
         Starts a regular python console with the current transpyler.
@@ -365,13 +396,14 @@ class Transpyler(metaclass=SingletonMeta):
                              'application.')
 
         from qturtle.mainwindow import start_application
-
         start_application(self)
 
     def start_main(self):
         """
         Starts the default main application.
         """
+
+        import click
 
         @click.command()
         @click.option('--cli', '-c', is_flag=True, default=False,
@@ -396,3 +428,14 @@ class Transpyler(metaclass=SingletonMeta):
                 return self.start_console(console='nogui')
 
         return main()
+
+
+#
+# Utility functions
+#
+def get_transpyler() -> Transpyler:
+    """
+    Return an instance of the last defined transpyler class.
+    """
+
+    return SingletonMeta._subclasses[-1]()

@@ -50,6 +50,9 @@ class TurtleView(QtWidgets.QGraphicsView):
         self._updatePosLabelPosition()
 
     def zoomIn(self):
+        """
+        Increase the zoom.
+        """
         self.scale(self._zoomfactor, self._zoomfactor)
 
     def zoomOut(self):

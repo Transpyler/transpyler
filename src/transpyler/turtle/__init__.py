@@ -13,7 +13,7 @@ languages.
 We have a few use cases:
 
 * Implement turtle commands in a Jupyter architecture: the server runs in the
-  kernel and the client runs in the shell.
+  kernel process and the client runs in the shell process.
 * Jupyter notebooks: similar as above, but messages can be redirect to
   javascript to update a canvas object that display the different turtles.
 * It should be possible to choose different frontend toolkits. Tk does not
@@ -22,8 +22,17 @@ We have a few use cases:
 * The "draw" messages can be stored and saved in a persistent structure. This
   can be used to generate output in static file formats or even to implement an
   online judge for turtle-based programs.
+
+
+.. autoclass:: transpyler.turtle.Turtle
+    :members:
+
+.. autoclass:: transpyler.turtle.State
+    :members:
 """
 
 from .turtle import Turtle
 from .turtlegroup import TurtleGroup
-from . import state
+from .namespace import TurtleNamespace
+from .state import TurtleState, MailboxState, MirrorState, RemoteState, PropertyState
+from .stategroup import StateGroup, IpcStateGroup

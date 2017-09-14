@@ -1,7 +1,7 @@
-from transpyler.jupyter import start_shell
-from ..transpyler import simple_transpyler
+from ..transpyler import get_transpyler
 
 
 # Executes using the global default transpyler instance
 if __name__ == '__main__':
-    start_shell(simple_transpyler)
+    transpyler = get_transpyler()
+    transpyler.start_console('jupyter', 'tk')
