@@ -7,11 +7,7 @@ from ..math import Vec
 
 class Turtle:
     """
-    Turtle representation on client.
-
-    Client knows the pos, heading, avatar and a dictionary of arbitrary meta
-    values. The client holds a reference to a connection and each method simply
-    sends messages through this connection object.
+    Creates a new Turtle.
     """
 
     _state_factory = None
@@ -22,7 +18,7 @@ class Turtle:
             try:
                 import PyQt5
                 from transpyler.turtle.state import MailboxState
-                from transpyler.turtle.qt.turtle import start_client
+                from transpyler.turtle.qt.runners import start_client
             except ImportError:
                 try:
                     import tk

@@ -3,9 +3,8 @@ import os
 from PyQt5 import QtGui
 from PyQt5 import QtSvg
 
-from transpyler.turtle.stategroup import IpcStateGroup
 from .utils import qtproperty, from_qvector, to_qvector, from_qcolor, to_qcolor
-from ..state import TurtleState
+from .. import TurtleState, MailboxState, IpcStateGroup, Turtle as BaseTurtle
 
 dir_path = os.path.dirname(os.path.dirname(__file__))
 svg_path = os.path.join(dir_path, 'data', 'turtleart.svg')
@@ -80,3 +79,15 @@ class QGraphicsSceneGroup(IpcStateGroup):
     def __init__(self, scene, **kwargs):
         self.scene = scene
         super().__init__(**kwargs)
+
+
+#
+# This is the user-visible turtle class for the QtSceneGraph. IPC is done using
+# two message queues. The client publishes messages in a queue that is consumed
+# by the server and vice-versa.
+#
+class Turtle(BaseTurtle):
+    """
+    Creates a new Turtle.
+    """
+    _state_factory = MailboxState

@@ -1,4 +1,3 @@
-import sys
 from collections import deque
 from multiprocessing import Queue
 
@@ -127,26 +126,3 @@ class TurtleScene(QtWidgets.QGraphicsScene):
         # for certain turtle movements and draws the corresponding geometric
         # figures
         pass
-
-
-def start_qt_scene_app(transpyler, inbox=None, outbox=None, ping=False):
-    """
-    Starts a simple QtApp with a TurtleScene widget.
-
-    Args:
-        inbox/outbox:
-            Inbox/Outbox queues used for IPC.
-    """
-    from .view import TurtleView
-
-    app = QtWidgets.QApplication(sys.argv)
-    scene = TurtleScene(inbox=inbox, outbox=outbox)
-    window = TurtleView(scene)
-    window.setWindowTitle('Turtle')
-    window.setMinimumWidth(800)
-    window.setMinimumHeight(600)
-    if ping:
-        scene.ping(receive=True)
-    window.show()
-    sys.exit(app.exec_())
-

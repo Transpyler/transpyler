@@ -1,3 +1,4 @@
+import builtins as _builtins
 from ._lib_str import format_string as _format_string
 
 
@@ -103,7 +104,7 @@ def pause():
 
 # These functions can be replaced/mocked and have a proper behavior in a
 # graphical environment or in tests.
-_print = print
+_print = _builtins.print
 
 
 def _pause():
