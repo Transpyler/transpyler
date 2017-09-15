@@ -18,9 +18,12 @@ with open(path, 'w') as F:
 dependencies = {
     'google_translate': ['textblob'],
     'jupyter': ['jupyter', 'jupyter-console', 'ipython'],
+    'pygments': ['pygments'],
     'dev': ['python-boilerplate[dev]']
 }
-dependencies['dev'] += dependencies['google_translate'] + dependencies['jupyter']
+dependencies['dev'] += sum(
+    [v for k, v in dependencies.items() if k != 'dev'], []
+)
 
 
 setup(
@@ -72,11 +75,7 @@ setup(
         'colortools',
         'click',
     ],
-    extras_require={
-        'dev': dependencies['dev'],
-        'google_translate': dependencies['google_translate'],
-        'jupypter': dependencies['jupyter'],
-    },
+    extras_require=dependencies,
 
     # Other configurations
     zip_safe=False,

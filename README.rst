@@ -2,10 +2,10 @@
     :target: https://travis-ci.org/Transpyler/transpyler
 
 .. image:: https://codecov.io/gh/Transpyler/transpyler/branch/master/graph/badge.svg
-    :target: https://codecov.io/gh/Transpyler/transpyler
+    :target: https://codecov.io/gh/Transpyler/transpyler
 
 .. image:: https://ci.appveyor.com/api/projects/status/it45pshyqi76irbx?svg=true
-   :target: https://ci.appveyor.com/project/fabiommendes/transpyler
+    :target: https://ci.appveyor.com/project/fabiommendes/transpyler
 
 
 Transpyler is an infrastructure to create simple localized versions of
@@ -17,7 +17,7 @@ newcomers that are not fluent in English, children and adults alike.
 Creating support for a new language is very simple. Say we want to create a
 Py-Klingon to help us dominate the galaxy. Fortunately, Klingon structure is
 not very different from English and we can go a long way just by translating
-make_transpyled_tokens. In transpyler it looks like this:
+tokens. In transpyler it looks like this:
 
 .. code-block:: python
 
@@ -75,33 +75,39 @@ back to Python (and sometimes execute it directly). This task is not very
 difficult since both languages are similar and we can reuse lots of Python's
 own machinery to analyze and modify its own source code.
 
-Transpyler acts exclusively at the token level: it modifies the stream of make_transpyled_tokens
-from the original translated language to a new stream of make_transpyled_tokens that must then
+Transpyler acts exclusively at the token level: it modifies the stream of tokens
+from the original translated language to a new stream of tokens that must then
 generate a grammatically valid python program. Indeed, we do not even implement
 our own tokenizer and use Python's own ``tokenize`` module to handle this part
 for us.
 
-Transpyler works by making several passes over the list of make_transpyled_tokens. The first
+Transpyler works by making several passes over the list of tokens. The first
 pass simply performs direct translations such as those shown in the Py-Klingon
-example above. A second pass makes maps groups of make_transpyled_tokens into a single Python
+example above. A second pass makes maps groups of tokens into a single Python
 token (eg.: we could make a "for each" command that is translated to "for").
 
-Subsequent passes may look for specific patterns of make_transpyled_tokens and perform more
+Subsequent passes may look for specific patterns of tokens and perform more
 complex translations. Pytuguês, for instance, implements a "repeat" command.
-In English it would be something like this::
+In English it would be something like this:
+
+
+.. code-block:: transpyler
 
     repeat 4 times:
         forward(100)
         left(90)
 
-This is transpiled to Python as::
+This is transpiled to Python as:
+
+.. ignore-next-block
+.. code-block:: python
 
     for ___ in range(4):
         forward(100)
         left(90)
 
-It is possible to make arbitrary modifications to the list of make_transpyled_tokens which in
-principle could allow arbitrary syntactic constructs. Notice that make_transpyled_tokens still
+It is possible to make arbitrary modifications to the list of tokens which in
+principle could allow arbitrary syntactic constructs. Notice that tokens still
 come from the Python tokenizer and hence there are certain hard lexical
 constraints on (including indentation as block delimiter semantics which in
 Python is implemented at the tokenizer level rather than in the grammar).
@@ -112,8 +118,8 @@ it. That said, new grammatical constructs should keep line numbers unaltered.
 
 Remember: transpyler is using your regular vanilla Python interpreter and putting
 a small layer of token translation on top of it. We make a few dirty hacks in the
-Python runtime, but no specially flavored interpreter with special recompilation is
-necessary.
+Python runtime, but it does not requires any specially flavored interpreter
+and additional compilation is unnecessary.
 
 
 And the standard lib?
@@ -127,42 +133,31 @@ you want to support into a their localized counterparts.
 As a convenience tool, you can list the functions you want to translate and
 we offer a tool that uses Google Translate to create a boilerplate for your
 standard lib functions. Google Translate is a wonderful tool, but we all know
-how bad it is for serious translations. Keep that in mind.
+how bad it can get for serious translations. Always keep that in mind.
 
-It all started with Pytuguês, and it is by far the most mature translation. If
-you want to support some specific language, please check the Pytuguês standard
-lib (it has some english comments!). I started a few projects for some languages
-that I or some of my friends have a minimum grasp. I am not fluent in those
-languages at all, so it is more of a shout for help for the community to take
-over and participate. Translation is not technically demanding, and anyone
-minimally familiar with Python can help. There is no excuse: just contribute!
-
-Here is a small list of projects using Transpyler.
+Here is a list of all projects using Transpyler.
 
 * Pytuguês: the original Python to portuguese.
-* Pytuñol: Python to Portuñol.
-
-.. * Pyella: Python to Spanish.
-   * Schlange: a German Python experiment.
-   * Pysperanto: Python for a language with no native speakers.
-   * Py-Klingon: A silly Python example just for fun :)
+* Pykor: Korean version.
+* Pytuñol: non-serious translation to Portuñol. It is a minimal project and can
+be used as a template for new translations.
 
 
 How about the builtin types?
 ----------------------------
 
 Python builtins poses a challenge. They cannot be monkey-patched at Python level,
-but we need to modify them. We want the "teH" constant to spell as "teH" rather
-than "True" in our translated Py-Klingon language. We also want method names for
+but we need to modify them. In Py-Klingon, we want the "teH" constant (True) to
+be represented as "teH" rather than "True". We also want method names for
 lists, strings, etc to be fully translated.
 
-Transpyler messes with these types at C library level using ctypes. The
-techniques are very similar to those implemented in a module called forbiddenfruit,
+Transpyler messes with these types at C level using ctypes. The techniques are
+very similar to those implemented in a module called ``forbiddenfruit``,
 which recommends never to use itself unless you want to do something dangerous or
 silly :)
 
-In the language introduced by this module, modifying a method to a builtin type
-is called making a curse. We provide a tools to curse Python's builtins easily
+In the language introduced by ``forbiddenfruit``, modifying a method to a builtin
+type is called making a curse. We provide a tools to curse Python's builtins easily
 and effectively.
 
 
@@ -170,10 +165,10 @@ A superset of Python?
 ---------------------
 
 Transpyler languages are usually supersets of Python itself. In Pytuguês, for
-instance, any Python code is also a valid Pytuguês code. This makes languages
+instance, most Python code is also a valid Pytuguês code. This makes languages
 easier to implement since we don't have to blacklist the original Python
 keywords, but it also creates a path for going from a educational Pythonesque
-language to the real Python that is useful in real world applications.
+languages to vanilla Python used in real world applications.
 
-The fact that we don't make any effort to hide the Python internals is not a
-bug, its a feature :)
+The fact that we don't make any effort to hide the Python internals and Python
+original syntax is not a bug, its a feature!
