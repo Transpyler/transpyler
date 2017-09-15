@@ -1,17 +1,19 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.0\n"
-"Report-Msgid-Bugs-To: fabiomacedomendes@gmail.com\n"
+"Project-Id-Version: \n"
+"Language: kr_KR\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #. range.name
+#, fuzzy
 msgid "range"
-msgstr ""
+msgstr "range"
 
 #. range.doc
+#, fuzzy
 msgid ""
 "range(stop) -> range object\n"
 "range(start, stop[, step]) -> range object\n"
@@ -22,32 +24,44 @@ msgid ""
 "These are exactly the valid indices for a list of 4 elements.\n"
 "When step is given, it specifies the increment (or decrement)."
 msgstr ""
+"range(stop) -> range object range(start, stop[, step]) -> range object\n"
+"\n"
+"Return an object that produces a sequence of integers from start (inclusive) to stop (exclusive) by step.  range(i, j) produces i, i+1, i+2, ..., j-1. start defaults to 0, and stop is omitted!  range(4) produces 0, 1, 2, 3. These are exactly the valid indices for a list of 4 elements. When step is given, it specifies the increment (or decrement)."
 
 #. range.args
 #. concatenate.args
+#, fuzzy
 msgid "args"
-msgstr ""
+msgstr "args"
 
 #. sleep.name
+#, fuzzy
 msgid "sleep"
-msgstr ""
+msgstr "sleep"
 
 #. sleep.doc
+#, fuzzy
 msgid ""
 "Delay execution for a given number of seconds.\n"
 "\n"
 "The argument may be a floating point number for subsecond precision."
 msgstr ""
+"Delay execution for a given number of seconds.\n"
+"\n"
+"The argument may be a floating point number for subsecond precision."
 
 #. sleep.args
+#, fuzzy
 msgid "seconds"
-msgstr ""
+msgstr "seconds"
 
 #. exit.name
+#, fuzzy
 msgid "exit"
-msgstr ""
+msgstr "exit"
 
 #. exit.doc
+#, fuzzy
 msgid ""
 "Finish program execution and provides an exit code.\n"
 "\n"
@@ -55,18 +69,24 @@ msgid ""
 "exit code different from zero or a string tells that there were an error\n"
 "during execution."
 msgstr ""
+"Finish program execution and provides an exit code.\n"
+"\n"
+"If msg is not given, the program finishes in a successful state. An exit code different from zero or a string tells that there were an error during execution."
 
 #. exit.args
+#, fuzzy
 msgid "msg"
-msgstr ""
+msgstr "msg"
 
 #. integer.name
+#, fuzzy
 msgid "integer"
-msgstr ""
+msgstr "integer"
 
 #. integer.doc
+#, fuzzy
 msgid "Converts argument to an integer."
-msgstr ""
+msgstr "Converts argument to an integer."
 
 #. integer.args
 #. real.args
@@ -85,36 +105,46 @@ msgstr ""
 #. sign.args
 #. abs.args
 #. Vec:x
+#, fuzzy
 msgid "x"
-msgstr ""
+msgstr "x"
 
 #. real.name
 #. Real:real
+#, fuzzy
 msgid "real"
-msgstr ""
+msgstr "real"
 
 #. real.doc
+#, fuzzy
 msgid "Convert argument to a real number (number with decimal places)."
-msgstr ""
+msgstr "Convert argument to a real number (number with decimal places)."
 
 #. complex.name
+#, fuzzy
 msgid "complex"
-msgstr ""
+msgstr "complex"
 
 #. complex.doc
+#, fuzzy
 msgid "Convert argument to a complex number."
-msgstr ""
+msgstr "Convert argument to a complex number."
 
 #. boolean.name
+#, fuzzy
 msgid "boolean"
-msgstr ""
+msgstr "boolean"
 
 #. boolean.doc
+#, fuzzy
 msgid ""
 "Convert argument to a boolean value.\n"
 "\n"
 "Zero and empty sequences are converted to False. All other values are True."
 msgstr ""
+"Convert argument to a boolean value.\n"
+"\n"
+"Zero and empty sequences are converted to False. All other values are True."
 
 #. binary.name
 msgid "binary"

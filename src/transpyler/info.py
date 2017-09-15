@@ -46,7 +46,7 @@ class Info:
             'language_info': self.get_language_info(),
             'help_links': [
                 {
-                    'text': _('%s Documentation' % self.display_name),
+                    'text': _('%s Documentation' % transpyler.display_name),
                     'link': transpyler.link_docs,
                 },
                 {
