@@ -170,7 +170,7 @@ class Transpyler(metaclass=SingletonMeta):
         """
 
     def compile(self, source, filename, mode, flags=0, dont_inherit=False,
-                compile_function=_compile):
+                compile_function=None):
         """
         Similar to the built-in function compile() for Transpyled code.
 
@@ -193,6 +193,7 @@ class Transpyler(metaclass=SingletonMeta):
                 A possible replacement for Python's built-in compile().
         """
 
+        compile_function = compile_function or _compile
         source = self.transpile(source)
         return compile_function(source, filename, mode, flags, dont_inherit)
 
@@ -220,7 +221,7 @@ class Transpyler(metaclass=SingletonMeta):
         args = (globals,) if locals is None else (globals, locals)
         return exec_function(code, *args)
 
-    def eval(self, source, globals=None, locals=None, eval_function=_eval):
+    def eval(self, source, globals=None, locals=None, eval_function=None):
         """
         Similar to the built-in function eval() for transpyled code.
 
@@ -235,7 +236,13 @@ class Transpyler(metaclass=SingletonMeta):
             eval_function (callable):
                 A possible replacement for Python's built-in eval().
         """
-        return self.exec(source, globals, locals, exec_function=eval_function)
+        eval_function = eval_function or _eval
+        code = self.transpile(source) if isinstance(source, str) else source
+        globals = {} if globals is None else globals
+        globals.update(self.namespace)
+
+        args = (globals,) if locals is None else (globals, locals)
+        return eval_function(code, *args)
 
     def transpile(self, src):
         """
@@ -260,6 +267,77 @@ class Transpyler(metaclass=SingletonMeta):
         except SyntaxError:
             return True
         return codeop.compile_command(pytuga_src, filename, symbol) is None
+
+    @classmethod
+    def core_functions(cls):
+        """
+        Return an dictionary with a small namespace for the core functions in
+        the transpyler API:
+
+        * init: init runtime
+        * compile: compile a string of source code
+        * exec: execute a string of source code
+        * eval: evaluate a string of source code and return the resulting object
+        * transpile: transpile source code to Python
+        * namespace: return a dictionary with builtin functions
+        * is_complete_source: check if string can be executed as-is or if it
+        requires additional lines of code in order to execute.
+        """
+
+        def init(ns=None):
+            return cls().init(ns)
+
+        def compile(source, filename, mode, flags=0, dont_inherit=False,
+                    compile_function=None):
+            return cls().compile(
+                source, filename, mode, flags=flags,
+                dont_inherit=dont_inherit, compile_function=compile_function
+            )
+
+        def exec(source, globals=None, locals=None, exec_function=None):
+            return cls().exec(
+                source, globals=globals, locals=locals,
+                exec_function=exec_function,
+            )
+
+        def eval(source, globals=None, locals=None, eval_function=None):
+            return cls().eval(
+                source, globals=globals, locals=locals,
+                eval_function=eval_function,
+            )
+
+        def transpile(src):
+            return cls().transpile(src)
+
+        def is_incomplete_source(src, filename="<input>", symbol="single"):
+            return cls().is_incomplete_source(src, filename, symbol)
+
+        def namespace(turtle=None):
+            """
+            Return a dictionary with all public functions.
+
+            If turtle is given and it is either 'qt' or 'tk', it includes the
+            corresponding turtle functions into the namespace.
+            """
+            transpyler = cls()
+            transpyler.has_turtle_functions = turtle is not None
+            transpyler.turtle_backend = turtle
+            transpyler.init()
+            return transpyler.namespace
+
+        # Update docstrings
+        init.__doc__ = cls.init.__doc__
+        compile.__doc__ = cls.compile.__doc__
+        exec.__doc__ = cls.exec.__doc__
+        eval.__doc__ = cls.eval.__doc__
+        transpile.__doc__ = cls.transpile.__doc__
+        is_incomplete_source.__doc__ = cls.is_incomplete_source.__doc__
+
+        return dict(
+            init=init, compile=compile, exec=exec, eval=eval,
+            transpile=transpile, is_incomplete_source=is_incomplete_source,
+            namespace=namespace,
+        )
 
     #
     # Utilities
