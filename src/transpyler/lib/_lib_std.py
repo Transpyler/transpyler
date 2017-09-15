@@ -1,3 +1,4 @@
+import builtins as _builtins
 import time as _time
 
 
@@ -91,17 +92,17 @@ def character(x):
 
 # These functions can be replaced/mocked and have a proper behavior in a
 # graphical environment or in tests.
-_range = range
+_range = _builtins.range
 _sleep = _time.sleep
-_integer = int
-_real = float
-_complex = complex
-_string = str
-_boolean = bool
-_binary = bin
-_octal = oct
-_hexadecimal = hex
-_character = chr
+_integer = _builtins.int
+_real = _builtins.float
+_complex = _builtins.complex
+_string = _builtins.str
+_boolean = _builtins.bool
+_binary = _builtins.bin
+_octal = _builtins.oct
+_hexadecimal = _builtins.hex
+_character = _builtins.chr
 
 
 def _exit(msg):

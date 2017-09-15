@@ -85,6 +85,8 @@ class Transpyler(metaclass=SingletonMeta):
 
     # Constants
     lang = 'en'
+    has_turtle_functions = False
+    turtle_backend = None
     standard_lib = None
     translations = None
     invalid_tokens = None
@@ -131,7 +133,7 @@ class Transpyler(metaclass=SingletonMeta):
 
     @lazy
     def namespace(self):
-        return self.make_global_namespace()
+        return self.recreate_namespace()
 
     def __init__(self, **kwargs):
         self._forbidden = False
@@ -335,10 +337,28 @@ class Transpyler(metaclass=SingletonMeta):
         elif backend == 'qt':
             from transpyler.turtle.qt import make_turtle_namespace
 
-            return make_turtle_namespace
+            return make_turtle_namespace()
 
         else:
             raise ValueError('invalid backend: %r' % backend)
+
+    def recreate_namespace(self):
+        """
+        Recompute the default namespace for the transpyler object.
+        """
+        ns = self.make_global_namespace()
+
+        if self.has_turtle_functions:
+            if self.turtle_backend is None:
+                raise RuntimeError(
+                    '.turtle_backend of transpyler object must be set to '
+                    'either "tk" or "qt"'
+                )
+            turtle_ns = self.make_turtle_namespace(self.turtle_backend)
+            ns.update(turtle_ns)
+        self.namespace = ns
+        return ns
+
 
     #
     # External execution

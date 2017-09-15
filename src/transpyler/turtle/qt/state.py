@@ -4,7 +4,8 @@ from PyQt5 import QtGui
 from PyQt5 import QtSvg
 
 from .utils import qtproperty, from_qvector, to_qvector, from_qcolor, to_qcolor
-from .. import TurtleState, MailboxState, IpcStateGroup, Turtle as BaseTurtle
+from .. import TurtleState, MailboxState, IpcStateGroup, Turtle as BaseTurtle, \
+    TurtleNamespace
 
 dir_path = os.path.dirname(os.path.dirname(__file__))
 svg_path = os.path.join(dir_path, 'data', 'turtleart.svg')
@@ -91,3 +92,11 @@ class Turtle(BaseTurtle):
     Creates a new Turtle.
     """
     _state_factory = MailboxState
+
+
+def make_turtle_namespace():
+    """
+    Returns a dictionary with the namespace of turtle functions.
+    """
+
+    return dict(TurtleNamespace(Turtle))
