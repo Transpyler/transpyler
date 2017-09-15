@@ -17,7 +17,7 @@ def has_qt():
     Returns True if PyQt5 is installed.
     """
     try:
-        import PyQt5
+        import PyQt5  # noqa: F401
         return True
     except ImportError:
         return False

@@ -83,3 +83,25 @@ def normalize_docstring(doc):
         lines[i] = '' if not line.strip() else line[ind:]
 
     return '\n'.join(lines)
+
+
+def split_docstring(text):
+    """
+    Split docstring in several sections.
+    """
+
+    parts = ['']
+    text = normalize_docstring(text)
+    parts[0], *lines = text.splitlines()
+
+    for line in lines:
+        if not line:
+            parts.append('')
+        elif line.startswith(' '):
+            parts[-1] += '\n' + line
+        elif parts[-1] == '':
+            parts[-1] += line
+        else:
+            parts[-1] += ' ' + line
+
+    return parts

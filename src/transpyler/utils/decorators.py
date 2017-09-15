@@ -4,7 +4,7 @@ from gettext import gettext as _
 from unidecode import unidecode
 
 
-def synonyms(*args, api_function=True):
+def synonyms(*args):
     """
     Decorator that marks synonyms/aliases of a function.
 
@@ -30,23 +30,9 @@ def synonyms(*args, api_function=True):
                 ('\n\n'
                  'Notes:\n'
                  '    %s: %s') % (_('Synonyms'), data)
-
-        if api_function:
-            func = is_api_function(func)
-
         return func
 
     return decorator
-
-
-def is_api_function(func):
-    """
-    Decorator that marks a function as a public API function for a transpyled
-    language.
-    """
-
-    func._is_api_function = True
-    return func
 
 
 def normalize_accented_keywords(func):

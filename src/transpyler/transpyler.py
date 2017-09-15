@@ -4,13 +4,13 @@ import importlib
 
 from lazyutils import lazy
 
-from .utils import pretty_callable
-from .utils.translate import translate_mod, gettext_for
-from .utils.utils import has_qt
+from transpyler.translate.translate import translate_mod
+from transpyler.translate.gettext import gettext_for
 from .info import Info
-from .lexer import Lexer
 from .introspection import Introspection
-
+from .lexer import Lexer
+from .utils import pretty_callable
+from .utils.utils import has_qt
 
 # Save useful builtin functions
 _compile = _builtins.compile
@@ -101,7 +101,7 @@ class Transpyler(metaclass=SingletonMeta):
     mimetype = lazy(lambda self: 'text/x-%s' % self.name)
     link_docs = lazy(
         lambda self:
-            "http://%s.readthedocs.io/%s/latest/" % (self.name, self.lang)
+        "http://%s.readthedocs.io/%s/latest/" % (self.name, self.lang)
     )
     link_github = lazy(
         lambda self: "http://github.com/transpyler/%s/" % self.name

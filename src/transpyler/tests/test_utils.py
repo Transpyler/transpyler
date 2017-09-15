@@ -1,7 +1,7 @@
 import transpyler.lib as lib
+from transpyler.translate.translate import translate_mod
 from transpyler.utils import *
 from transpyler.utils import synonyms, normalize_accented_keywords
-from transpyler.utils.translate import translate_mod
 
 
 def test_keep_spaces():

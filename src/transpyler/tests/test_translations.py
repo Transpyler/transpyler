@@ -1,7 +1,7 @@
 import pytest
 
-from transpyler.utils.translate import extract_translation, \
-    extract_translations, translate_mod
+from transpyler.translate import extract_translations, \
+    extract_translation, translate_mod
 
 
 class TestExtractTranslations:

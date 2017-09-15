@@ -2,8 +2,6 @@ import os
 
 import click
 
-import transpyler.utils.namespaces
-
 
 #
 # Utilities
@@ -16,14 +14,17 @@ def potfile():
     You probably has little use for this command unless you are a Transpyler
     developer.
     """
-    import transpyler.utils.translate as mod
+    from transpyler.translate import L10N_PATH
+    from transpyler.utils import collect_mod_namespace
+    from transpyler.translate import extract_translations
+    from transpyler.translate import create_pot_file
 
     click.echo('Updating transpyler.pot file...', nl=False)
 
-    path = os.path.join(mod.I10N_PATH, 'transpyler.pot')
-    names = transpyler.utils.namespaces.collect_mod_namespace()
-    translations = mod.extract_translations(names)
-    mod.create_pot_file(translations, path)
+    path = os.path.join(L10N_PATH, 'transpyler.pot')
+    names = collect_mod_namespace()
+    translations = extract_translations(names)
+    create_pot_file(translations, path)
 
     click.echo(' Done!')
 
@@ -36,7 +37,7 @@ def autotranslate(lang, auto):
     """
     Fill translations in a PO file using google translate.
     """
-    from transpyler.utils.translate import google_translate
+    from transpyler.translate.google_translate import google_translate
 
     lang = lang.replace('-', '_')
     google_translate(lang, prompt=not auto, verbose=True)
