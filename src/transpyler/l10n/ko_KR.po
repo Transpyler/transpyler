@@ -1,61 +1,71 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.0\n"
-"Report-Msgid-Bugs-To: fabiomacedomendes@gmail.com\n"
+"Project-Id-Version: \n"
+"Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
+"Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: \n"
 "X-Generator: Poedit 2.0.2\n"
-"Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"Language: ko_KR\n"
 
 #. range.name
 msgid "range"
-msgstr ""
+msgstr "범위"
 
 #. range.doc
+#, fuzzy
 msgid ""
 "range(stop) -> range object\n"
 "range(start, stop[, step]) -> range object\n"
 "\n"
-"Return an object that produces a sequence of integers from start "
-"(inclusive)\n"
+"Return an object that produces a sequence of integers from start (inclusive)\n"
 "to stop (exclusive) by step.  range(i, j) produces i, i+1, i+2, ..., j-1.\n"
 "start defaults to 0, and stop is omitted!  range(4) produces 0, 1, 2, 3.\n"
 "These are exactly the valid indices for a list of 4 elements.\n"
 "When step is given, it specifies the increment (or decrement)."
 msgstr ""
+"범위 (정지) -> 범위 객체 범위 (시작, 정지 [, 단계]) -> 범위 객체\n"
+"\n"
+"start (inclusive)부터 stop (exclusive)까지의 순차 순서로 객체를 리턴합니다. range (i, j)는 i, i + 1, i + 2, ..., j-1을 생성합니다. start는 0으로 기본 설정되며 stop은 생략됩니다! range (4)는 0, 1, 2, 3을 생성합니다. 이것은 정확히 4 개의 요소 목록에 대한 유효한 색인입니다. step이 주어지면 증가 (또는 감소)를 지정합니다."
 
 #. range.args
 #. concatenate.args
+#, fuzzy
 msgid "args"
-msgstr ""
+msgstr "args"
 
 #. sleep.name
+#, fuzzy
 msgid "sleep"
-msgstr ""
+msgstr "자다"
 
 #. sleep.doc
+#, fuzzy
 msgid ""
 "Delay execution for a given number of seconds.\n"
 "\n"
 "The argument may be a floating point number for subsecond precision."
 msgstr ""
+"주어진 시간 (초) 동안 지연 실행.\n"
+"\n"
+"인수는 두 번째 정밀도의 부동 소수점 수입니다."
 
 #. sleep.args
+#, fuzzy
 msgid "seconds"
-msgstr ""
+msgstr "초"
 
 #. exit.name
+#, fuzzy
 msgid "exit"
-msgstr ""
+msgstr "출구"
 
 #. exit.doc
+#, fuzzy
 msgid ""
 "Finish program execution and provides an exit code.\n"
 "\n"
@@ -63,18 +73,24 @@ msgid ""
 "exit code different from zero or a string tells that there were an error\n"
 "during execution."
 msgstr ""
+"프로그램 실행을 마치고 종료 코드를 제공합니다.\n"
+"\n"
+"msg가 주어지지 않으면 프로그램은 성공적인 상태로 종료됩니다. 0 또는 문자열과 다른 종료 코드는 실행 중 오류가 있음을 나타냅니다."
 
 #. exit.args
+#, fuzzy
 msgid "msg"
-msgstr ""
+msgstr "msg"
 
 #. integer.name
+#, fuzzy
 msgid "integer"
-msgstr ""
+msgstr "정수"
 
 #. integer.doc
+#, fuzzy
 msgid "Converts argument to an integer."
-msgstr ""
+msgstr "인수를 정수로 변환합니다."
 
 #. integer.args
 #. real.args
@@ -93,75 +109,94 @@ msgstr ""
 #. sign.args
 #. abs.args
 #. Vec:x
+#, fuzzy
 msgid "x"
-msgstr ""
+msgstr "엑스"
 
 #. real.name
 #. Real:real
+#, fuzzy
 msgid "real"
-msgstr ""
+msgstr "레알"
 
 #. real.doc
+#, fuzzy
 msgid "Convert argument to a real number (number with decimal places)."
-msgstr ""
+msgstr "인수를 실수 (소수점 이하 자릿수)로 변환하십시오."
 
 #. complex.name
+#, fuzzy
 msgid "complex"
-msgstr ""
+msgstr "복잡한"
 
 #. complex.doc
+#, fuzzy
 msgid "Convert argument to a complex number."
-msgstr ""
+msgstr "인수를 복소수로 변환하십시오."
 
 #. boolean.name
+#, fuzzy
 msgid "boolean"
-msgstr ""
+msgstr "부울"
 
 #. boolean.doc
+#, fuzzy
 msgid ""
 "Convert argument to a boolean value.\n"
 "\n"
 "Zero and empty sequences are converted to False. All other values are True."
 msgstr ""
+"인수를 부울 값으로 변환합니다.\n"
+"\n"
+"0과 빈 시퀀스는 False로 변환됩니다. 다른 모든 값은 참입니다."
 
 #. binary.name
+#, fuzzy
 msgid "binary"
-msgstr ""
+msgstr "이진"
 
 #. binary.doc
+#, fuzzy
 msgid "Convert integer to a string with its binary representation."
-msgstr ""
+msgstr "정수를 이진 표현으로 된 문자열로 변환합니다."
 
 #. octal.name
+#, fuzzy
 msgid "octal"
-msgstr ""
+msgstr "8_진수"
 
 #. octal.doc
+#, fuzzy
 msgid "Convert integer to a string with its octal representation."
-msgstr ""
+msgstr "정수를 8 진수 표현으로 된 문자열로 변환합니다."
 
 #. hexadecimal.name
+#, fuzzy
 msgid "hexadecimal"
-msgstr ""
+msgstr "16_진수"
 
 #. hexadecimal.doc
+#, fuzzy
 msgid "Convert integer to a string with its hexadecimal representation"
-msgstr ""
+msgstr "정수를 16 진수 표현으로 된 문자열로 변환합니다"
 
 #. character.name
+#, fuzzy
 msgid "character"
-msgstr ""
+msgstr "캐릭터"
 
 #. character.doc
-msgid ""
-"Convert number to its corresponding character in the ASCII/Unicode tables."
-msgstr ""
+#, fuzzy
+msgid "Convert number to its corresponding character in the ASCII/Unicode tables."
+msgstr "숫자를 ASCII / 유니 코드 테이블의 해당 문자로 변환하십시오."
 
 #. concatenate.name
+#, fuzzy
 msgid "concatenate"
-msgstr ""
+msgstr "사슬_같이_잇다"
 
 #. concatenate.doc
+#, fuzzy
 msgid ""
 "Convert argument to string and concatenate.\n"
 "\n"
@@ -173,12 +208,23 @@ msgid ""
 "    >>> concatenate([1, 2, 3, 4])\n"
 "    '1234'"
 msgstr ""
+"인수를 문자열로 변환하고 연결하십시오.\n"
+"\n"
+"하나의 인수 만 전달되면 시퀀스라고 가정합니다.\n"
+"\n"
+"예 :\n"
+"    >>> concatenate ( 'x =', 2)\n"
+"    'x = 2'\n"
+"    >>> 연결 ([1, 2, 3, 4])\n"
+"    '1234'"
 
 #. join.name
+#, fuzzy
 msgid "join"
-msgstr ""
+msgstr "어울리다"
 
 #. join.doc
+#, fuzzy
 msgid ""
 "Similar to concatenate(), but takes an extra separator as first argument\n"
 "argument.\n"
@@ -187,16 +233,24 @@ msgid ""
 "    >>> join(', ', 1, 2, 3)\n"
 "    '1, 2, 3'"
 msgstr ""
+"concatenate ()와 유사하지만 첫 번째 인수로 별도의 구분 기호를 사용합니다.\n"
+"\n"
+"예 :\n"
+"    >>> join ( ',', 1, 2, 3)\n"
+"    '1, 2, 3'"
 
 #. join.args
+#, fuzzy
 msgid "separator, args"
-msgstr ""
+msgstr "분리_기호, _args"
 
 #. format_string.name
+#, fuzzy
 msgid "format_string"
-msgstr ""
+msgstr "형식_문자열"
 
 #. format_string.doc
+#, fuzzy
 msgid ""
 "Format text inserting parameters in the wildcard positions.\n"
 "\n"
@@ -211,16 +265,27 @@ msgid ""
 ">>> format_string('{0} != {1}', 42, 43)\n"
 "'42 != 43'"
 msgstr ""
+"와일드 카드 위치에 매개 변수를 삽입하는 텍스트의 서식을 지정합니다.\n"
+"\n"
+"문자열 서식 지정에는 두 가지 구문이 있습니다. 첫 번째는 C를 기반으로하며 % s, % f, % d와 같은 기호를 사용하여 삽입 지점을 구분합니다.\n"
+"\n"
+">>> format_string ( '% i! = % .2f', 42, 43) '42! = 43.00 '\n"
+"\n"
+"두 번째는 중괄호를 사용합니다.\n"
+"\n"
+">>> format_string ( '{0}! = {1}', 42, 43) '42! = 43 '"
 
 #. format_string.args
+#, fuzzy
 msgid "string, args, kwargs"
-msgstr ""
+msgstr "끈, _args, _kwargs"
 
 #. print.name
 msgid "print"
-msgstr ""
+msgstr "인쇄"
 
 #. print.doc
+#, fuzzy
 msgid ""
 "Prints the object or text provided on the screen.\n"
 "\n"
@@ -231,41 +296,56 @@ msgid ""
 "    >>> print(\"Hello world!\")\n"
 "    Hello World!"
 msgstr ""
+"화면에 제공된 객체 또는 텍스트를 인쇄합니다.\n"
+"\n"
+"인수가 여러 개 호출되면 순서대로 출력하고 공백으로 구분합니다.\n"
+"\n"
+"예 :\n"
+"    >>> print ( \"Hello world!\")\n"
+"    안녕하세요!"
 
 #. print.args
 #. alert.args
 #. min.args
 #. max.args
+#, fuzzy
 msgid "args, kwargs"
-msgstr ""
+msgstr "args, _kwargs"
 
 #. alert.name
+#, fuzzy
 msgid "alert"
-msgstr ""
+msgstr "경보"
 
 #. alert.doc
+#, fuzzy
 msgid ""
 "Similar to the `show` function, but displays the resulting message in a\n"
 "dialog box."
-msgstr ""
+msgstr "`show` 함수와 비슷하지만 결과 메시지를 대화 상자에 표시합니다."
 
 #. print_formatted.name
+#, fuzzy
 msgid "print_formatted"
-msgstr ""
+msgstr "서식이_지정된_인쇄"
 
 #. print_formatted.doc
+#, fuzzy
 msgid "Displays a string after applying the provided formatting arguments."
-msgstr ""
+msgstr "제공된 서식 인수를 적용한 후 문자열을 표시합니다."
 
 #. print_formatted.args
+#, fuzzy
 msgid "text, args, kwargs"
-msgstr ""
+msgstr "본문, _args, _kwargs"
 
 #. read_text.name
+#, fuzzy
 msgid "read_text"
-msgstr ""
+msgstr "텍스트_읽기"
 
 #. read_text.doc
+#, fuzzy
 msgid ""
 "Prompts the user for a text entry.\n"
 "\n"
@@ -274,16 +354,25 @@ msgid ""
 "    >>> show(\"Hello,\" + name)  # the user types \"Maria\"\n"
 "    Hello Maria"
 msgstr ""
+"사용자에게 텍스트 입력을 요구합니다.\n"
+"\n"
+"예 :\n"
+"    >>> name = read_text ( '귀하의 이름 :')\n"
+"    >>> show ( \"Hello,\"+ name) # 사용자 유형 \"마리아\"\n"
+"    안녕 마리아"
 
 #. read_text.args
+#, fuzzy
 msgid "message"
-msgstr ""
+msgstr "메시지"
 
 #. read_number.name
+#, fuzzy
 msgid "read_number"
-msgstr ""
+msgstr "번호를_읽다."
 
 #. read_number.doc
+#, fuzzy
 msgid ""
 "Prompts the user for a numeric entry.\n"
 "\n"
@@ -292,35 +381,50 @@ msgid ""
 "    >>> x + 40\n"
 "    42"
 msgstr ""
+"사용자에게 숫자 항목을 입력하라는 메시지를 표시합니다.\n"
+"\n"
+"예 :\n"
+"    >>> x = read_number ( '숫자 :') # 사용자 유형 2 ...\n"
+"    >>> x + 40\n"
+"    42"
 
 #. read_number.args
+#, fuzzy
 msgid "message, text, num"
-msgstr ""
+msgstr "메시지, 본문, 넘버"
 
 #. read_file.name
+#, fuzzy
 msgid "read_file"
-msgstr ""
+msgstr "파일을_읽다"
 
 #. read_file.doc
+#, fuzzy
 msgid ""
 "Reads the content from a text file and returns it as string.\n"
 "\n"
 "Examples:\n"
 "    >>> data = read_file(\"foo.txt\")"
 msgstr ""
+"텍스트 파일에서 내용을 읽고이를 문자열로 반환합니다.\n"
+"\n"
+"예 :\n"
+"    >>> data = read_file ( \"foo.txt\")"
 
 #. read_file.args
+#, fuzzy
 msgid "file"
-msgstr ""
+msgstr "파일"
 
 #. save_in_file.name
+#, fuzzy
 msgid "save_in_file"
-msgstr ""
+msgstr "파일에_저장하다"
 
 #. save_in_file.doc
+#, fuzzy
 msgid ""
-"Saves the text content to the indicated file, deleting any previous "
-"content.\n"
+"Saves the text content to the indicated file, deleting any previous content.\n"
 "\n"
 "WARNING! If the given file exists, this function will overwrite your\n"
 "content without asking!\n"
@@ -328,36 +432,52 @@ msgid ""
 "Examples:\n"
 "    >>> save_in_file(data, \"foo.txt\")"
 msgstr ""
+"텍스트 내용을 표시된 파일에 저장하고 이전 내용을 삭제합니다.\n"
+"\n"
+"경고! 주어진 파일이 존재하면,이 함수는 묻지 않고 내용을 덮어 씁니다!\n"
+"\n"
+"예 :\n"
+"    >>> save_in_file (데이터, \"foo.txt\")"
 
 #. save_in_file.args
+#, fuzzy
 msgid "text, file, F"
-msgstr ""
+msgstr "본문, 파일, 에프"
 
 #. pause.name
+#, fuzzy
 msgid "pause"
-msgstr ""
+msgstr "중지"
 
 #. pause.doc
+#, fuzzy
 msgid "Stops execution until the user presses the <return> key."
-msgstr ""
+msgstr "사용자가 <return> 키를 누를 때까지 실행을 중지합니다."
 
 #. Number.name
+#, fuzzy
 msgid "Number"
-msgstr ""
+msgstr "번호"
 
 #. Number.doc
+#, fuzzy
 msgid ""
 "All numbers inherit from this class.\n"
 "\n"
 "If you just want to check if an argument x is a number, without\n"
 "caring what kind, use isinstance(x, Number)."
 msgstr ""
+"모든 숫자는이 클래스에서 상속받습니다.\n"
+"\n"
+"인수 x가 어떤 종류인지 신경 쓰지 않고 숫자인지 확인하려면 isinstance (x, Number)를 사용하십시오."
 
 #. Real.name
+#, fuzzy
 msgid "Real"
-msgstr ""
+msgstr "레알"
 
 #. Real.doc
+#, fuzzy
 msgid ""
 "To Complex, Real adds the operations that work on real numbers.\n"
 "\n"
@@ -366,113 +486,148 @@ msgid ""
 "\n"
 "Real also provides defaults for the derived operations."
 msgstr ""
+"Complex에 Real은 실수에서 작동하는 연산을 추가합니다.\n"
+"\n"
+"즉, float, trunc (), divmod, %, <, <=,> 및> =로 변환하는 것입니다.\n"
+"\n"
+"Real은 파생 된 작업에 대한 기본값을 제공합니다."
 
 #. Real:conjugate.name
+#, fuzzy
 msgid "conjugate"
-msgstr ""
+msgstr "결합한"
 
 #. Real:conjugate.doc
+#, fuzzy
 msgid "Conjugate is a no-op for Reals."
-msgstr ""
+msgstr "Conjugate는 Reals에게는 아무런 도움이되지 않습니다."
 
 #. Real:conjugate.args
 #. Vec:norm.args
 #. Vec:normalized.args
+#, fuzzy
 msgid "self"
-msgstr ""
+msgstr "본인"
 
 #. Real:imag
+#, fuzzy
 msgid "imag"
-msgstr ""
+msgstr "상상하다"
 
 #. pi.doc
 #. e.doc
+#, fuzzy
 msgid ""
 "float(x) -> floating point number\n"
 "\n"
 "Convert a string or number to a floating point number, if possible."
 msgstr ""
+"float (x) -> 부동 소수점 숫자\n"
+"\n"
+"가능한 경우 문자열 또는 숫자를 부동 소수점 숫자로 변환하십시오."
 
 #. cos.name
+#, fuzzy
 msgid "cos"
-msgstr ""
+msgstr "코사인"
 
 #. cos.doc
+#, fuzzy
 msgid "Cosine of an angle (in degrees)"
-msgstr ""
+msgstr "코사인 각도 (도)"
 
 #. cos.args
 #. sin.args
 #. tan.args
+#, fuzzy
 msgid "angle"
-msgstr ""
+msgstr "각도"
 
 #. sin.name
+#, fuzzy
 msgid "sin"
-msgstr ""
+msgstr "죄"
 
 #. sin.doc
+#, fuzzy
 msgid "Sine of an angle (in degrees)"
-msgstr ""
+msgstr "사인 각도 (도 단위)"
 
 #. tan.name
+#, fuzzy
 msgid "tan"
-msgstr ""
+msgstr "탠_껍질"
 
 #. tan.doc
+#, fuzzy
 msgid "Tangent of an angle (in degrees)"
-msgstr ""
+msgstr "접선 각도 (도 단위)"
 
 #. sqrt.name
+#, fuzzy
 msgid "sqrt"
-msgstr ""
+msgstr "sqrt"
 
 #. sqrt.doc
+#, fuzzy
 msgid "Return the square root of a positive number."
-msgstr ""
+msgstr "양수의 제곱근을 반환합니다."
 
 #. exp.name
+#, fuzzy
 msgid "exp"
-msgstr ""
+msgstr "특급"
 
 #. exp.doc
+#, fuzzy
 msgid "Return the exponential of a number."
-msgstr ""
+msgstr "수치의 지수를 돌려줍니다."
 
 #. log.name
 #. ln.name
+#, fuzzy
 msgid "log"
-msgstr ""
+msgstr "로그"
 
 #. log.doc
 #. ln.doc
+#, fuzzy
 msgid ""
 "Return the natural logarithm of x.\n"
 "\n"
 "Aliases: log | ln"
 msgstr ""
+"x의 자연 대수를 반환합니다.\n"
+"\n"
+"별칭 : 로그 | 음"
 
 #. log10.name
+#, fuzzy
 msgid "log10"
-msgstr ""
+msgstr "log10"
 
 #. log10.doc
+#, fuzzy
 msgid "Return the logarithm of x in base 10."
-msgstr ""
+msgstr "10 진수로 x의 대수를 반환합니다."
 
 #. log2.name
+#, fuzzy
 msgid "log2"
-msgstr ""
+msgstr "log2"
 
 #. log2.doc
+#, fuzzy
 msgid "Return the logarithm of x in base 2."
-msgstr ""
+msgstr "밑이 2 인 x의 대수를 반환합니다."
 
 #. sign.name
+#, fuzzy
 msgid "sign"
-msgstr ""
+msgstr "기호"
 
 #. sign.doc
+#, fuzzy
 msgid ""
 "Return 1 if x is positive, -1 if it is negative and 0 if it is null.\n"
 "\n"
@@ -480,20 +635,29 @@ msgid ""
 "    >>> sign(-32.0)\n"
 "    -1"
 msgstr ""
+"x가 양수이면 1을, 음수이면 -1을 반환하고 null이면 0을 반환합니다.\n"
+"\n"
+"예 :\n"
+"    >>> 부호 (-32.0)\n"
+"    -1"
 
 #. abs.name
+#, fuzzy
 msgid "abs"
-msgstr ""
+msgstr "복근"
 
 #. abs.doc
+#, fuzzy
 msgid "Return the absolute value of the argument."
-msgstr ""
+msgstr "인수의 절대 값을 반환합니다."
 
 #. round.name
+#, fuzzy
 msgid "round"
-msgstr ""
+msgstr "일주"
 
 #. round.doc
+#, fuzzy
 msgid ""
 "Round a number to a given precision in decimal digits (default 0 digits).\n"
 "ndigits may be negative.\n"
@@ -504,85 +668,116 @@ msgid ""
 "    >>> round(3.141516, 2)\n"
 "    3.14"
 msgstr ""
+"주어진 정밀도로 10 진수로 숫자를 반올림합니다 (기본값 0 자리). ndigits는 음수 일 수 있습니다.\n"
+"\n"
+"예 :\n"
+"    >>> 라운드 (1.9)\n"
+"    2\n"
+"    >>> 라운드 (3.141516, 2)\n"
+"    3.14"
 
 #. round.args
+#, fuzzy
 msgid "number, ndigits"
-msgstr ""
+msgstr "번호, _ndigits"
 
 #. ceil.name
+#, fuzzy
 msgid "ceil"
-msgstr ""
+msgstr "천장"
 
 #. ceil.doc
+#, fuzzy
 msgid ""
 "Return the ceiling of x as an Integral.\n"
 "This is the smallest integer >= x."
-msgstr ""
+msgstr "x의 천장을 Integral로 반환합니다. 이것은 가장 작은 정수> = x입니다."
 
 #. ceil.args
 #. trunc.args
+#, fuzzy
 msgid "number"
-msgstr ""
+msgstr "번호"
 
 #. trunc.name
+#, fuzzy
 msgid "trunc"
-msgstr ""
+msgstr "줄기"
 
 #. trunc.doc
+#, fuzzy
 msgid "Truncates x to the nearest Integral toward 0."
-msgstr ""
+msgstr "x를 0에 가장 가까운 Integral로 자릅니다."
 
 #. sum.name
+#, fuzzy
 msgid "sum"
-msgstr ""
+msgstr "합집합"
 
 #. sum.doc
+#, fuzzy
 msgid "Return the sum of all numbers in the sequence."
-msgstr ""
+msgstr "순서의 모든 수치의 합계를 돌려줍니다."
 
 #. sum.args
+#, fuzzy
 msgid "seq, start"
-msgstr ""
+msgstr "연속하다, 스타트"
 
 #. product.name
+#, fuzzy
 msgid "product"
-msgstr ""
+msgstr "생성물"
 
 #. product.doc
+#, fuzzy
 msgid "Return the product of all numbers in the sequence."
-msgstr ""
+msgstr "시퀀스의 모든 숫자의 곱을 반환합니다."
 
 #. product.args
+#, fuzzy
 msgid "seq, start, result, x"
-msgstr ""
+msgstr "연속하다, 스타트, 결과, 엑스"
 
 #. min.name
+#, fuzzy
 msgid "min"
-msgstr ""
+msgstr "최소"
 
 #. min.doc
+#, fuzzy
 msgid ""
 "Return the minimum value in the arguments.\n"
 "\n"
 "It called with a single sequence, return the minimum value on that sequence."
 msgstr ""
+"인수의 최소치를 돌려줍니다.\n"
+"\n"
+"단일 시퀀스를 호출하고 해당 시퀀스의 최소값을 반환합니다."
 
 #. max.name
+#, fuzzy
 msgid "max"
-msgstr ""
+msgstr "최대"
 
 #. max.doc
+#, fuzzy
 msgid ""
 "Return the maximum value in the arguments.\n"
 "\n"
 "It called with a single sequence, return the maximum value on that sequence."
 msgstr ""
+"인수의 최대 값을 리턴하십시오.\n"
+"\n"
+"단일 시퀀스로 호출하고 해당 시퀀스의 최대 값을 반환합니다."
 
 #. dice.name
+#, fuzzy
 msgid "dice"
-msgstr ""
+msgstr "주사위"
 
 #. dice.doc
+#, fuzzy
 msgid ""
 "Simulate a dice trow (return a random number between 1 and 6.\n"
 "\n"
@@ -590,138 +785,179 @@ msgid ""
 "faces\n"
 "\n"
 "Examples:\n"
-"    >>> dice(20)                                            # doctest: "
-"+SKIP\n"
+"    >>> dice(20)                                            # doctest: +SKIP\n"
 "    13"
 msgstr ""
+"주사위 던지기를 시뮬레이트하십시오 (1에서 6 사이의 임의의 숫자를 반환하십시오.\n"
+"\n"
+"다른 수의 얼굴로 주사위를 던지려면 명시적인 인수를 사용하여 호출하십시오.\n"
+"\n"
+"예 :\n"
+"    >>> 주사위 (20) # doctest : + SKIP\n"
+"    13"
 
 #. dice.args
+#, fuzzy
 msgid "n"
-msgstr ""
+msgstr "엔"
 
 #. random.name
+#, fuzzy
 msgid "random"
-msgstr ""
+msgstr "무작위의"
 
 #. random.doc
+#, fuzzy
 msgid "Return a random number between 0 and 1."
-msgstr ""
+msgstr "0에서 1 사이의 난수를 반환합니다."
 
 #. randint.name
+#, fuzzy
 msgid "randint"
-msgstr ""
+msgstr "randint"
 
 #. randint.doc
+#, fuzzy
 msgid "Return a random integer between a and b (inclusive)."
-msgstr ""
+msgstr "a와 b 사이의 임의의 정수를 반환합니다."
 
 #. randint.args
+#, fuzzy
 msgid "a, b"
-msgstr ""
+msgstr "에이, 비"
 
 #. Vec.name
+#, fuzzy
 msgid "Vec"
-msgstr ""
+msgstr "벡"
 
 #. Vec.doc
+#, fuzzy
 msgid ""
 "A tuple-based 2D vector.\n"
 "\n"
 "Supports all basic arithmetic operations."
 msgstr ""
+"튜플 기반의 2D 벡터입니다.\n"
+"\n"
+"모든 기본 산술 연산을 지원합니다."
 
 #. Vec:count
+#, fuzzy
 msgid "count"
-msgstr ""
+msgstr "카운트"
 
 #. Vec:from_angle
+#, fuzzy
 msgid "from_angle"
-msgstr ""
+msgstr "from_angle"
 
 #. Vec:index
+#, fuzzy
 msgid "index"
-msgstr ""
+msgstr "색인"
 
 #. Vec:norm.name
+#, fuzzy
 msgid "norm"
-msgstr ""
+msgstr "표준"
 
 #. Vec:norm.doc
+#, fuzzy
 msgid "Vector norm."
-msgstr ""
+msgstr "벡터 규범."
 
 #. Vec:normalized.name
+#, fuzzy
 msgid "normalized"
-msgstr ""
+msgstr "표준화_된"
 
 #. Vec:normalized.doc
+#, fuzzy
 msgid "Return unity vector."
-msgstr ""
+msgstr "화합 벡터를 반환합니다."
 
 #. Vec:perp.name
+#, fuzzy
 msgid "perp"
-msgstr ""
+msgstr "펄프"
 
 #. Vec:perp.doc
+#, fuzzy
 msgid "Returns a perpendicular vector rotated 90 degrees counter-clockwise."
-msgstr ""
+msgstr "반 시계 방향으로 90도 회전 한 수직 벡터를 반환합니다."
 
 #. Vec:perp.args
+#, fuzzy
 msgid "self, invert"
-msgstr ""
+msgstr "본인, 거꾸로_하다"
 
 #. Vec:rotate.name
+#, fuzzy
 msgid "rotate"
-msgstr ""
+msgstr "회전하다"
 
 #. Vec:rotate.doc
+#, fuzzy
 msgid "Return rotated vector by the given angle."
-msgstr ""
+msgstr "지정된 각도만큼 회전 된 벡터를 반환합니다."
 
 #. Vec:rotate.args
+#, fuzzy
 msgid "self, angle, x, y, c, s"
-msgstr ""
+msgstr "본인, 각도, 엑스, 와이, 기음, 에스"
 
 #. Vec:y
+#, fuzzy
 msgid "y"
-msgstr ""
+msgstr "와이"
 
 #. vec.name
+#, fuzzy
 msgid "vec"
-msgstr ""
+msgstr "vec"
 
 #. vec.doc
+#, fuzzy
 msgid "Return a vector with the given (x, y) components."
-msgstr ""
+msgstr "지정된 (x, y) 성분을 가지는 벡터를 돌려줍니다."
 
 #. vec.args
+#, fuzzy
 msgid "x, y"
-msgstr ""
+msgstr "엑스, 와이"
 
 #. dot.name
+#, fuzzy
 msgid "dot"
-msgstr ""
+msgstr "점"
 
 #. dot.doc
+#, fuzzy
 msgid "The dot product (scalar product) of two vectors."
-msgstr ""
+msgstr "두 벡터의 내적 (스칼라 곱)입니다."
 
 #. dot.args
+#, fuzzy
 msgid "u, v"
-msgstr ""
+msgstr "유, v"
 
 #. exiter.name
+#, fuzzy
 msgid "quit"
-msgstr ""
+msgstr "떠나다"
 
 #. exiter.doc
+#, fuzzy
 msgid "Type quit() to leave."
-msgstr ""
+msgstr "종료하려면 quit ()을 입력하십시오."
 
 #. cls.name
+#, fuzzy
 msgid "cls"
-msgstr ""
+msgstr "cls"
 
 #. cls.doc
+#, fuzzy
 msgid "Clear screen"
-msgstr ""
+msgstr "화면 지우기"
