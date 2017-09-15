@@ -4,8 +4,8 @@ import importlib
 
 from lazyutils import lazy
 
-from transpyler.translate.translate import translate_mod
 from transpyler.translate.gettext import gettext_for
+from transpyler.translate.translate import translate_mod
 from .info import Info
 from .introspection import Introspection
 from .lexer import Lexer
@@ -358,7 +358,6 @@ class Transpyler(metaclass=SingletonMeta):
             ns.update(turtle_ns)
         self.namespace = ns
         return ns
-
 
     #
     # External execution
