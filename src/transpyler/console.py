@@ -86,7 +86,7 @@ class TranspylerConsole(code.InteractiveConsole):
         super().interact(banner, exitmsg)
 
 
-def start_console(namespace=None, transpyler=None):
+def start_console(*, namespace=None, transpyler=None):
     """
     Runs the main console.
     """

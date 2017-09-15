@@ -1,17 +1,19 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.0\n"
-"Report-Msgid-Bugs-To: fabiomacedomendes@gmail.com\n"
+"Project-Id-Version: \n"
+"Language: kr\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #. range.name
+#, fuzzy
 msgid "range"
-msgstr ""
+msgstr "range"
 
 #. range.doc
+#, fuzzy
 msgid ""
 "range(stop) -> range object\n"
 "range(start, stop[, step]) -> range object\n"
@@ -22,22 +24,31 @@ msgid ""
 "These are exactly the valid indices for a list of 4 elements.\n"
 "When step is given, it specifies the increment (or decrement)."
 msgstr ""
+"range(stop) -> range object range(start, stop[, step]) -> range object\n"
+"\n"
+"Return an object that produces a sequence of integers from start (inclusive) to stop (exclusive) by step.  range(i, j) produces i, i+1, i+2, ..., j-1. start defaults to 0, and stop is omitted!  range(4) produces 0, 1, 2, 3. These are exactly the valid indices for a list of 4 elements. When step is given, it specifies the increment (or decrement)."
 
 #. range.args
 #. concatenate.args
+#, fuzzy
 msgid "args"
-msgstr ""
+msgstr "args"
 
 #. sleep.name
+#, fuzzy
 msgid "sleep"
-msgstr ""
+msgstr "sleep"
 
 #. sleep.doc
+#, fuzzy
 msgid ""
 "Delay execution for a given number of seconds.\n"
 "\n"
 "The argument may be a floating point number for subsecond precision."
 msgstr ""
+"Delay execution for a given number of seconds.\n"
+"\n"
+"The argument may be a floating point number for subsecond precision."
 
 #. sleep.args
 msgid "seconds"
