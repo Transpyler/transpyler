@@ -44,6 +44,7 @@ class QLine(QGraphicsLineItem, QObject):
     """
     A line/QObject class.
     """
+
     def __init__(self, v0, v1, pen):
         x0, y0 = v0
         x1, y1 = v1

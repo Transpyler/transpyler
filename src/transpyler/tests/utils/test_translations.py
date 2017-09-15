@@ -65,7 +65,7 @@ class TestTranslateModule:
 
         assert new_mod.mostre.__doc__.startswith(
             'Mostra o objeto ou texto fornecido na tela.')
-            # assert new_mod.cos.__doc__ == ''
+        # assert new_mod.cos.__doc__ == ''
 
     def test_translate_standard_module_to_pt_BR(self):
         mod = translate_mod('pt_BR')

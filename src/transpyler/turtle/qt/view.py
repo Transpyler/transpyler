@@ -49,35 +49,35 @@ class TurtleView(QtWidgets.QGraphicsView):
         self._updatePosLabelText((0, 0))
         self._updatePosLabelPosition()
 
-    def zoomIn(self):
+    def zoomIn(self):  # noqa: N802
         """
         Increase the zoom.
         """
         self.scale(self._zoomfactor, self._zoomfactor)
 
-    def zoomOut(self):
+    def zoomOut(self):  # noqa: N802
         self.scale(1 / self._zoomfactor, 1 / self._zoomfactor)
 
-    def notifyPosChanged(self, turtle, pos):
+    def notifyPosChanged(self, turtle, pos):  # noqa: N802
         if turtle is self._scene.mainTurtle():
             self._updatePosLabelText(pos)
 
-    def resizeEvent(self, QResizeEvent):
+    def resizeEvent(self, event):  # noqa: N802
         self._updatePosLabelPosition()
-        super().resizeEvent(QResizeEvent)
+        super().resizeEvent(event)
 
-    def _updatePosLabelPosition(self):
+    def _updatePosLabelPosition(self):  # noqa: N802
         size = self.viewport().size()
         w = self._posLabel
         margin = 3
         w.move(size.width() - w.width() - margin,
                size.height() - w.height() - margin)
 
-    def _updatePosLabelText(self, pos):
+    def _updatePosLabelText(self, pos):  # noqa: N802
         s = "x=%s, y=%s" % (round(pos[0]), round(pos[1]))
         self._posLabel.setText(s)
 
-    def saveImage(self, fname):
+    def saveImage(self, fname):  # noqa: N802
         """
         Saves current viewport as a png file of the given fname.
         """

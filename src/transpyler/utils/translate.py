@@ -331,9 +331,11 @@ def google_translate(lang, verbose=True, prompt=True):
     # Utility functions
     echo = print \
         if verbose or prompt else lambda *args, **kwargs: None
-    showline = lambda: print('\n' + '-' * 40) \
+
+    def showline(): return print('\n' + '-' * 40) \
         if verbose or prompt else lambda: None
-    ask = lambda: input('\nTranslate? [Y/n]').lower() in ('y', '') \
+
+    def ask(): return input('\nTranslate? [Y/n]').lower() in ('y', '') \
         if prompt else lambda: True
 
     # Prepare

@@ -3,6 +3,7 @@ from gettext import gettext as _
 
 from unidecode import unidecode
 
+
 def synonyms(*args, api_function=True):
     """
     Decorator that marks synonyms/aliases of a function.

@@ -77,7 +77,7 @@ def getsetter(name):
     """
 
     getter = op.methodcaller('get' + name)
-    setter = lambda x, v: setattr(x, 'set' + name, v)
+    setter = lambda self, v: setattr(self, 'set' + name, v)
     return property(getter, setter)
 
 

@@ -13,18 +13,30 @@ class TurtleGroup(collections.MutableSequence):
 
     _state_class = None
     __slots__ = ('_data',)
-    __len__ = lambda x: len(x._data)
-    __iter__ = lambda x: iter(x._data)
-    __getitem__ = lambda x, i: x._data[i]
-    __delitem__ = lambda x, i: x._data.__delitem__(i)
-    __setitem__ = lambda x, i, v: x._data.__setitem__(i, v)
-    insert = lambda x, i, v: x.insert(i, v)
 
     def __init__(self):
         self._data = []
 
     def __repr__(self):
         return 'TurtleGroup(%r)' % self._data
+
+    def __len__(self):
+        return len(self._data)
+
+    def __iter__(self):
+        return iter(self._data)
+
+    def __getitem__(self, i):
+        return self._data[i]
+
+    def __delitem__(self, i):
+        return self._data.__delitem__(i)
+
+    def __setitem__(self, i, v):
+        return self._data.__setitem__(i, v)
+
+    def insert(self, i, v):
+        return self.insert(i, v)
 
     @vecargsmethod
     def setpos(self, value):
@@ -175,7 +187,6 @@ class TurtleGroup(collections.MutableSequence):
         """
         for t in self:
             t.reset()
-
 
     # Aliases
     fd = forward

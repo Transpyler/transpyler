@@ -23,10 +23,17 @@ class StateGroup(collections.MutableSequence):
         value.register(self)
         self._turtles.__setitem__(idx, value)
 
-    __len__ = lambda self: len(self._turtles)
-    __iter__ = lambda self: iter(self._turtles)
-    __getitem__ = lambda self, idx: self._turtles[idx]
-    __delitem__ = lambda self, idx: self._turtles.__delitem__[idx]
+    def __len__(self):
+        return len(self._turtles)
+
+    def __iter__(self):
+        return iter(self._turtles)
+
+    def __getitem__(self, idx):
+        return self._turtles[idx]
+
+    def __delitem__(self, idx):
+        return self._turtles.__delitem__[idx]
 
     def getturtle(self, id):
         """

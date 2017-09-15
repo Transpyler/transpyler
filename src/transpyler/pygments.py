@@ -26,33 +26,33 @@ def transpyler_lexer_factory(transpyler):
             mimetypes=transpyler.mimetypes,
             flags=re.MULTILINE | re.UNICODE,
             uni_name="[%s][%s]*" % (uni.xid_start, uni.xid_continue),
-            tokens=make_tokens(transpyler),
+            tokens=make_transpyled_tokens(transpyler),
         )
     )
 
 
-def make_tokens(transpyler):
+def make_transpyled_tokens(transpyler):
     """
-    Return a list of pygments make_tokens from a transpyler object.
+    Return a list of pygments make_transpyled_tokens from a transpyler object.
     """
 
-    KEYWORDS = transpyler.introspection.all_keywords
-    CONSTANTS = transpyler.introspection.all_constants
-    EXCEPTIONS = transpyler.introspection.all_exceptions
-    BUILTINS = transpyler.introspection.all_builtins
+    keywords = transpyler.introspection.all_keywords
+    constants = transpyler.introspection.all_constants
+    exceptions = transpyler.introspection.all_exceptions
+    builtins = transpyler.introspection.all_builtins
 
     uni_name = "[%s][%s]*" % (uni.xid_start, uni.xid_continue)
 
-    tokens = Python3Lexer.tokens.copy()  # @UndefinedVariable
+    tokens = Python3Lexer.tokens.copy()
 
     tokens['keywords'] = [
-        (words(KEYWORDS, suffix=r'\b'), Keyword),
-        (words(CONSTANTS, suffix=r'\b'), Keyword.Constant),
+        (words(keywords, suffix=r'\b'), Keyword),
+        (words(constants, suffix=r'\b'), Keyword.Constant),
     ]
     tokens['builtins'] = [
-        (words(BUILTINS, prefix=r'(?<!\.)', suffix=r'\b'), Name.Builtin),
+        (words(builtins, prefix=r'(?<!\.)', suffix=r'\b'), Name.Builtin),
         (r'(?<!\.)(self|Ellipsis|NotImplemented)\b', Name.Builtin.Pseudo),
-        (words(EXCEPTIONS, prefix=r'(?<!\.)', suffix=r'\b'),
+        (words(exceptions, prefix=r'(?<!\.)', suffix=r'\b'),
          Name.Exception),
     ]
     tokens['numbers'] = [

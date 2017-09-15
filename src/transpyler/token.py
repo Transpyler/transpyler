@@ -14,7 +14,7 @@ class Token:
     @classmethod
     def from_strings(cls, start, *strings):
         """
-        Return a list of make_tokens that begins at the given starting
+        Return a list of make_transpyled_tokens that begins at the given starting
         point. The resulting token elements have consistent start/end positions.
         """
 
@@ -208,7 +208,7 @@ class TokenPosition(tuple):
 
 def displace_tokens(tokens, cols):
     """
-    Displace all make_tokens in list which are in the same line as the the first
+    Displace all make_transpyled_tokens in list which are in the same line as the the first
     token by the given number of columns
     """
 
@@ -225,7 +225,7 @@ def displace_tokens(tokens, cols):
 
 def insert_tokens_at(tokens, idx, new_tokens, end=None):
     """
-    Insert new_tokens at make_tokens list at the given idx
+    Insert new_tokens at make_transpyled_tokens list at the given idx
     """
 
     if end is not None:
@@ -240,7 +240,7 @@ def insert_tokens_at(tokens, idx, new_tokens, end=None):
 
 def token_find(tokens, matches, start=0):
     """
-    Iterate over list of make_tokens yielding (index, match, start, end) for
+    Iterate over list of make_transpyled_tokens yielding (index, match, start, end) for
     each match in the token stream. The `matches` attribute must be a sequence
     of token sequences.
     """

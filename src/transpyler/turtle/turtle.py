@@ -15,24 +15,8 @@ class Turtle:
     @lazy
     def _state(self):
         if self._state_factory is None:
-            try:
-                import PyQt5
-                from transpyler.turtle.state import MailboxState
-                from transpyler.turtle.qt.runners import start_client
-            except ImportError:
-                try:
-                    import tk
-                    from transpyler.turtle.tk import TkTurtleState
-                except ImportError:
-                    raise RuntimeError('tk or PyQt5 are required to run '
-                                       'the turtle module')
-                else:
-                    Turtle._state_factory = TkTurtleState
-
-            else:
-                Turtle._state_factory = MailboxState
-                start_client()
-
+            raise RuntimeError('Turtle does not define an _state_factory '
+                               'attribute')
         return self._state_factory(**self._args)
 
     def __init__(self, pos=None, heading=0.0, *, drawing=True,

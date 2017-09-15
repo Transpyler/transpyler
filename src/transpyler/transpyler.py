@@ -27,11 +27,11 @@ class SingletonMeta(type):
 
     _subclasses = []
 
-    def __init__(cls, *args, **kwargs):
+    def __init__(cls, *args, **kwargs):  # noqa: N805
         super().__init__(*args, **kwargs)
         type(cls)._subclasses.append(cls)
 
-    def __call__(cls, *args, **kwargs):
+    def __call__(cls, *args, **kwargs):  # noqa: N805
         try:
             return cls._instance
         except AttributeError:
@@ -362,7 +362,7 @@ class Transpyler(metaclass=SingletonMeta):
         # Select the console application
         if console == 'auto':
             try:
-                import IPython
+                import IPython  # noqa: F401
             except ImportError:
                 console = 'console'
             else:

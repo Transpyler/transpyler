@@ -36,18 +36,18 @@ class TurtleScene(QtWidgets.QGraphicsScene):
         assert self._turtles.inbox is self._inbox
         assert self._turtles.outbox is self._outbox
 
-    def clearTurtles(self):
+    def clearTurtles(self):  # noqa: N802
         self._turtles.clear()
 
     #
     # Events and signals
     #
-    def clearScreen(self):
+    def clearScreen(self):  # noqa: N802
         state = self.fullTurtleState()
         self.clear()
         self.setFullTurtleState(state)
 
-    def restartScreen(self):
+    def restartScreen(self):  # noqa: N802
         self.clear()
 
     #
@@ -59,7 +59,7 @@ class TurtleScene(QtWidgets.QGraphicsScene):
         """
         self._turtles.ping(receive=receive)
 
-    def timerEvent(self, timer):
+    def timerEvent(self, timer):  # noqa: N802
         """
         Scheduled to be executed at some given framerate.
 
@@ -74,7 +74,7 @@ class TurtleScene(QtWidgets.QGraphicsScene):
     #
     # Turtle control
     #
-    def newTurtle(self, *, default=False, **kwds):
+    def newTurtle(self, *, default=False, **kwds):  # noqa: N802
         """
         Adds new turtle to the scene and return it.
         """
@@ -85,13 +85,13 @@ class TurtleScene(QtWidgets.QGraphicsScene):
             self.setTurtle(turtle)
         return turtle
 
-    def turtle(self):
+    def turtle(self):  # noqa: N802
         """
         Return the active turtle.
         """
         return self._turtle
 
-    def setTurtle(self, turtle):
+    def setTurtle(self, turtle):  # noqa: N802
         """
         Configures the active Turtle object.
         """
@@ -100,19 +100,19 @@ class TurtleScene(QtWidgets.QGraphicsScene):
     #
     # Turtle visibility
     #
-    def isActiveTurtleVisible(self):
+    def isActiveTurtleVisible(self):  # noqa: N802
         return not self.isActiveTurtleHidden()
 
-    def isActiveTurtleHidden(self):
+    def isActiveTurtleHidden(self):  # noqa: N802
         if self._turtle is None:
             return True
         return self._turtle.hidden
 
-    def hideActiveTurtle(self):
+    def hideActiveTurtle(self):  # noqa: N802
         if self._turtle is not None:
             self._turtle.hide()
 
-    def showActiveTurtle(self):
+    def showActiveTurtle(self):  # noqa: N802
         if self._turtle is None:
             raise ValueError('no turtle defined')
         self._turtle.show()

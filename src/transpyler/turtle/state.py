@@ -140,43 +140,47 @@ class PropertyState(TurtleState):
     """
 
     # Position
-    getpos = lambda x: x._pos
-    setpos = lambda x, v: setattr(x, '_pos', vec(*v))
+    getpos = lambda self: self._pos
+    setpos = lambda self, v: setattr(self, '_pos', vec(*v))
     pos = getsetter('pos')
 
     # Heading
-    getheading = lambda x: x._heading
-    setheading = lambda x, v: setattr(x, '_heading', v)
+    getheading = lambda self: self._heading
+    setheading = lambda self, v: setattr(self, '_heading', v)
     heading = getsetter('heading')
 
     # Drawing
-    getdrawing = lambda x: x._drawing
-    setdrawing = lambda x, v: setattr(x, '_drawing', v)
+    getdrawing = lambda self: self._drawing
+    setdrawing = lambda self, v: setattr(self, '_drawing', v)
     drawing = getsetter('drawing')
 
     # Color
-    getcolor = lambda x: x._color
-    setcolor = lambda x, v: setattr(x, '_color', v)
+    getcolor = lambda self: self._color
+    setcolor = lambda self, v: setattr(self, '_color', v)
     color = getsetter('color')
 
     # Fillcolor
-    getfillcolor = lambda x: x._fillcolor
-    setfillcolor = lambda x, v: setattr(x, '_fillcolor', v)
+    getfillcolor = lambda self: self._fillcolor
+    setfillcolor = lambda self, v: setattr(self, '_fillcolor', v)
     fillcolor = getsetter('fillcolor')
 
     # Width
-    getwidth = lambda x: x._width
-    setwidth = lambda x, v: setattr(x, '_width', v)
+    getwidth = lambda self: self._width
+    setwidth = lambda self, v: setattr(self, '_width', v)
     width = getsetter('width')
 
     # Hidden
-    gethidden = lambda x: x._hidden
-    sethidden = lambda x, v: setattr(x, '_hidden', v)
-    hidden = getsetter('hiden')
+    gethidden = lambda self: self._hidden
+    sethidden = lambda self, v: setattr(self, '_hidden', v)
+    hidden = getsetter('hidden')
 
     # Avatar
-    getavatar = lambda x: x._avatar
-    setavatar = lambda x, v: x.validate_avatar(v) and setattr(x, '_avatar', v)
+    getavatar = lambda self: self._avatar
+
+    def setavatar(self, v):
+        self.validate_avatar(v)
+        self._avatar = v
+
     avatar = getsetter('avatar')
 
 
@@ -252,8 +256,12 @@ class MailboxState(RemoteState):
     the outbox and the server responds with a message in the inbox.
     """
 
-    inbox_factory = lambda self: Queue()
-    outbox_factory = lambda self: Queue()
+    def inbox_factory(self):
+        return Queue()
+
+    def outbox_factory(self):
+        return Queue()
+
     timeout = 1.0
 
     def __init__(self, **kwargs):
