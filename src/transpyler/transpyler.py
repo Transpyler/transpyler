@@ -467,13 +467,15 @@ class Transpyler(metaclass=SingletonMeta):
 
         if console == 'qtconsole':
             from .jupyter import start_jupyter
-            start_jupyter(self, gui=True)
+            start_jupyter(transpyler=self, gui=True)
+
         elif console == 'jupyter':
             from .jupyter import start_jupyter
-            start_jupyter(self, gui=False)
+            start_jupyter(transpyler=self, gui=False)
+
         elif console == 'console':
             from .console import start_console
-            start_console(self)
+            start_console(transpyler=self)
 
     def start_notebook(self):
         """
