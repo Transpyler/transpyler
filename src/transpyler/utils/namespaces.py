@@ -37,15 +37,13 @@ def collect_synonyms(namespace, add_unaccented=True):
     return result
 
 
-def collect_mod_namespace(mod=None):
+def extract_namespace(mod):
     """
     Return a namespace dict with all public names for the given module.
 
     If no module is given, uses transpyler's standard lib.
     """
-    import transpyler.lib as lib
-
-    namespace = vars(mod or lib)
+    namespace = vars(mod)
     return {k: v for (k, v) in namespace.items() if not k.startswith('_')}
 
 

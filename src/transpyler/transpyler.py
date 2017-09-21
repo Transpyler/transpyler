@@ -1,15 +1,16 @@
 import builtins as _builtins
 import codeop
 import importlib
+import types
 
 from lazyutils import lazy
 
-from transpyler.translate.gettext import gettext_for
-from transpyler.translate.translate import translate_mod
 from .info import Info
 from .introspection import Introspection
 from .lexer import Lexer
 from .utils import pretty_callable
+from .translate.gettext import gettext_for
+from .translate.translate import translate_namespace
 from .utils.utils import has_qt
 
 # Save useful builtin functions
@@ -94,7 +95,6 @@ class Transpyler(metaclass=SingletonMeta):
     version = '0.1.0'
     codemirror_mode = 'python'
     file_extension = 'py'
-    builtin_modules = ()
 
     # Language info and instrospection
     introspection = lazy(lambda self: self.introspection_factory)
@@ -379,26 +379,14 @@ class Transpyler(metaclass=SingletonMeta):
         Return a dictionary with the default global namespace for the
         transpyler runtime.
         """
-        ns = {}
-
-        load_modules_queue = []
-
-        # Load modules from list of modules
-        for mod in self.builtin_modules:
-            mod = importlib.import_module(mod)
-            load_modules_queue.append(mod)
+        from transpyler import lib
+        
+        ns = extract_namespace(lib)
 
         # Load default translations from using the lang option
         if self.lang:
-            mod = translate_mod(self.lang)
-            load_modules_queue.append(mod)
-
-        # Load all modules in queue
-        for mod in load_modules_queue:
-            for name in dir(mod):
-                if name.startswith('_') or name.isupper():
-                    continue
-                ns[name] = getattr(mod, name)
+            translated = translate_namespace(ns, self.lang)
+            ns.update(translated)
 
         return ns
 
@@ -410,15 +398,21 @@ class Transpyler(metaclass=SingletonMeta):
         if backend == 'tk':
             from transpyler.turtle.tk import make_turtle_namespace
 
-            return make_turtle_namespace()
+            ns = make_turtle_namespace()
 
         elif backend == 'qt':
             from transpyler.turtle.qt import make_turtle_namespace
 
-            return make_turtle_namespace()
+            ns = make_turtle_namespace()
 
         else:
             raise ValueError('invalid backend: %r' % backend)
+
+        if self.lang:
+            translated = translate_namespace(ns, self.lang)
+            ns.update(translated)
+        
+        return ns            
 
     def recreate_namespace(self):
         """
@@ -538,3 +532,14 @@ def get_transpyler() -> Transpyler:
     """
 
     return SingletonMeta._subclasses[-1]()
+
+
+def extract_namespace(mod):
+    """
+    Return a dictionary with module public variables.
+    """
+
+    return {
+        name: getattr(mod, name) for name in dir(mod) 
+        if not name.startswith('_')
+    } 
