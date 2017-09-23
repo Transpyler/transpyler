@@ -1,5 +1,38 @@
 from .utils.utils import has_qt
 
+def run(transpyler):
+    """
+    Starts the default main application.
+    """
+    import click
+
+    @click.command()
+    @click.option('--cli', '-c', is_flag=True, default=False,
+                  help='start gui-less console.')
+    @click.option('--console', is_flag=True, default=False,
+                  help='start a simple gui-less console.')
+    @click.option('--notebook/--no-notebook', '-n', default=False,
+                  help='starts notebook server.')
+    def main(cli, notebook, console):
+        command = None
+
+        if cli:
+            command = lambda: start_console(transpyler, console='auto')
+        elif console:
+            command = lambda: start_console(transpyler, console='console')
+        elif notebook:
+            command = lambda: start_notebook(transpyler)
+        elif has_qt():
+            command = lambda: start_qturtle(transpyler)
+        else:
+            click.echo('Could not start GUI. Do you have Qt installed?',
+                           err=True)
+            command = lambda: start_console(transpyler, console='nogui')
+
+        return command()
+
+    return main()
+
 def start_console(transpyler, console='auto', turtle='auto'):
     """
     Starts a regular python console with the current transpyler.

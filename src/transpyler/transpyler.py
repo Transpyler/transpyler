@@ -6,11 +6,9 @@ from lazyutils import lazy
 from .info import Info
 from .introspection import Introspection
 from .lexer import Lexer
-from .translate import gettext_for
-from .translate import translate_namespace, translator_factory
-from .utils import pretty_callable
-from .utils.utils import has_qt
-from .runnable import *
+from .translate.gettext import gettext_for
+from .translate.translate import translate_namespace
+from .runnable import run
 
 # Save useful builtin functions
 _compile = _builtins.compile
@@ -120,7 +118,7 @@ class Transpyler(metaclass=SingletonMeta):
     )
     long_banner = lazy(lambda self: self.short_banner)
     lexer = lazy(lambda self: self.lexer_factory(self))
-    
+
     @lazy
     def name(self):
         cls_name = self.__class__.__name__.lower()
@@ -339,7 +337,6 @@ class Transpyler(metaclass=SingletonMeta):
             transpile=transpile, is_incomplete_source=is_incomplete_source,
             namespace=namespace,
         )
-    
 
     #
     # Console helpers
@@ -428,49 +425,7 @@ class Transpyler(metaclass=SingletonMeta):
     # External execution
     #
     def start_main(self):
-        """
-        Starts the default main application.
-        """
-
-        import click
-
-        @click.command()
-        @click.option('--cli', '-c', is_flag=True, default=False,
-                      help='start gui-less console.')
-        @click.option('--console', is_flag=True, default=False,
-                      help='start a simple gui-less console.')
-        @click.option('--notebook/--no-notebook', '-n', default=False,
-                      help='starts notebook server.')
-        def main(cli, notebook, console):
-            if cli:
-                return start_console(self, console='auto')
-            if console:
-                return start_console(self, console='console')
-            if notebook:
-                return start_notebook(self)
-
-            if has_qt():
-                return start_qturtle(self)
-            else:
-                click.echo('Could not start GUI. Do you have Qt installed?',
-                               err=True)
-                return start_console(self, console='nogui')
-
-            # if cli:
-            #     return self.start_console(console='auto')
-            # if console:
-            #     return self.start_console(console='console')
-            # if notebook:
-            #     return self.start_notebook()
-            #
-            # if has_qt():
-            #     return self.start_qturtle()
-            # else:
-            #     click.echo('Could not start GUI. Do you have Qt installed?',
-            #                err=True)
-            #     return self.start_console(console='nogui')
-
-        return main()
+        return run(self)
 
 
 #
