@@ -49,3 +49,21 @@ def make_turtle_namespace(backend, lang):
         ns.update(translated)
     
     return ns 
+
+
+def recreate_namespace(transpyler):
+    """
+    Recompute the default namespace for the transpyler object.
+    """
+    ns = make_global_namespace(transpyler.lang)
+
+    if transpyler.has_turtle_functions:
+        if transpyler.turtle_backend is None:
+            raise RuntimeError(
+                '.turtle_backend of transpyler object must be set to '
+                'either "tk" or "qt"'
+            )
+        turtle_ns = make_turtle_namespace(transpyler.turtle_backend, transpyler.lang)
+        ns.update(turtle_ns)
+    transpyler.namespace = ns
+    return ns
