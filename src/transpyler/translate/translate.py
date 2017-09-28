@@ -7,6 +7,8 @@ import types
 from collections import defaultdict
 from functools import singledispatch
 
+from lazyutils import lazy
+
 from .extract import extract_translations
 from .gettext import gettext_for
 from ..utils.decorators import synonyms as _synonyms
@@ -114,3 +116,16 @@ def apply_translations_type(cls: type, data: dict):  # noqa: F811
     """
 
     return cls
+
+class Translator():
+
+    def __init__(self, lang):
+        self.gettext = gettext_for(lang)
+
+    def translate(self, st):
+        """
+        Translates string to the requested language.
+        """
+        return self.gettext.gettext(st)
+
+

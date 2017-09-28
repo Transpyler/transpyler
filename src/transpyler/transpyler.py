@@ -7,6 +7,7 @@ from .info import Info
 from .introspection import Introspection
 from .lexer import Lexer
 from .translate.gettext import gettext_for
+from .translate.translate import Translator
 from .translate.translate import translate_namespace
 from .utils import pretty_callable
 from .utils.utils import has_qt
@@ -107,18 +108,19 @@ class Transpyler(metaclass=SingletonMeta):
         lambda self: "http://github.com/transpyler/%s/" % self.name
     )
 
+    translator = lazy(lambda self: Translator(self.lang))
+
     # Computed constants
     display_name = lazy(lambda self: self.name.title().replace('_', ' '))
     short_banner = lazy(
-        lambda self: self.translate(
+        lambda self: self.translator.translate(
             '%s %s\n'
             'Type "help", "copyright" or "license" for more information.' %
             (self.display_name, self.version))
     )
     long_banner = lazy(lambda self: self.short_banner)
     lexer = lazy(lambda self: self.lexer_factory(self))
-    gettext = lazy(lambda self: gettext_for(self.lang))
-
+    
     @lazy
     def name(self):
         cls_name = self.__class__.__name__.lower()
@@ -336,15 +338,7 @@ class Transpyler(metaclass=SingletonMeta):
             transpile=transpile, is_incomplete_source=is_incomplete_source,
             namespace=namespace,
         )
-
-    #
-    # Utilities
-    #
-    def translate(self, st):
-        """
-        Translates string to the requested language.
-        """
-        return self.gettext.gettext(st)
+    
 
     #
     # Console helpers
@@ -364,12 +358,12 @@ class Transpyler(metaclass=SingletonMeta):
         message for its repr.
         """
 
-        @pretty_callable(self.translate('exiter.doc'))
+        @pretty_callable(self.translator.translate('exiter.doc'))
         def exit():
             return function()
 
-        exit.__name__ = self.translate('exiter.name')
-        exit.__doc__ = self.translate('exiter.doc')
+        exit.__name__ = self.translator.translate('exiter.name')
+        exit.__doc__ = self.translator.translate('exiter.doc')
         return exit
 
     def make_global_namespace(self):

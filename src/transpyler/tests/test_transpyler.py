@@ -149,4 +149,4 @@ class TestPyBrLanguage(PyBrFixtures, TranspyledLanguage):
         assert 'mostre' in ns
 
     def test_translate(self, transpyler):
-        assert transpyler.translate('file') == 'arquivo'
+        assert transpyler.translator.translate('left') == 'esquerda'
