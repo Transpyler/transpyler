@@ -12,6 +12,7 @@ from .utils import pretty_callable
 from .translate.gettext import gettext_for
 from .translate.translate import translate_namespace
 from .utils.utils import has_qt
+from .namespace import make_global_namespace
 
 # Save useful builtin functions
 _compile = _builtins.compile
@@ -374,22 +375,6 @@ class Transpyler(metaclass=SingletonMeta):
         exit.__doc__ = self.translate('exiter.doc')
         return exit
 
-    def make_global_namespace(self):
-        """
-        Return a dictionary with the default global namespace for the
-        transpyler runtime.
-        """
-        from transpyler import lib
-        
-        ns = extract_namespace(lib)
-
-        # Load default translations from using the lang option
-        if self.lang:
-            translated = translate_namespace(ns, self.lang)
-            ns.update(translated)
-
-        return ns
-
     def make_turtle_namespace(self, backend):
         """
         Return a dictionary with all turtle-related functions.
@@ -418,7 +403,7 @@ class Transpyler(metaclass=SingletonMeta):
         """
         Recompute the default namespace for the transpyler object.
         """
-        ns = self.make_global_namespace()
+        ns = make_global_namespace(self.lang)
 
         if self.has_turtle_functions:
             if self.turtle_backend is None:
@@ -532,14 +517,3 @@ def get_transpyler() -> Transpyler:
     """
 
     return SingletonMeta._subclasses[-1]()
-
-
-def extract_namespace(mod):
-    """
-    Return a dictionary with module public variables.
-    """
-
-    return {
-        name: getattr(mod, name) for name in dir(mod) 
-        if not name.startswith('_')
-    } 
