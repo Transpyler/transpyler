@@ -25,3 +25,27 @@ def extract_namespace(mod):
         name: getattr(mod, name) for name in dir(mod) 
         if not name.startswith('_')
     } 
+
+def make_turtle_namespace(backend, lang):
+    """
+    Return a dictionary with all turtle-related functions.
+    """
+
+    if backend == 'tk':
+        from transpyler.turtle.tk import make_turtle_namespace
+
+        ns = make_turtle_namespace()
+
+    elif backend == 'qt':
+        from transpyler.turtle.qt import make_turtle_namespace
+
+        ns = make_turtle_namespace()
+
+    else:
+        raise ValueError('invalid backend: %r' % backend)
+
+    if lang:
+        translated = translate_namespace(ns, lang)
+        ns.update(translated)
+    
+    return ns 

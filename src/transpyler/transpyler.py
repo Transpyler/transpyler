@@ -10,9 +10,8 @@ from .introspection import Introspection
 from .lexer import Lexer
 from .utils import pretty_callable
 from .translate.gettext import gettext_for
-from .translate.translate import translate_namespace
 from .utils.utils import has_qt
-from .namespace import make_global_namespace
+from .namespace import make_global_namespace, make_turtle_namespace
 
 # Save useful builtin functions
 _compile = _builtins.compile
@@ -374,30 +373,7 @@ class Transpyler(metaclass=SingletonMeta):
         exit.__name__ = self.translate('exiter.name')
         exit.__doc__ = self.translate('exiter.doc')
         return exit
-
-    def make_turtle_namespace(self, backend):
-        """
-        Return a dictionary with all turtle-related functions.
-        """
-
-        if backend == 'tk':
-            from transpyler.turtle.tk import make_turtle_namespace
-
-            ns = make_turtle_namespace()
-
-        elif backend == 'qt':
-            from transpyler.turtle.qt import make_turtle_namespace
-
-            ns = make_turtle_namespace()
-
-        else:
-            raise ValueError('invalid backend: %r' % backend)
-
-        if self.lang:
-            translated = translate_namespace(ns, self.lang)
-            ns.update(translated)
-        
-        return ns            
+         
 
     def recreate_namespace(self):
         """
@@ -411,7 +387,7 @@ class Transpyler(metaclass=SingletonMeta):
                     '.turtle_backend of transpyler object must be set to '
                     'either "tk" or "qt"'
                 )
-            turtle_ns = self.make_turtle_namespace(self.turtle_backend)
+            turtle_ns = make_turtle_namespace(self.turtle_backend, self.lang)
             ns.update(turtle_ns)
         self.namespace = ns
         return ns
