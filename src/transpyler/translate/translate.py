@@ -7,72 +7,43 @@ import types
 from collections import defaultdict
 from functools import singledispatch
 
-from transpyler import lib
 from .extract import extract_translations
 from .gettext import gettext_for
 from ..utils.decorators import synonyms as _synonyms
-from ..utils.namespaces import collect_synonyms, collect_mod_namespace
+from ..utils.namespaces import collect_synonyms
 
 
-#
-# Translate objects: these functions produce translated versions of
-# modules/namespaces from a given translation .po file.
-#
-def translate_mod(lang, mod=lib, path='', synonyms=True,
-                  add_unaccented=True, keep_old=True):
+def translate_namespace(ns, lang, synonyms=True, add_unaccented=True):
     """
-    Translates a module and register the translation in the given sys.modules
-    path.
-
-    Examples:
-        >>> translate_mod('pt_BR')
-        <module 'lib'>
-
-    Args:
-        lang:
-            The desired output language.
-        mod:
-            Optional module object. If not given, translates transpyler.lib.
-
-    Returns:
-        A module object.
-    """
-
-    new_mod = types.ModuleType(path or mod.__name__)
-    namespace = translate_namespace(lang, mod,
-                                    keep_old=keep_old,
-                                    synonyms=synonyms,
-                                    add_unaccented=add_unaccented)
-    for k, v in namespace.items():
-        setattr(new_mod, k, v)
-
-    return new_mod
-
-
-def translate_namespace(lang, mod=lib, synonyms=True, add_unaccented=True,
-                        keep_old=True):
-    """
-    Return a namespace dict with the given ``lib``` module translated according
-    to the request ``lang``.
-
-    If no lib is given, uses the default transpyler.lib.
+    Return a dict with the given namespace translated according to the 
+    requested ``lang``.
     """
 
     _ = gettext_for(lang).gettext
-    obj_mapping = defaultdict(dict)
-    ns = collect_mod_namespace(mod)
-    strings = extract_translations(ns)
-    strings = {tuple(k.split('.')): v for k, v in strings.items()}
-    for k, v in strings.items():
-        name, *args = k
-        if v:
-            obj_mapping[name]['.'.join(args)] = _(v)
+    translation_data = defaultdict(dict)
+    translation_strings = extract_translations(ns)
+    for name, value in translation_strings.items():
+        # Translate methods in a class
+        if ':' in name:
+            classname, method = name.split(':')
+            name, sep, post = method.partition('.')
+            class_dict = translation_data[classname]
+            method_dict = class_dict.setdefault(name, {})
+            method_dict[post] = _(value)
+
+        # Translate a function or regular object 
+        else:
+            name, sep, post = name.partition('.')
+            translation_data[name][post] = _(value)
 
     # Create namespace
-    namespace = dict(mod.__dict__) if keep_old else {}
-    for k, v in obj_mapping.items():
-        name = _(k).partition('\n')[0].strip()
-        namespace[name] = translate_object(k, v)
+    namespace = dict(ns)
+    for name, data in translation_data.items():
+        if name not in ns:
+            continue
+        obj = ns[name]
+        translated_name = _(name).partition('\n')[0].strip()
+        namespace[translated_name] = apply_translations(obj, data)
 
     # Add synonyms and unaccented versions
     if synonyms:
@@ -82,24 +53,15 @@ def translate_namespace(lang, mod=lib, synonyms=True, add_unaccented=True,
 
 
 @singledispatch
-def translate_object(name, data):
+def apply_translations(obj, data):
     """
-    Translate object using a dictionary of (attr, translation) pairs.
+    Translate object by applying translation data to object.
     """
-
-    # FIXME: handle class:method names properly
-    try:
-        value = getattr(lib, name)
-    except AttributeError:
-        return data
-    try:
-        return translate_object(value, data)
-    except TypeError:
-        return value
+    return obj
 
 
-@translate_object.register(types.FunctionType)
-def translate_function(func, data: dict):
+@apply_translations.register(types.FunctionType)
+def apply_translations_function(func, data: dict):
     """
     Return a translated version of func.
     """
@@ -143,11 +105,12 @@ def translate_function(func, data: dict):
     return _synonyms(*synonyms)(translated)
 
 
-@translate_object.register(type)
-def translate_type(cls: type, data: dict):  # noqa: F811
+@apply_translations.register(type)
+def apply_translations_type(cls: type, data: dict):  # noqa: F811
     """
     Extend class with translated method.
 
     Changes the name and other parameters *inplace*.
     """
+
     return cls
