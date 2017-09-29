@@ -19,7 +19,7 @@ _input = _builtins.input
 _print = _builtins.print
 
 
-class SingletonMeta(type):
+class SingletonTranspyler(type):
     """
     Base metaclass for classes that have a single instance.
     """
@@ -37,8 +37,15 @@ class SingletonMeta(type):
             Transpyler._instance = super().__call__(*args, **kwargs)
             return cls._instance
 
+    @staticmethod
+    def getInstance():
+        """ Static access method. """
+        if Transpyler._subclasses == None:
+            Transpyler()
+        return Singleton._subclasses 
 
-class Transpyler(metaclass=SingletonMeta):
+
+class Transpyler(metaclass=SingletonTranspyler):
     """
     Base class for all new Transpylers.
 
@@ -524,13 +531,6 @@ class Transpyler(metaclass=SingletonMeta):
 #
 # Utility functions
 #
-def get_transpyler() -> Transpyler:
-    """
-    Return an instance of the last defined transpyler class.
-    """
-
-    return SingletonMeta._subclasses[-1]()
-
 
 def extract_namespace(mod):
     """
