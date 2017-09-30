@@ -1,4 +1,5 @@
 import os
+import re
 
 import click
 
@@ -14,19 +15,27 @@ def potfile():
     You probably has little use for this command unless you are a Transpyler
     developer.
     """
+    from transpyler import lib
     from transpyler.translate import L10N_PATH
-    from transpyler.utils import collect_mod_namespace
+    from transpyler.utils import extract_namespace
     from transpyler.translate import extract_translations
     from transpyler.translate import create_pot_file
-
-    click.echo('Updating transpyler.pot file...', nl=False)
+    from transpyler.turtle.namespace import TurtleNamespace
 
     path = os.path.join(L10N_PATH, 'transpyler.pot')
-    names = collect_mod_namespace()
-    translations = extract_translations(names)
+    click.echo('Updating transpyler.pot file at:\n    %s' % path)
+
+    namespace = extract_namespace(lib)
+    namespace.update(TurtleNamespace())
+    translations = extract_translations(namespace)
     create_pot_file(translations, path)
 
-    click.echo(' Done!')
+    click.echo('\nCreated potfile with %s translations!' % len(translations))
+    click.echo('Please review the translation files for specific languages.')
+    for path in os.listdir(L10N_PATH):
+        path = os.path.basename(path)
+        if re.match(r'^[a-z][a-z](_[A-Z][A-Z])?\.po$', path):
+            click.echo('    * ' + path)
 
 
 @click.command()

@@ -20,7 +20,8 @@ def collect_synonyms(namespace, add_unaccented=True):
 
     result = {}
 
-    # Includes the aliased versions of the names defined in the input global_namespace
+    # Includes the aliased versions of the names defined in the input
+    # global_namespace
     for attr, func in namespace.items():
         if hasattr(func, '__synonyms__'):
             for alias in func.__synonyms__:

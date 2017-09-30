@@ -23,12 +23,12 @@ def has_qt():
         return False
 
 
-def clear_argv():
+def clear_argv(argv=sys.argv):
     """
     Remove extra arguments from sys.argv.
     """
 
-    keep = [sys.argv.pop(0)]
+    keep = [argv.pop(0)]
     if keep[0] == sys.executable:
-        keep.append(sys.argv.pop(0))
-    sys.argv[:] = keep
+        keep.append(argv.pop(0))
+    argv[:] = keep

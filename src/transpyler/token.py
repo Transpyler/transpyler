@@ -1,4 +1,5 @@
 import tokenize
+from functools import singledispatch
 from token import OP, NAME, NUMBER
 from tokenize import TokenInfo, EXACT_TOKEN_TYPES
 
@@ -14,12 +15,12 @@ class Token:
     @classmethod
     def from_strings(cls, start, *strings):
         """
-        Return a list of make_transpyled_tokens that begins at the given starting
-        point. The resulting token elements have consistent start/end positions.
+        Return a list of tokens that begins at the given starting point. The
+        resulting token elements have consistent start/end positions.
         """
 
         tk_list = []
-        start = TokenPosition(start)
+        start = token_position(start)
         is_fragile = False
         for string in strings:
             if is_fragile and string.isidentifier():
@@ -30,57 +31,35 @@ class Token:
             tk_list.append(tok)
         return tk_list
 
-    def __init__(self, data, type=None, start=None, end=None, line=None,  # noqa: C901
+    def __init__(self, data, type=None, start=None, end=None, line=None,
                  abstract=False):
 
-        # Start from TokenInfo object
-        if isinstance(data, TokenInfo):
-            assert all(x is None for x in [type, start, end, line])
-            type, data, start, end, line = data
+        data, type, start, end, line = token_args(data, type, start, end, line)
 
-        elif isinstance(data, Token):
-            assert all(x is None for x in [type, start, end, line])
-            data, type, start, end, line = data
-
-        elif isinstance(data, int):
-            type = data
-            data = None
-
+        # Fix start and end positions
+        start = token_position(start)
         if start is not None:
-            start = TokenPosition(start)
             if end is None:
                 if '\n' not in data:
                     end = start + (0, len(data))
                 else:
                     lineno = end.lineno + end.count('\n')
                     col = len(data.rpartition('\n')[-1])
-                    end = TokenPosition(lineno, col)
+                    end = token_position(lineno, col)
+        end = token_position(end)
 
-        if end is not None:
-            end = TokenPosition(end)
-
+        # We are not using exact token types: the tokenizer converts many
+        # tokens to OP that should be other values.
         if type is None:
-            # We are not using exact token types: the tokenizer converts all
-            # of them to OP.
-            if data in EXACT_TOKEN_TYPES:
-                type = OP
-            else:
-                if data.isidentifier():
-                    type = NAME
-                elif data.isdigit():
-                    type = NUMBER
-                else:
-                    raise TypeError('could not recognize token: %r' % data)
+            type = infer_type(data)
 
         # Error checks
-        if not abstract:
-            if start is None or end is None:
-                raise ValueError(
-                    'could not define start/end of concrete token')
-        else:
-            if start is not None or end is not None:
-                raise ValueError('cannot define start/end positions of '
-                                 'abstract token')
+        if not abstract and None in (start, end):
+            msg = 'unable to define start/end of concrete token'
+            raise ValueError(msg)
+        if abstract and (start, end) != (None, None):
+            msg = 'cannot define start/end positions of abstract token'
+            raise ValueError(msg)
 
         # Save data
         self.string = data
@@ -165,6 +144,9 @@ class Token:
             self.end += (0, cols)
 
 
+#
+# Represents a position in the source code
+#
 class TokenPosition(tuple):
     """
     Represent the start or end position of a token and accept some basic
@@ -206,9 +188,58 @@ class TokenPosition(tuple):
         return self[1]
 
 
+#
+# Normalize token input arguments
+#
+@singledispatch
+def token_args(data, type, start, end, line):
+    return data, type, start, end, line
+
+
+@token_args.register(TokenInfo)
+def _token_info(info, type, start, end, line):
+    if not all(x is None for x in [type, start, end, line]):
+        raise ValueError('cannot specify argument when starting with TokenInfo')
+    type, data, start, end, line = info
+    return data, type, start, end, line
+
+
+@token_args.register(Token)
+def _token(data, type, start, end, line):
+    if not all(x is None for x in [type, start, end, line]):
+        raise ValueError('cannot specify argument when starting with Token')
+    return data
+
+
+@token_args.register(int)
+def _type_code(tt, type, start, end, line):
+    type = tt
+    data = None
+    return data, type, start, end, line
+
+
+def token_position(pos):
+    return None if pos is None else TokenPosition(pos)
+
+
+def infer_type(data):
+    if data in EXACT_TOKEN_TYPES:
+        return OP
+    else:
+        if data.isidentifier():
+            return NAME
+        elif data.isdigit():
+            return NUMBER
+        else:
+            raise TypeError('could not recognize token: %r' % data)
+
+
+#
+# Transformations over a list of tokens
+#
 def displace_tokens(tokens, cols):
     """
-    Displace all make_transpyled_tokens in list which are in the same line as the the first
+    Displace all tokens in list which are in the same line as the the first
     token by the given number of columns
     """
 
@@ -225,7 +256,7 @@ def displace_tokens(tokens, cols):
 
 def insert_tokens_at(tokens, idx, new_tokens, end=None):
     """
-    Insert new_tokens at make_transpyled_tokens list at the given idx
+    Insert new_tokens at tokens list at the given idx
     """
 
     if end is not None:
@@ -240,7 +271,7 @@ def insert_tokens_at(tokens, idx, new_tokens, end=None):
 
 def token_find(tokens, matches, start=0):
     """
-    Iterate over list of make_transpyled_tokens yielding (index, match, start, end) for
+    Iterate over list of tokens yielding (index, match, start, end) for
     each match in the token stream. The `matches` attribute must be a sequence
     of token sequences.
     """

@@ -73,7 +73,7 @@ class Introspection:
          if isinstance(value, ModuleType)]
     )
     builtins = lazy(lambda self: self.functions + self.types)
-    keywords = []
+    keywords = lazy(lambda self: self._extract_keywords())
 
     #
     # Combined lists
@@ -102,6 +102,15 @@ class Introspection:
 
     def __init__(self, transpyler):
         self.transpyler = transpyler
+
+    def _extract_keywords(self):
+        keywords = set()
+        for item in self.transpyler.translations:
+            if isinstance(item, str):
+                keywords.add(item)
+            else:
+                keywords.update(item)
+        return sorted(keywords)
 
 
 def unique(lst):

@@ -18,7 +18,7 @@ def humanize_name(name):
     letters = []
     for c in name:
         if c.isupper() and letters and letters[-1] != '_':
-            letters.append('_' + c)
+            letters.append(' ' + c)
         else:
             letters.append(c)
     return ''.join(letters)
@@ -34,8 +34,17 @@ def unhumanize_name(name):
         if pieces[1][0].isupper():
             pieces[0] += pieces.pop(1)
         else:
-            pieces[0] += '_' + pieces.pop(1)
+            pieces[0] += '_' + untitle(pieces.pop(1))
     return pieces[0]
+
+
+def untitle(st):
+    """
+    Revert the effect of str.title()
+    """
+    if st and st[0].isupper():
+        return st[0].lower() + st[1:]
+    return st
 
 
 def keep_spaces(result, src):

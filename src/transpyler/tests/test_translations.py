@@ -1,7 +1,9 @@
 import pytest
 
-from transpyler.translate import extract_translations, \
-    extract_translation, translate_mod
+from transpyler import lib
+from transpyler.tests import mod
+from transpyler.translate import extract_translations, extract_translation, \
+    translate_namespace
 
 
 class TestExtractTranslations:
@@ -53,28 +55,32 @@ class TestExtractTranslations:
         }
 
 
-class TestTranslateModule:
-    def test_translate_mod(self):
-        from transpyler.tests import mod
+class TestTranslate:
+    def test_translated_function_works_properly(self):
+        ns_orig = {'sqrt': lib.sqrt}
+        ns_trans = translate_namespace(ns_orig, 'pt_BR')
 
-        new_mod = translate_mod('pt_BR', mod)
-        public_names = {x for x in dir(new_mod) if not x.startswith('_')}
-        assert public_names == {
+        print(ns_trans)
+        raiz = ns_trans['raiz']
+        sqrt = ns_orig['sqrt']
+        assert ns_orig is not ns_trans
+        assert raiz is not sqrt
+        assert raiz(4) == sqrt(4) == 2.0
+
+    def test_translate_mod_to_pt_BR(self):
+        ns = translate_namespace(vars(mod), 'pt_BR')
+        assert set(x for x in ns if not x.startswith('_')) == {
             'cos', 'coseno', 'mostrar', 'mostre', 'print',
         }
 
-        assert new_mod.mostre.__doc__.startswith(
-            'Mostra o objeto ou texto fornecido na tela.')
-        # assert new_mod.cos.__doc__ == ''
+        msg = 'Mostra o objeto ou texto fornecido na tela.'
+        assert ns['mostre'].__doc__.startswith(msg)
 
-    def test_translate_standard_module_to_pt_BR(self):
-        mod = translate_mod('pt_BR')
+    def test_translate_mod_to_es_BR(self):
+        ns = translate_namespace(vars(mod), 'es_BR')
+        assert set(x for x in ns if not x.startswith('_')) == {
+            'cos', 'imprimir', 'print',
+        }
 
-        assert mod.mostre
-        assert mod.mostrar
-
-    def test_translate_standard_module_to_es_BR(self):
-        mod = translate_mod('es_BR')
-
-        print('\n'.join(dir(mod)))
-        assert mod.imprimir
+        msg = 'Muestra el objeto o texto proporcionado en la pantalla.'
+        assert ns['imprimir'].__doc__.startswith(msg)

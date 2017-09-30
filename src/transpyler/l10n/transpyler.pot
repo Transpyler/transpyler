@@ -369,6 +369,23 @@ msgstr ""
 #. Real:conjugate.args
 #. Vec:norm.args
 #. Vec:normalized.args
+#. Turtle:clear.args
+#. Turtle:getavatar.args
+#. Turtle:getcolor.args
+#. Turtle:getfillcolor.args
+#. Turtle:getheading.args
+#. Turtle:getpos.args
+#. Turtle:getwidth.args
+#. Turtle:hide.args
+#. Turtle:isdown.args
+#. Turtle:ishidden.args
+#. Turtle:isvisible.args
+#. Turtle:pd.args
+#. Turtle:pendown.args
+#. Turtle:penup.args
+#. Turtle:pu.args
+#. Turtle:reset.args
+#. Turtle:show.args
 msgid "self"
 msgstr ""
 
@@ -698,6 +715,454 @@ msgstr ""
 
 #. dot.args
 msgid "u, v"
+msgstr ""
+
+#. mainturtle.name
+msgid "mainturtle"
+msgstr ""
+
+#. mainturtle.doc
+msgid "Returns the main turtle object."
+msgstr ""
+
+#. Turtle.name
+msgid "Turtle"
+msgstr ""
+
+#. Turtle.doc
+msgid "Creates a new Turtle."
+msgstr ""
+
+#. Turtle:back.name
+#. Turtle:backward.name
+#. Turtle:bk.name
+#. backward.name
+#. bk.name
+#. back.name
+msgid "backward"
+msgstr ""
+
+#. Turtle:back.doc
+#. Turtle:backward.doc
+#. Turtle:bk.doc
+#. backward.doc
+#. bk.doc
+#. back.doc
+msgid ""
+"Move the turtle backward by the given step size (in pixels).\n"
+"\n"
+"Aliases: backward | back | bk"
+msgstr ""
+
+#. Turtle:back.args
+#. Turtle:backward.args
+#. Turtle:bk.args
+#. Turtle:fd.args
+#. Turtle:forward.args
+msgid "self, step"
+msgstr ""
+
+#. Turtle:clear.name
+#. clear.name
+msgid "clear"
+msgstr ""
+
+#. Turtle:clear.doc
+#. clear.doc
+msgid "Clear all drawings made by turtle."
+msgstr ""
+
+#. Turtle:color
+msgid "color"
+msgstr ""
+
+#. Turtle:drawing
+msgid "drawing"
+msgstr ""
+
+#. Turtle:fd.name
+#. Turtle:forward.name
+#. forward.name
+#. fd.name
+msgid "forward"
+msgstr ""
+
+#. Turtle:fd.doc
+#. Turtle:forward.doc
+#. forward.doc
+#. fd.doc
+msgid ""
+"Move the turtle forward by the given step size (in pixels).\n"
+"\n"
+"Aliases: forward | fd"
+msgstr ""
+
+#. Turtle:fillcolor
+msgid "fillcolor"
+msgstr ""
+
+#. Turtle:getavatar.name
+#. getavatar.name
+msgid "getavatar"
+msgstr ""
+
+#. Turtle:getavatar.doc
+#. getavatar.doc
+msgid "Return a string with the name of the current avatar."
+msgstr ""
+
+#. Turtle:getcolor.name
+#. getcolor.name
+msgid "getcolor"
+msgstr ""
+
+#. Turtle:getcolor.doc
+#. getcolor.doc
+msgid "Return a tuple of (R, G, B) with the current pen color."
+msgstr ""
+
+#. Turtle:getfillcolor.name
+#. getfillcolor.name
+msgid "getfillcolor"
+msgstr ""
+
+#. Turtle:getfillcolor.doc
+#. getfillcolor.doc
+msgid "Return a tuple of (R, G, B) with the current fill color."
+msgstr ""
+
+#. Turtle:getheading.name
+#. getheading.name
+msgid "getheading"
+msgstr ""
+
+#. Turtle:getheading.doc
+#. getheading.doc
+msgid "Return current heading of the turtle (in degrees)."
+msgstr ""
+
+#. Turtle:getpos.name
+#. getpos.name
+msgid "getpos"
+msgstr ""
+
+#. Turtle:getpos.doc
+#. getpos.doc
+msgid "Return a vector (x, y) with turtle's position (in pixels)."
+msgstr ""
+
+#. Turtle:getwidth.name
+#. getwidth.name
+msgid "getwidth"
+msgstr ""
+
+#. Turtle:getwidth.doc
+#. getwidth.doc
+msgid "Return the pen width (in pixels):"
+msgstr ""
+
+#. Turtle:goto.name
+#. goto.name
+msgid "goto"
+msgstr ""
+
+#. Turtle:goto.doc
+#. goto.doc
+msgid ""
+"Goes to the given position.\n"
+"\n"
+"If the pen is down, it draws a line."
+msgstr ""
+
+#. Turtle:goto.args
+#. Turtle:jump.args
+#. Turtle:setpos.args
+msgid "self, x, y, kwds"
+msgstr ""
+
+#. Turtle:heading
+msgid "heading"
+msgstr ""
+
+#. Turtle:hidden
+msgid "hidden"
+msgstr ""
+
+#. Turtle:hide.name
+#. hide.name
+msgid "hide"
+msgstr ""
+
+#. Turtle:hide.doc
+#. hide.doc
+msgid "Hide turtle."
+msgstr ""
+
+#. Turtle:isdown.name
+#. isdown.name
+msgid "isdown"
+msgstr ""
+
+#. Turtle:isdown.doc
+#. isdown.doc
+msgid "Return True if the pen is down or False otherwise."
+msgstr ""
+
+#. Turtle:ishidden.name
+#. ishidden.name
+msgid "ishidden"
+msgstr ""
+
+#. Turtle:ishidden.doc
+#. ishidden.doc
+msgid "Return True if the turtle is not visible."
+msgstr ""
+
+#. Turtle:isvisible.name
+#. isvisible.name
+msgid "isvisible"
+msgstr ""
+
+#. Turtle:isvisible.doc
+#. isvisible.doc
+msgid "Return True if the turtle is visible."
+msgstr ""
+
+#. Turtle:jump.name
+#. jump.name
+msgid "jump"
+msgstr ""
+
+#. Turtle:jump.doc
+#. jump.doc
+msgid ""
+"Relative movement by the desired position. It *never* draw as line even\n"
+"if the pen is down."
+msgstr ""
+
+#. Turtle:left.name
+#. Turtle:lt.name
+#. left.name
+#. lt.name
+msgid "left"
+msgstr ""
+
+#. Turtle:left.doc
+#. Turtle:lt.doc
+#. left.doc
+#. lt.doc
+msgid ""
+"Rotate the turtle counter-clockwise by the given angle.\n"
+"\n"
+"Aliases: left | lt\n"
+"\n"
+"Negative angles produces clockwise rotation."
+msgstr ""
+
+#. Turtle:left.args
+#. Turtle:lt.args
+#. Turtle:right.args
+#. Turtle:rt.args
+msgid "self, angle"
+msgstr ""
+
+#. Turtle:pd.name
+#. Turtle:pendown.name
+#. pendown.name
+#. pd.name
+msgid "pendown"
+msgstr ""
+
+#. Turtle:pd.doc
+#. Turtle:pendown.doc
+#. pendown.doc
+#. pd.doc
+msgid ""
+"Lower the turtle pen so it can draw in the screen.\n"
+"\n"
+"Aliases: pendown | pd"
+msgstr ""
+
+#. Turtle:penup.name
+#. Turtle:pu.name
+#. penup.name
+#. pu.name
+msgid "penup"
+msgstr ""
+
+#. Turtle:penup.doc
+#. Turtle:pu.doc
+#. penup.doc
+#. pu.doc
+msgid ""
+"Raises the turtle pen so it stops drawing.\n"
+"\n"
+"Aliases: penup | pu"
+msgstr ""
+
+#. Turtle:pos
+msgid "pos"
+msgstr ""
+
+#. Turtle:reset.name
+#. reset.name
+msgid "reset"
+msgstr ""
+
+#. Turtle:reset.doc
+#. reset.doc
+msgid "Clear all drawings and reset turtle to initial position."
+msgstr ""
+
+#. Turtle:right.name
+#. Turtle:rt.name
+#. right.name
+#. rt.name
+msgid "right"
+msgstr ""
+
+#. Turtle:right.doc
+#. Turtle:rt.doc
+#. right.doc
+#. rt.doc
+msgid ""
+"Rotate the turtle clockwise by the given angle.\n"
+"\n"
+"Aliases: right | rt\n"
+"\n"
+"Negative angles produces counter-clockwise rotation. Return final\n"
+"heading."
+msgstr ""
+
+#. Turtle:setavatar.name
+#. setavatar.name
+msgid "setavatar"
+msgstr ""
+
+#. Turtle:setavatar.doc
+#. setavatar.doc
+msgid "Modifies the turtle avatar."
+msgstr ""
+
+#. Turtle:setavatar.args
+#. Turtle:setcolor.args
+#. Turtle:setfillcolor.args
+#. Turtle:setheading.args
+#. Turtle:setwidth.args
+msgid "self, value"
+msgstr ""
+
+#. Turtle:setcolor.name
+#. setcolor.name
+msgid "setcolor"
+msgstr ""
+
+#. Turtle:setcolor.doc
+#. setcolor.doc
+msgid ""
+"Modifies the pen color.\n"
+"\n"
+"Color can be specified as an (R, G, B) tuple or as a hex string or by\n"
+"name."
+msgstr ""
+
+#. Turtle:setfillcolor.name
+#. setfillcolor.name
+msgid "setfillcolor"
+msgstr ""
+
+#. Turtle:setfillcolor.doc
+#. setfillcolor.doc
+msgid ""
+"Modifies the fill color.\n"
+"\n"
+"Color can be specified as an (R, G, B) tuple or as a hex string or by\n"
+"name."
+msgstr ""
+
+#. Turtle:setheading.name
+#. setheading.name
+msgid "setheading"
+msgstr ""
+
+#. Turtle:setheading.doc
+#. setheading.doc
+msgid "Sets turtle's heading (in degrees)."
+msgstr ""
+
+#. Turtle:setpos.name
+#. setpos.name
+msgid "setpos"
+msgstr ""
+
+#. Turtle:setpos.doc
+#. setpos.doc
+msgid ""
+"Modifies turtle's position (in pixels)\n"
+"\n"
+"User can pass the x, y coordinates of the new position or a tuple of\n"
+"(x, y) values. This method never draws a line."
+msgstr ""
+
+#. Turtle:setwidth.name
+#. setwidth.name
+msgid "setwidth"
+msgstr ""
+
+#. Turtle:setwidth.doc
+#. setwidth.doc
+msgid "Modifies the pen width (in pixels)"
+msgstr ""
+
+#. Turtle:show.name
+#. show.name
+msgid "show"
+msgstr ""
+
+#. Turtle:show.doc
+#. show.doc
+msgid "Shows a hidden turtle."
+msgstr ""
+
+#. Turtle:width
+msgid "width"
+msgstr ""
+
+#. getpos.args
+#. setpos.args
+#. getheading.args
+#. setheading.args
+#. getwidth.args
+#. setwidth.args
+#. getcolor.args
+#. setcolor.args
+#. getfillcolor.args
+#. setfillcolor.args
+#. getavatar.args
+#. setavatar.args
+#. penup.args
+#. pendown.args
+#. isdown.args
+#. isvisible.args
+#. ishidden.args
+#. hide.args
+#. show.args
+#. clear.args
+#. reset.args
+#. goto.args
+#. jump.args
+#. forward.args
+#. backward.args
+#. left.args
+#. right.args
+#. fd.args
+#. bk.args
+#. back.args
+#. lt.args
+#. rt.args
+#. pu.args
+#. pd.args
+msgid "args, kwargs, turtle"
 msgstr ""
 
 #. exiter.name

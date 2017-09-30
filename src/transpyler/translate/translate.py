@@ -15,7 +15,7 @@ from ..utils.namespaces import collect_synonyms
 
 def translate_namespace(ns, lang, synonyms=True, add_unaccented=True):
     """
-    Return a dict with the given namespace translated according to the 
+    Return a dict with the given namespace translated according to the
     requested ``lang``.
     """
 
@@ -31,7 +31,7 @@ def translate_namespace(ns, lang, synonyms=True, add_unaccented=True):
             method_dict = class_dict.setdefault(name, {})
             method_dict[post] = _(value)
 
-        # Translate a function or regular object 
+        # Translate a function or regular object
         else:
             name, sep, post = name.partition('.')
             translation_data[name][post] = _(value)

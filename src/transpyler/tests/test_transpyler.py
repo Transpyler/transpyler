@@ -121,6 +121,8 @@ class PyBrFixtures:
             }
             lang = 'pt_BR'
 
+        if hasattr(Transpyler, '_instance'):
+            del Transpyler._instance
         yield PyBr()
         del Transpyler._instance
 
@@ -147,4 +149,4 @@ class TestPyBrLanguage(PyBrFixtures, TranspyledLanguage):
         assert 'mostre' in ns
 
     def test_translate(self, transpyler):
-        assert transpyler.translate('left') == 'esquerda'
+        assert transpyler.translate('file') == 'arquivo'

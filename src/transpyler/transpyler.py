@@ -1,16 +1,14 @@
 import builtins as _builtins
 import codeop
-import importlib
-import types
 
 from lazyutils import lazy
 
 from .info import Info
 from .introspection import Introspection
 from .lexer import Lexer
-from .utils import pretty_callable
 from .translate.gettext import gettext_for
 from .translate.translate import translate_namespace
+from .utils import pretty_callable
 from .utils.utils import has_qt
 
 # Save useful builtin functions
@@ -97,7 +95,7 @@ class Transpyler(metaclass=SingletonMeta):
     file_extension = 'py'
 
     # Language info and instrospection
-    introspection = lazy(lambda self: self.introspection_factory)
+    introspection = lazy(lambda self: self.introspection_factory(self))
     info = lazy(lambda self: self.info_factory(self))
     mimetypes = lazy(lambda self: [self.mimetype])
     mimetype = lazy(lambda self: 'text/x-%s' % self.name)
@@ -268,7 +266,7 @@ class Transpyler(metaclass=SingletonMeta):
             return True
         return codeop.compile_command(pytuga_src, filename, symbol) is None
 
-    @classmethod
+    @classmethod  # noqa: C901 (it only creates functions on a closure)
     def core_functions(cls):
         """
         Return an dictionary with a small namespace for the core functions in
@@ -380,7 +378,7 @@ class Transpyler(metaclass=SingletonMeta):
         transpyler runtime.
         """
         from transpyler import lib
-        
+
         ns = extract_namespace(lib)
 
         # Load default translations from using the lang option
@@ -411,8 +409,8 @@ class Transpyler(metaclass=SingletonMeta):
         if self.lang:
             translated = translate_namespace(ns, self.lang)
             ns.update(translated)
-        
-        return ns            
+
+        return ns
 
     def recreate_namespace(self):
         """
@@ -540,6 +538,6 @@ def extract_namespace(mod):
     """
 
     return {
-        name: getattr(mod, name) for name in dir(mod) 
-        if not name.startswith('_')
-    } 
+        name: getattr(mod, name)
+        for name in dir(mod) if not name.startswith('_')
+        }
