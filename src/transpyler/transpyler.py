@@ -44,7 +44,7 @@ class SingletonTranspyler(type):
             Transpyler()
         return Singleton._subclasses 
 
-
+        
 class Transpyler(metaclass=SingletonTranspyler):
     """
     Base class for all new Transpylers.
