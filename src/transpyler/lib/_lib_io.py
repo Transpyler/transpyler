@@ -73,7 +73,7 @@ def read_file(file=None):
     """
 
     if file is None:
-        file = _filechooser(True)
+        file = _filechooser()
     return open(file).read()
 
 
@@ -89,7 +89,7 @@ def save_in_file(text, file=None):
     """
 
     if file is None:
-        file = _filechooser(False)
+        file = _filechooser()
 
     with open(file) as F:
         F.write(str(text))
@@ -122,7 +122,7 @@ def _input(*args):
     return input(*args)
 
 
-def _filechooser(do_open):
+def _filechooser():
     """
     File name:
     """

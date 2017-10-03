@@ -7,7 +7,6 @@ from transpyler.utils import synonyms, normalize_accented_keywords
 class TestUtilityFunctions:
     def test_has_qt(self):
         try:
-            import PyQt5
             assert has_qt()
         except ImportError:
             assert not has_qt()
