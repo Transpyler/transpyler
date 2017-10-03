@@ -4,7 +4,7 @@ import traceback
 
 from lazyutils import lazy
 
-from transpyler import get_transpyler
+from transpyler import SingletonTranspyler
 
 
 class TranspylerConsole(code.InteractiveConsole):
@@ -91,7 +91,7 @@ def start_console(*, namespace=None, transpyler=None):
     Runs the main console.
     """
 
-    transpyler = transpyler or get_transpyler()
+    transpyler = transpyler or SingletonTranspyler.getInstance()
     console = TranspylerConsole(namespace, transpyler=transpyler)
     banner = transpyler.console_banner()
     console.interact(banner)
