@@ -4,6 +4,7 @@
 import pytest
 
 from transpyler import Transpyler
+from transpyler.translate import translator_factory
 
 
 class TranspyledLanguage:
@@ -147,6 +148,11 @@ class TestPyBrLanguage(PyBrFixtures, TranspyledLanguage):
         ns = transpyler.make_global_namespace()
         assert 'cos' in ns
         assert 'mostre' in ns
+    
+    def test_translate_factory(self):
+        translator = translator_factory('pt_BR')
+        assert translator('file') == 'arquivo'
 
     def test_translate(self, transpyler):
-        assert transpyler.translator.translate('left') == 'esquerda'
+        assert transpyler.translate('file') == 'arquivo'
+

@@ -117,15 +117,10 @@ def apply_translations_type(cls: type, data: dict):  # noqa: F811
 
     return cls
 
-class Translator():
-
-    def __init__(self, lang):
-        self.gettext = gettext_for(lang)
-
-    def translate(self, st):
-        """
-        Translates string to the requested language.
-        """
-        return self.gettext.gettext(st)
-
-
+def translator_factory(lang):
+    """
+    Return a translator function that receives a string and return a translated
+    version using gettext.
+    """
+    gettext = gettext_for(lang)
+    return gettext.gettext

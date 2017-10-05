@@ -6,9 +6,8 @@ from lazyutils import lazy
 from .info import Info
 from .introspection import Introspection
 from .lexer import Lexer
-from .translate.gettext import gettext_for
-from .translate.translate import Translator
-from .translate.translate import translate_namespace
+from .translate import gettext_for
+from .translate import translate_namespace, translator_factory
 from .utils import pretty_callable
 from .utils.utils import has_qt
 
@@ -108,12 +107,12 @@ class Transpyler(metaclass=SingletonMeta):
         lambda self: "http://github.com/transpyler/%s/" % self.name
     )
 
-    translator = lazy(lambda self: Translator(self.lang))
+    translate = lazy(lambda self: translator_factory(self.lang))
 
     # Computed constants
     display_name = lazy(lambda self: self.name.title().replace('_', ' '))
     short_banner = lazy(
-        lambda self: self.translator.translate(
+        lambda self: self.translate(
             '%s %s\n'
             'Type "help", "copyright" or "license" for more information.' %
             (self.display_name, self.version))
@@ -358,12 +357,12 @@ class Transpyler(metaclass=SingletonMeta):
         message for its repr.
         """
 
-        @pretty_callable(self.translator.translate('exiter.doc'))
+        @pretty_callable(self.translate('exiter.doc'))
         def exit():
             return function()
 
-        exit.__name__ = self.translator.translate('exiter.name')
-        exit.__doc__ = self.translator.translate('exiter.doc')
+        exit.__name__ = self.translate('exiter.name')
+        exit.__doc__ = self.translate('exiter.doc')
         return exit
 
     def make_global_namespace(self):
