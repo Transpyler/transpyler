@@ -374,6 +374,18 @@ class Transpyler(metaclass=SingletonMeta):
         exit.__doc__ = self.translate('exiter.doc')
         return exit
 
+    def recreate_namespace(self):
+        return recreate_namespace(self)
+
+    def make_turtle_namespace(self, backend, lang):
+        return make_turtle_namespace(self, backend, lang)
+
+    def extract_namespace(self, mod):
+        return extract_namespace(self, mod)
+
+    def make_global_namespace(self, lang):
+        return make_global_namespace(self, lang)
+
     #
     # External execution
     #
