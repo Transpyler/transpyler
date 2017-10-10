@@ -10,8 +10,8 @@ from .introspection import Introspection
 from .lexer import Lexer
 from .utils import pretty_callable
 from .translate.gettext import gettext_for
-from .translate.translate import translate_namespace
 from .utils.utils import has_qt
+from .namespace import make_global_namespace, make_turtle_namespace, recreate_namespace
 
 # Save useful builtin functions
 _compile = _builtins.compile
@@ -133,7 +133,7 @@ class Transpyler(metaclass=SingletonMeta):
 
     @lazy
     def namespace(self):
-        return self.recreate_namespace()
+        return recreate_namespace(self)
 
     def __init__(self, **kwargs):
         self._forbidden = False
@@ -374,62 +374,17 @@ class Transpyler(metaclass=SingletonMeta):
         exit.__doc__ = self.translate('exiter.doc')
         return exit
 
-    def make_global_namespace(self):
-        """
-        Return a dictionary with the default global namespace for the
-        transpyler runtime.
-        """
-        from transpyler import lib
-        
-        ns = extract_namespace(lib)
-
-        # Load default translations from using the lang option
-        if self.lang:
-            translated = translate_namespace(ns, self.lang)
-            ns.update(translated)
-
-        return ns
-
-    def make_turtle_namespace(self, backend):
-        """
-        Return a dictionary with all turtle-related functions.
-        """
-
-        if backend == 'tk':
-            from transpyler.turtle.tk import make_turtle_namespace
-
-            ns = make_turtle_namespace()
-
-        elif backend == 'qt':
-            from transpyler.turtle.qt import make_turtle_namespace
-
-            ns = make_turtle_namespace()
-
-        else:
-            raise ValueError('invalid backend: %r' % backend)
-
-        if self.lang:
-            translated = translate_namespace(ns, self.lang)
-            ns.update(translated)
-        
-        return ns            
-
     def recreate_namespace(self):
-        """
-        Recompute the default namespace for the transpyler object.
-        """
-        ns = self.make_global_namespace()
+        return recreate_namespace(self)
 
-        if self.has_turtle_functions:
-            if self.turtle_backend is None:
-                raise RuntimeError(
-                    '.turtle_backend of transpyler object must be set to '
-                    'either "tk" or "qt"'
-                )
-            turtle_ns = self.make_turtle_namespace(self.turtle_backend)
-            ns.update(turtle_ns)
-        self.namespace = ns
-        return ns
+    def make_turtle_namespace(self, backend, lang):
+        return make_turtle_namespace(self, backend, lang)
+
+    def extract_namespace(self, mod):
+        return extract_namespace(self, mod)
+
+    def make_global_namespace(self, lang):
+        return make_global_namespace(self, lang)
 
     #
     # External execution
@@ -532,14 +487,3 @@ def get_transpyler() -> Transpyler:
     """
 
     return SingletonMeta._subclasses[-1]()
-
-
-def extract_namespace(mod):
-    """
-    Return a dictionary with module public variables.
-    """
-
-    return {
-        name: getattr(mod, name) for name in dir(mod) 
-        if not name.startswith('_')
-    } 
