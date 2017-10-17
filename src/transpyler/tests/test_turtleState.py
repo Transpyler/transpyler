@@ -1,6 +1,6 @@
 import pytest
-
-from transpyler.turtle.state import TurtleState
+import warnings
+from transpyler.turtle.turtleState import TurtleState
 
 @pytest.fixture
 def turtle_state():
@@ -37,15 +37,14 @@ def test_rotate(turtle_state):
     turtle_state.rotate(1.0)
     assert turtle_state.heading == 1.0
 
-"""
-    Function not implemented draw_line
-
 def test_move(turtle_state):
-    turtle_state.pos == (0, 0)
+    turtle_state.drawing = False
     turtle_state.move(100)
-    assert turtle_state.pos == (100, 0)
-"""
+    assert turtle_state.pos == (100)
 
-
-
-        
+def test_moveTrue(turtle_state):
+    turtle_state.drawing = True
+    oldpos = turtle_state.pos
+    turtle_state.pos = 100
+    with pytest.raises(NotImplementedError):
+        turtle_state.draw_line(oldpos, turtle_state.pos)
