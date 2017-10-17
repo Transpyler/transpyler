@@ -38,13 +38,48 @@ def test_rotate(turtle_state):
     assert turtle_state.heading == 1.0
 
 def test_move(turtle_state):
-    turtle_state.drawing = False
-    turtle_state.move(100)
-    assert turtle_state.pos == (100)
+    try:
+        turtle_state.move(100)
+        assert False
+    except NotImplementedError:
+        assert True
 
-def test_moveTrue(turtle_state):
-    turtle_state.drawing = True
-    oldpos = turtle_state.pos
-    turtle_state.pos = 100
-    with pytest.raises(NotImplementedError):
-        turtle_state.draw_line(oldpos, turtle_state.pos)
+def test_step(turtle_state):
+    try:
+        turtle_state.step(100)
+        assert False
+    except NotImplementedError:
+        assert True
+
+def test_clear(turtle_state):
+    turtle_state.lines = [1]
+    turtle_state.lines.clear()
+    assert turtle_state.lines == []
+
+def test_reset(turtle_state):
+    turtle_state.lines = [1]
+    turtle_state.pos = (100)
+    turtle_state.heading = (1.1)
+    turtle_state.drawing = False
+    turtle_state.reset()
+    assert turtle_state.lines == []
+    assert turtle_state.pos == (0,0)
+    assert turtle_state.drawing == True
+
+def test_draw_line(turtle_state):
+    try:
+        turtle_state.draw_line(1,1)
+        assert False
+    except NotImplementedError:
+        assert True
+
+def test_register(turtle_state):
+    turtle_state.register("pytuga")
+    assert turtle_state.group == "pytuga"
+    
+def test_recv(turtle_state):
+    try:
+        turtle_state.recv()
+        assert False
+    except NotImplementedError:
+        assert True
