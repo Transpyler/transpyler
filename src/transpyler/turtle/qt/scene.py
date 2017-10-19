@@ -59,7 +59,7 @@ class TurtleScene(QtWidgets.QGraphicsScene):
         """
         self._turtles.ping(receive=receive)
 
-    def timerEvent(self, timer):  # noqa: N802
+    def timerEvent(self):  # noqa: N802
         """
         Scheduled to be executed at some given framerate.
 

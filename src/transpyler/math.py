@@ -199,7 +199,7 @@ def dice(n=6):
         >>> dice(20)                                            # doctest: +SKIP
         13
     """
-    return _random.randint(1, 6)
+    return _random.randint(1, n)
 
 
 def random():

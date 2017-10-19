@@ -32,7 +32,6 @@ We have a few use cases:
 """
 
 from .turtle import Turtle
-from .turtlegroup import TurtleGroup
 from .namespace import TurtleNamespace
-from .state import TurtleState, MailboxState, MirrorState, RemoteState, PropertyState
+from .state import TurtleState, MailboxState, RemoteState, PropertyState
 from .stategroup import StateGroup, IpcStateGroup
