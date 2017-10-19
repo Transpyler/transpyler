@@ -6,8 +6,8 @@ from lazyutils import lazy
 from .info import Info
 from .introspection import Introspection
 from .lexer import Lexer
-from .translate.gettext import gettext_for
-from .translate.translate import translate_namespace
+from .translate import gettext_for
+from .translate import translate_namespace, translator_factory
 from .utils import pretty_callable
 from .utils.utils import has_qt
 
@@ -107,6 +107,8 @@ class Transpyler(metaclass=SingletonMeta):
         lambda self: "http://github.com/transpyler/%s/" % self.name
     )
 
+    translate = lazy(lambda self: translator_factory(self.lang))
+
     # Computed constants
     display_name = lazy(lambda self: self.name.title().replace('_', ' '))
     short_banner = lazy(
@@ -117,8 +119,7 @@ class Transpyler(metaclass=SingletonMeta):
     )
     long_banner = lazy(lambda self: self.short_banner)
     lexer = lazy(lambda self: self.lexer_factory(self))
-    gettext = lazy(lambda self: gettext_for(self.lang))
-
+    
     @lazy
     def name(self):
         cls_name = self.__class__.__name__.lower()
@@ -336,15 +337,7 @@ class Transpyler(metaclass=SingletonMeta):
             transpile=transpile, is_incomplete_source=is_incomplete_source,
             namespace=namespace,
         )
-
-    #
-    # Utilities
-    #
-    def translate(self, st):
-        """
-        Translates string to the requested language.
-        """
-        return self.gettext.gettext(st)
+    
 
     #
     # Console helpers
