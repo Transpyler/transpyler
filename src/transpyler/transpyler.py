@@ -7,7 +7,7 @@ from .info import Info
 from .introspection import Introspection
 from .lexer import Lexer
 from .translate.gettext import gettext_for
-from .translate.translate import translate_namespace
+from .translate.translate import translate_namespace, translator_factory
 from .runners import run
 
 # Save useful builtin functions
