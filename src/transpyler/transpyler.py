@@ -6,6 +6,7 @@ from lazyutils import lazy
 from .info import Info
 from .introspection import Introspection
 from .lexer import Lexer
+from .utils import pretty_callable
 from .translate.gettext import gettext_for
 from .translate.translate import translate_namespace, translator_factory
 from .runners import run
