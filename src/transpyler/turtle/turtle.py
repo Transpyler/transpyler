@@ -192,7 +192,8 @@ class Turtle:
 
         Aliases: forward | fd
         """
-        self._state.step(step)
+        for i in range(step):
+            self._state.step(0.02)
 
     def backward(self, step):
         """

@@ -4,7 +4,7 @@ from colortools import Color
 
 from .utils import getsetter, ipc_property
 from ..math import vec, cos, sin, tan
-
+import time
 
 class TurtleState:
     """
@@ -57,11 +57,13 @@ class TurtleState:
         if self.drawing:
             self.draw_line(oldpos, pos)
 
-    def step(self, step):
+    def step(self, velocity=None):
         """
         Move forwards (or backwards if step is negative).
         """
-        self.move(self.pos + self.heading_direction * step)
+        if velocity:
+            time.sleep(velocity)
+        self.move(self.pos + self.heading_direction)
 
     def clear(self):
         """
