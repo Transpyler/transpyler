@@ -349,3 +349,7 @@ class MirrorState(RemoteState):
 
     def draw_line(self, v1, v2):
         pass
+
+    def clear(self):
+        self.setvalue('pos', vec(0,0))
+
