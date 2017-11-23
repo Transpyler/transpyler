@@ -25,6 +25,8 @@ class Turtle:
             pos=pos, heading=heading, drawing=drawing, color=color,
             fillcolor=fillcolor, width=width, hidden=hidden
         )
+        self.forward(1)
+
 
     def __repr__(self):
         return 'Turtle(%r)' % self.getavatar()
