@@ -23,7 +23,7 @@ class TurtleState:
     def __init__(self, pos=None, heading=0.0, drawing=True,
                  color='black', fillcolor='black', width=1, hidden=False,
                  avatar=None, group=None, id=None):
-        self.pos = self.startpos = self._vec(pos or (0, 0))
+        self.pos = self.startpos = self._vec(0, 0)
         self.heading = self.startheading = heading
         self.drawing = self.startdrawing = drawing
         self.color = color
@@ -352,4 +352,5 @@ class MirrorState(RemoteState):
 
     def clear(self):
         self.setvalue('pos', vec(0,0))
+        self.setvalue('heading', 0.0)
 
