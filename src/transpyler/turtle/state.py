@@ -202,6 +202,8 @@ class RemoteState(TurtleState):
         Rotates by the given angle.
     ['move', id, pos]:
         Moves turtle to the given position.
+    ['clear', id]:
+        Clear all lines drawn by specific turtle
 
     The actual state info is stored on another thread or process.
     """
@@ -238,6 +240,9 @@ class RemoteState(TurtleState):
 
     def setvalue(self, attr, value):
         return self.send(['set', self.id, attr, value])
+
+    def clear(self):
+        self.send(['clear', self.id])
 
     def send(self, msg):
         """
@@ -313,6 +318,9 @@ class MirrorState(RemoteState):
         self.local = TurtleState(**kwargs)
         self.local.draw_line = lambda v1, v2: None
         self.id = self.local.id
+
+    def __getattr__(self, attr):
+        return getattr(self.local, attr)
 
     def getvalue(self, attr):
         return getattr(self.local, attr)

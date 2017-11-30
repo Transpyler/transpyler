@@ -15,8 +15,6 @@ svg_renderer = QtSvg.QSvgRenderer(svg_path)
 class QGraphicsItemState(TurtleState):
     """
     A server turtle that redirects operations to a QGraphicsSvgItem.
-
-    This turtle lives on the server part of the application.
     """
 
     valid_avatars = ['tuga']
