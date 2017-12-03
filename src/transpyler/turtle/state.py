@@ -23,7 +23,7 @@ class TurtleState:
     def __init__(self, pos=None, heading=0.0, drawing=True,
                  color='black', fillcolor='black', width=1, hidden=False,
                  avatar=None, group=None, id=None):
-        self.pos = self.startpos = self._vec(pos or (0, 0))
+        self.pos = self.startpos = self._vec(0, 0)
         self.heading = self.startheading = heading
         self.drawing = self.startdrawing = drawing
         self.color = color
@@ -202,6 +202,8 @@ class RemoteState(TurtleState):
         Rotates by the given angle.
     ['move', id, pos]:
         Moves turtle to the given position.
+    ['clear', id]:
+        Clear all lines drawn by specific turtle
 
     The actual state info is stored on another thread or process.
     """
@@ -238,6 +240,9 @@ class RemoteState(TurtleState):
 
     def setvalue(self, attr, value):
         return self.send(['set', self.id, attr, value])
+
+    def clear(self):
+        self.send(['clear', self.id])
 
     def send(self, msg):
         """
@@ -314,6 +319,9 @@ class MirrorState(RemoteState):
         self.local.draw_line = lambda v1, v2: None
         self.id = self.local.id
 
+    def __getattr__(self, attr):
+        return getattr(self.local, attr)
+
     def getvalue(self, attr):
         return getattr(self.local, attr)
 
@@ -341,3 +349,4 @@ class MirrorState(RemoteState):
 
     def draw_line(self, v1, v2):
         pass
+
