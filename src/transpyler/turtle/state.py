@@ -87,6 +87,12 @@ class TurtleState:
         """
         raise NotImplementedError
 
+    def redraw_line(self,v1,v2):
+        """
+        Draws line from the first position and last of the array lines
+        """
+        raise NotImplementedError
+
     def register(self, group):
         """
         Register on a group.
@@ -315,6 +321,9 @@ class MirrorState(RemoteState):
         self.local = TurtleState(**kwargs)
         self.local.draw_line = lambda v1, v2: None
         self.id = self.local.id
+
+    def __getattr__(self, attr):
+        return getattr(self.local, attr)
 
     def getvalue(self, attr):
         return getattr(self.local, attr)

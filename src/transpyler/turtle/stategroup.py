@@ -13,9 +13,10 @@ class StateGroup(collections.MutableSequence):
 
     state_class = TurtleState
 
-    def __init__(self):
+    def __init__(self, speed=5):
         self._index = 0
         self._turtles = []
+        self.speed = speed
 
     def __setitem__(self, idx, value):
         if not isinstance(value, self.state_class):

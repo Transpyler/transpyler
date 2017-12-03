@@ -48,6 +48,7 @@ class QGraphicsItemState(TurtleState):
         cursor.setTransformOriginPoint(0.5 * curr_width, 0.5 * curr_height)
         cursor.setScale(self.size / curr_width)
         cursor.setZValue(1.0)
+        self._last_orientation = float('nan')
         self.pen = QtGui.QPen(QtGui.QColor(0, 0, 0))
         self.brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
         super().__init__(*args, **kwargs)
@@ -55,8 +56,15 @@ class QGraphicsItemState(TurtleState):
     def draw_line(self, v1, v2):
         a, b = v1
         c, d = v2
+
         line = self.group.scene.addLine(a, b, c, d, self.pen)
         self.lines.append(line)
+
+    def redraw_line(self):
+        first_pos = self.lines[0]
+        last_line = self.lines[-1]
+        self.lines = []
+        self.draw_line(first, line)
 
     def clear(self):
         scene = self.group.scene
@@ -69,6 +77,9 @@ class QGraphicsItemState(TurtleState):
         super().register(group)
         group.scene.addItem(self.graphics_item)
 
+    def step(self, size):
+        self._last_orientation = self.heading
+        return super().step(size)
 
 class QGraphicsSceneGroup(IpcStateGroup):
     """
