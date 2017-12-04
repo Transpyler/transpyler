@@ -1,8 +1,5 @@
 from multiprocessing import Queue
-
 from colortools import Color
-import threading
-
 from .utils import getsetter, ipc_property
 from ..math import vec, cos, sin, tan
 import time
@@ -58,13 +55,12 @@ class TurtleState:
         if self.drawing:
             self.draw_line(oldpos, pos)
 
-    def step(self, velocity=None):
+    def step(self, idle=None):
         """
         Move forwards (or backwards if step is negative).
         """
-
-        if velocity:
-            time.sleep(velocity)
+        if idle:
+            time.sleep(idle)
         self.move(self.pos + self.heading_direction)
 
     def clear(self):
@@ -86,12 +82,6 @@ class TurtleState:
     def draw_line(self, v1, v2):
         """
         Draws line from v1 to v2.
-        """
-        raise NotImplementedError
-
-    def redraw_line(self,v1,v2):
-        """
-        Draws line from the first position and last of the array lines
         """
         raise NotImplementedError
 

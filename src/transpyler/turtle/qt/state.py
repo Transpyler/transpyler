@@ -57,15 +57,8 @@ class QGraphicsItemState(TurtleState):
     def draw_line(self, v1, v2):
         a, b = v1
         c, d = v2
-
         line = self.group.scene.addLine(a, b, c, d, self.pen)
         self.lines.append(line)
-
-    def redraw_line(self):
-        first_pos = self.lines[0]
-        last_line = self.lines[-1]
-        self.lines = []
-        self.draw_line(first, line)
 
     def clear(self):
         scene = self.group.scene

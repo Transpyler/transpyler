@@ -193,7 +193,6 @@ class Turtle:
         """
         for i in range(step):
             self._state.step(0.02)
-        ##self._state.redraw_line(self._state.lines[0],self._state.lines[-1])
 
     def backward(self, step):
         """
