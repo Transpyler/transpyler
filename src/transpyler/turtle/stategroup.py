@@ -1,7 +1,7 @@
 import collections
 from multiprocessing import Queue
 
-from .state import TurtleState
+from .turtleState import TurtleState
 
 
 class StateGroup(collections.MutableSequence):

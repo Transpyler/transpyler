@@ -27,12 +27,16 @@ We have a few use cases:
 .. autoclass:: transpyler.turtle.Turtle
     :members:
 
-.. autoclass:: transpyler.turtle.State
+.. autoclass:: transpyler.turtle.turtleState
     :members:
 """
 
 from .turtle import Turtle
 from .turtlegroup import TurtleGroup
 from .namespace import TurtleNamespace
-from .state import TurtleState, MailboxState, MirrorState, RemoteState, PropertyState
+from .turtleState import TurtleState
 from .stategroup import StateGroup, IpcStateGroup
+from .propertyState import PropertyState
+from .remoteState import RemoteState
+from .mirrorState import MirrorState
+from .mailboxState import MailboxState
