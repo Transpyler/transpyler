@@ -1,10 +1,8 @@
 from multiprocessing import Queue
-
 from colortools import Color
-
 from .utils import getsetter, ipc_property
 from ..math import vec, cos, sin, tan
-
+import time
 
 class TurtleState:
     """
@@ -57,11 +55,13 @@ class TurtleState:
         if self.drawing:
             self.draw_line(oldpos, pos)
 
-    def step(self, step):
+    def step(self, idle=None):
         """
         Move forwards (or backwards if step is negative).
         """
-        self.move(self.pos + self.heading_direction * step)
+        if idle:
+            time.sleep(idle)
+        self.move(self.pos + self.heading_direction)
 
     def clear(self):
         """
@@ -313,6 +313,9 @@ class MirrorState(RemoteState):
         self.local = TurtleState(**kwargs)
         self.local.draw_line = lambda v1, v2: None
         self.id = self.local.id
+
+    def __getattr__(self, attr):
+        return getattr(self.local, attr)
 
     def getvalue(self, attr):
         return getattr(self.local, attr)

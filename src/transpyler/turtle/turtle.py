@@ -4,7 +4,6 @@ from lazyutils import lazy
 from .utils import vecargsmethod
 from ..math import Vec
 
-
 class Turtle:
     """
     Creates a new Turtle.
@@ -192,7 +191,8 @@ class Turtle:
 
         Aliases: forward | fd
         """
-        self._state.step(step)
+        for i in range(step):
+            self._state.step(0.02)
 
     def backward(self, step):
         """

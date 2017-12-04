@@ -2,6 +2,7 @@ import os
 
 from PyQt5 import QtGui
 from PyQt5 import QtSvg
+import threading
 
 from .utils import qtproperty, from_qvector, to_qvector, from_qcolor, to_qcolor
 from .. import TurtleState, MailboxState, IpcStateGroup, Turtle as BaseTurtle, \
@@ -48,6 +49,7 @@ class QGraphicsItemState(TurtleState):
         cursor.setTransformOriginPoint(0.5 * curr_width, 0.5 * curr_height)
         cursor.setScale(self.size / curr_width)
         cursor.setZValue(1.0)
+        self._last_orientation = float('nan')
         self.pen = QtGui.QPen(QtGui.QColor(0, 0, 0))
         self.brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
         super().__init__(*args, **kwargs)
@@ -69,6 +71,11 @@ class QGraphicsItemState(TurtleState):
         super().register(group)
         group.scene.addItem(self.graphics_item)
 
+    def step(self, size):
+        # self._last_orientation = self.heading
+        thread = threading.Thread(target=super().step(), args=size)
+        thread.start()
+        return thread
 
 class QGraphicsSceneGroup(IpcStateGroup):
     """
