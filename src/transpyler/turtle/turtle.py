@@ -4,7 +4,6 @@ from lazyutils import lazy
 from .utils import vecargsmethod
 from ..math import Vec
 
-
 class Turtle:
     """
     Creates a new Turtle.

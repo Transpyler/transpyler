@@ -2,6 +2,7 @@ import os
 
 from PyQt5 import QtGui
 from PyQt5 import QtSvg
+import threading
 
 from .utils import qtproperty, from_qvector, to_qvector, from_qcolor, to_qcolor
 from .. import TurtleState, MailboxState, IpcStateGroup, Turtle as BaseTurtle, \
@@ -78,8 +79,10 @@ class QGraphicsItemState(TurtleState):
         group.scene.addItem(self.graphics_item)
 
     def step(self, size):
-        self._last_orientation = self.heading
-        return super().step(size)
+        # self._last_orientation = self.heading
+        thread = threading.Thread(target=super().step(), args=size)
+        thread.start()
+        return thread
 
 class QGraphicsSceneGroup(IpcStateGroup):
     """

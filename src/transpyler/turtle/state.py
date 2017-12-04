@@ -1,6 +1,7 @@
 from multiprocessing import Queue
 
 from colortools import Color
+import threading
 
 from .utils import getsetter, ipc_property
 from ..math import vec, cos, sin, tan
@@ -61,6 +62,7 @@ class TurtleState:
         """
         Move forwards (or backwards if step is negative).
         """
+
         if velocity:
             time.sleep(velocity)
         self.move(self.pos + self.heading_direction)
