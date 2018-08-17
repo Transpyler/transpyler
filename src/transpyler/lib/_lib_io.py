@@ -1,5 +1,7 @@
 import builtins as _builtins
+
 from ._lib_str import format_string as _format_string
+from ..translate import gettext as _
 
 
 def print(*args, **kwargs):
@@ -44,8 +46,8 @@ def read_text(message=''):
         Hello Maria
     """
 
-    if isinstance(message, str) and message:
-        message = (message + ' ') if not message.endswith(' ') else message
+    message = str(message or _('Input:'))
+    message = (message + ' ') if message[-1] not in ' \n\t\r' else message
     return _input(message)
 
 
@@ -60,8 +62,14 @@ def read_number(message=''):
     """
 
     text = read_text(message)
-    num = float(text.replace(',', '.'))
-    return int(num) if int(num) == num else num
+    while True:
+        try:
+            num = float(text.replace(',', '.'))
+        except ValueError:
+            _print(_('Invalid number: {text}').format(text=text))
+            return read_number(message)
+        else:
+            return int(num) if int(num) == num else num
 
 
 def read_file(file=None):

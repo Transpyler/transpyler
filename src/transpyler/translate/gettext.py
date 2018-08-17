@@ -1,9 +1,11 @@
-import gettext
+import gettext as _gettext
 import os
 
 import polib
 
 L10N_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'l10n')
+LANGUAGE = None
+GETTEXT_INSTANCE = None
 PO_HEADER = """#
 msgid ""
 msgstr ""
@@ -14,6 +16,25 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\\n"
 
 """
+
+
+def gettext(x):
+    """
+    Translates string using the default language.
+    """
+    if LANGUAGE is None:
+        return x
+    return GETTEXT_INSTANCE.gettext(x)
+
+
+def set_language(lang):
+    """
+    Sets the global output language for the transpyler environment.
+    """
+    global LANGUAGE, GETTEXT_INSTANCE
+
+    LANGUAGE = lang.replace('-', '_')
+    GETTEXT_INSTANCE = gettext_for(LANGUAGE)
 
 
 def gettext_for(lang):
@@ -30,9 +51,9 @@ def gettext_for(lang):
 
     try:
         with open(os.path.join(L10N_PATH, lang + '.mo'), 'rb') as F:
-            result = gettext.GNUTranslations(F)
+            result = _gettext.GNUTranslations(F)
     except FileNotFoundError:
-        result = gettext.NullTranslations()
+        result = _gettext.NullTranslations()
     return result
 
 

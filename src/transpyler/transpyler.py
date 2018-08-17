@@ -6,9 +6,10 @@ from lazyutils import lazy
 from .info import Info
 from .introspection import Introspection
 from .lexer import Lexer
-from .translate.gettext import gettext_for
-from .translate.translate import translate_namespace, translator_factory
-from .runners import run
+from .translate import gettext_for
+from .translate import translate_namespace, translator_factory
+from .utils import pretty_callable
+from .utils.utils import has_qt
 
 # Save useful builtin functions
 _compile = _builtins.compile
@@ -118,7 +119,7 @@ class Transpyler(metaclass=SingletonMeta):
     )
     long_banner = lazy(lambda self: self.short_banner)
     lexer = lazy(lambda self: self.lexer_factory(self))
-
+    
     @lazy
     def name(self):
         cls_name = self.__class__.__name__.lower()
@@ -166,7 +167,6 @@ class Transpyler(metaclass=SingletonMeta):
 
         Default implementation does nothing.
         """
-        pass
 
     def compile(self, source, filename, mode, flags=0, dont_inherit=False,
                 compile_function=None):
@@ -337,6 +337,7 @@ class Transpyler(metaclass=SingletonMeta):
             transpile=transpile, is_incomplete_source=is_incomplete_source,
             namespace=namespace,
         )
+    
 
     #
     # Console helpers
@@ -424,8 +425,93 @@ class Transpyler(metaclass=SingletonMeta):
     #
     # External execution
     #
+    def start_console(self, console='auto', turtle='auto'):
+        """
+        Starts a regular python console with the current transpyler.
+
+        Args:
+            console:
+                Can be one of 'jupyter', 'console', 'qtconsole', 'auto'. This
+                chooses the default console application. The default behavior
+                (auto) is to try jupyter and fallback to console if it is
+                not available.
+            turtle:
+                Sets the turtle backend. It can be either 'qt', 'tk', 'none' or
+                'auto'. The defaut strategy (auto) is to try the qt first and
+                fallback to tk.
+        """
+
+        # Select the console application
+        if console == 'auto':
+            try:
+                import IPython  # noqa: F401
+            except ImportError:
+                console = 'console'
+            else:
+                console = 'jupyter'
+
+        if console == 'qtconsole':
+            from .jupyter import start_jupyter
+            start_jupyter(transpyler=self, gui=True)
+
+        elif console == 'jupyter':
+            from .jupyter import start_jupyter
+            start_jupyter(transpyler=self, gui=False)
+
+        elif console == 'console':
+            from .console import start_console
+            start_console(transpyler=self)
+
+    def start_notebook(self):
+        """
+        Starts a jupyter notebook with the current transpyler.
+        """
+
+        from .jupyter import start_notebook
+        start_notebook(self)
+
+    def start_qturtle(self):
+        """
+        Starts a QTurtle application with the current transpyler.
+        """
+
+        if not has_qt():
+            raise SystemExit('PyQt5 is necessary to run the turtle '
+                             'application.')
+
+        from qturtle.mainwindow import start_application
+        start_application(self)
+
     def start_main(self):
-        return run(self)
+        """
+        Starts the default main application.
+        """
+
+        import click
+
+        @click.command()
+        @click.option('--cli', '-c', is_flag=True, default=False,
+                      help='start gui-less console.')
+        @click.option('--console', is_flag=True, default=False,
+                      help='start a simple gui-less console.')
+        @click.option('--notebook/--no-notebook', '-n', default=False,
+                      help='starts notebook server.')
+        def main(cli, notebook, console):
+            if cli:
+                return self.start_console(console='auto')
+            if console:
+                return self.start_console(console='console')
+            if notebook:
+                return self.start_notebook()
+
+            if has_qt():
+                return self.start_qturtle()
+            else:
+                click.echo('Could not start GUI. Do you have Qt installed?',
+                           err=True)
+                return self.start_console(console='nogui')
+
+        return main()
 
 
 #
@@ -447,4 +533,4 @@ def extract_namespace(mod):
     return {
         name: getattr(mod, name)
         for name in dir(mod) if not name.startswith('_')
-        }
+    }
