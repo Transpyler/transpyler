@@ -24,3 +24,4 @@ src/transpyler/__meta__.py
 # Testing and temporary files
 .tox/
 .vscode/
+.pytest_cache/

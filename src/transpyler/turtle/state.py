@@ -63,7 +63,7 @@ class TurtleState:
         """
         self.move(self.pos + self.heading_direction * step)
 
-    def clear(self):
+    def clean(self):
         """
         Remove all drawn lines.
         """
@@ -74,7 +74,7 @@ class TurtleState:
         Reset turtle to initial state.
         """
 
-        self.clear()
+        self.clean()
         self.pos = self.startpos
         self.heading = self.startheading
         self.drawing = self.startdrawing
@@ -120,6 +120,9 @@ class TurtleState:
         elif action == 'step':
             self.step(args[0])
             return ['step', id]
+        elif action == 'clean':
+            self.clean()
+            return ['clean', id]
         else:
             raise ValueError('invalid action: %r' % action)
 
@@ -140,38 +143,38 @@ class PropertyState(TurtleState):
     """
 
     # Position
-    getpos = lambda self: self._pos
-    setpos = lambda self, v: setattr(self, '_pos', vec(*v))
+    getpos = (lambda self: self._pos)
+    setpos = (lambda self, v: setattr(self, '_pos', vec(*v)))
     pos = getsetter('pos')
 
     # Heading
-    getheading = lambda self: self._heading
-    setheading = lambda self, v: setattr(self, '_heading', v)
+    getheading = (lambda self: self._heading)
+    setheading = (lambda self, v: setattr(self, '_heading', v))
     heading = getsetter('heading')
 
     # Drawing
-    getdrawing = lambda self: self._drawing
-    setdrawing = lambda self, v: setattr(self, '_drawing', v)
+    getdrawing = (lambda self: self._drawing)
+    setdrawing = (lambda self, v: setattr(self, '_drawing', v))
     drawing = getsetter('drawing')
 
     # Color
-    getcolor = lambda self: self._color
-    setcolor = lambda self, v: setattr(self, '_color', v)
+    getcolor = (lambda self: self._color)
+    setcolor = (lambda self, v: setattr(self, '_color', v))
     color = getsetter('color')
 
     # Fillcolor
-    getfillcolor = lambda self: self._fillcolor
-    setfillcolor = lambda self, v: setattr(self, '_fillcolor', v)
+    getfillcolor = (lambda self: self._fillcolor)
+    setfillcolor = (lambda self, v: setattr(self, '_fillcolor', v))
     fillcolor = getsetter('fillcolor')
 
     # Width
-    getwidth = lambda self: self._width
-    setwidth = lambda self, v: setattr(self, '_width', v)
+    getwidth = (lambda self: self._width)
+    setwidth = (lambda self, v: setattr(self, '_width', v))
     width = getsetter('width')
 
     # Hidden
-    gethidden = lambda self: self._hidden
-    sethidden = lambda self, v: setattr(self, '_hidden', v)
+    gethidden = (lambda self: self._hidden)
+    sethidden = (lambda self, v: setattr(self, '_hidden', v))
     hidden = getsetter('hidden')
 
     # Avatar
@@ -238,6 +241,9 @@ class RemoteState(TurtleState):
 
     def setvalue(self, attr, value):
         return self.send(['set', self.id, attr, value])
+
+    def clean(self):
+        self.send(['clear', self.id])
 
     def send(self, msg):
         """
@@ -313,6 +319,7 @@ class MirrorState(RemoteState):
         self.local = TurtleState(**kwargs)
         self.local.draw_line = lambda v1, v2: None
         self.id = self.local.id
+        self.lines = []
 
     def getvalue(self, attr):
         return getattr(self.local, attr)
@@ -338,6 +345,10 @@ class MirrorState(RemoteState):
         local.step(step)
         super().step(step)
         self.setvalue('pos', local.pos)
+
+    def clean(self):
+        self.local.clean()
+        super().clean()
 
     def draw_line(self, v1, v2):
         pass

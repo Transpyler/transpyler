@@ -23,7 +23,7 @@ class TurtleScene(QtWidgets.QGraphicsScene):
         self.startTimer(1000 / fps)
 
         # Connect signals to slots
-        self.clearScreenSignal.connect(self.clearScreen)
+        self.clearScreenSignal.connect(self.cleanScreen)
         self.restartScreenSignal.connect(self.restartScreen)
 
         # Creates mail boxes
@@ -37,12 +37,12 @@ class TurtleScene(QtWidgets.QGraphicsScene):
         assert self._turtles.outbox is self._outbox
 
     def clearTurtles(self):  # noqa: N802
-        self._turtles.clear()
+        self._turtles.clean()
 
     #
     # Events and signals
     #
-    def clearScreen(self):  # noqa: N802
+    def cleanScreen(self):  # noqa: N802
         state = self.fullTurtleState()
         self.clear()
         self.setFullTurtleState(state)

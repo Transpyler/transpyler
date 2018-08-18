@@ -73,7 +73,7 @@ def curse_none_repr(name):
 
     name = name or 'None'
 
-    def __repr__():  # noqa: N802
+    def __repr__(self):  # noqa: N802
         return name
 
     apply_attr_curse(type(None), '__repr__', __repr__)

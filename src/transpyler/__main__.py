@@ -12,7 +12,7 @@ def potfile():
     """
     Updates Transpyler lib main potfile.
 
-    You probably has little use for this command unless you are a Transpyler
+    You probably have little use for this command unless you are a Transpyler
     developer.
     """
     from transpyler import lib

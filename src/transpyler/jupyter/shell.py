@@ -15,8 +15,7 @@ class TranspylerShell(ZMQInteractiveShell):
 
     def init_user_ns(self):
         super().init_user_ns()
-        exit_function = self.transpyler.make_exit_function(self.exiter)
-        self.user_ns[exit_function.__name__] = exit_function
+        self.transpyler.exit_callback = self.exiter
 
     def init_create_namespaces(self, user_module=None, user_ns=None):
         super().init_create_namespaces(user_module, user_ns)

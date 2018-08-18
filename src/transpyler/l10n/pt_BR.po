@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 2.0.2\n"
+"X-Generator: Poedit 2.1.1\n"
 
 #. range.name
 msgid "range"
@@ -30,12 +30,11 @@ msgid ""
 "These are exactly the valid indices for a list of 4 elements.\n"
 "When step is given, it specifies the increment (or decrement)."
 msgstr ""
-"Retorna uma lista de inteiros. Pode ser chamada de 3 maneiras diferentes:\n"
-"\n"
 "intervalo(n) -> [0, 1, ..., n - 1]\n"
 "intervalo(a, b) -> [a, a + 1, ..., b - 1]\n"
 "intervalo(a, b, x) -> [a, a + x, ..., b - 1]\n"
 "\n"
+"Retorna uma sequencia de inteiros de acordo com um dos três exemplos acima.\n"
 "\n"
 "Exemplos:\n"
 "    >>> intervalo(5)\n"
@@ -84,20 +83,23 @@ msgid ""
 "exit code different from zero or a string tells that there were an error\n"
 "during execution."
 msgstr ""
+"Conclui a execução do programa e fornece um código de saída.\n"
+"\n"
+"Se a mensagem de erro não for fornecida, o programa terminará em um estado "
+"bem-sucedido. Um código de saída diferente de zero ou uma string informa que "
+"houve um erro durante a execução."
 
 #. exit.args
 msgid "msg"
 msgstr "mensagem"
 
 #. integer.name
-#, fuzzy
-#| msgid "is_integer"
 msgid "integer"
-msgstr "é_inteiro"
+msgstr "inteiro"
 
 #. integer.doc
 msgid "Converts argument to an integer."
-msgstr ""
+msgstr "Converte argumento para um inteiro."
 
 #. integer.args
 #. real.args
@@ -126,7 +128,7 @@ msgstr "real"
 
 #. real.doc
 msgid "Convert argument to a real number (number with decimal places)."
-msgstr ""
+msgstr "Converte o argumento para um número real (número com casas decimais)."
 
 #. complex.name
 msgid "complex"
@@ -134,11 +136,9 @@ msgstr "complexo"
 
 #. complex.doc
 msgid "Convert argument to a complex number."
-msgstr ""
+msgstr "Converte o argumento em um número complexo."
 
 #. boolean.name
-#, fuzzy
-#| msgid "bool"
 msgid "boolean"
 msgstr ""
 "booleano\n"
@@ -150,40 +150,45 @@ msgid ""
 "\n"
 "Zero and empty sequences are converted to False. All other values are True."
 msgstr ""
+"Converte argumento para um valor lógico.\n"
+"\n"
+"Zero e sequências vazias são convertidas para Falso. Todos outros valores "
+"são Verdadeiros."
 
 #. binary.name
 msgid "binary"
-msgstr ""
+msgstr "binário"
 
 #. binary.doc
 msgid "Convert integer to a string with its binary representation."
-msgstr ""
+msgstr "Retorna string com representação binária do número."
 
 #. octal.name
 msgid "octal"
-msgstr ""
+msgstr "octal"
 
 #. octal.doc
 msgid "Convert integer to a string with its octal representation."
-msgstr ""
+msgstr "Retorna string com representação octal do número."
 
 #. hexadecimal.name
-#, fuzzy
 msgid "hexadecimal"
-msgstr "Isdcimal"
+msgstr "hexadecimal"
 
 #. hexadecimal.doc
 msgid "Convert integer to a string with its hexadecimal representation"
-msgstr ""
+msgstr "Retorna texto com representação hexadecimal do número"
 
 #. character.name
 msgid "character"
-msgstr ""
+msgstr "caractere"
 
 #. character.doc
 msgid ""
 "Convert number to its corresponding character in the ASCII/Unicode tables."
 msgstr ""
+"Converta o número em seu caractere correspondente nas tabelas ASCII / "
+"Unicode."
 
 #. concatenate.name
 msgid "concatenate"
@@ -453,9 +458,8 @@ msgid "Stops execution until the user presses the <return> key."
 msgstr "Interrompe a execução até que o usuário pressione a tecla <enter>."
 
 #. Number.name
-#, fuzzy
 msgid "Number"
-msgstr "Retorna o número de elementos de um objeto."
+msgstr "Número"
 
 #. Number.doc
 msgid ""
@@ -464,11 +468,14 @@ msgid ""
 "If you just want to check if an argument x is a number, without\n"
 "caring what kind, use isinstance(x, Number)."
 msgstr ""
+"Todos números herdam desta classe.\n"
+"\n"
+"Se você deseja chegar se um argumento x é um número, se se preocupar com o "
+"tipo específico, use `isinstance(x, Número)`."
 
 #. Real.name
-#, fuzzy
 msgid "Real"
-msgstr "real"
+msgstr "Real"
 
 #. Real.doc
 msgid ""
@@ -478,7 +485,7 @@ msgid ""
 "%, <, <=, >, and >=.\n"
 "\n"
 "Real also provides defaults for the derived operations."
-msgstr ""
+msgstr "Números reais."
 
 #. Real:conjugate.name
 msgid "conjugate"
@@ -486,11 +493,28 @@ msgstr "conjugado"
 
 #. Real:conjugate.doc
 msgid "Conjugate is a no-op for Reals."
-msgstr ""
+msgstr "Conjugação não afeta números reais."
 
 #. Real:conjugate.args
 #. Vec:norm.args
 #. Vec:normalized.args
+#. Turtle:clean.args
+#. Turtle:getavatar.args
+#. Turtle:getcolor.args
+#. Turtle:getfillcolor.args
+#. Turtle:getheading.args
+#. Turtle:getpos.args
+#. Turtle:getwidth.args
+#. Turtle:hide.args
+#. Turtle:isdown.args
+#. Turtle:ishidden.args
+#. Turtle:isvisible.args
+#. Turtle:pd.args
+#. Turtle:pendown.args
+#. Turtle:penup.args
+#. Turtle:pu.args
+#. Turtle:reset.args
+#. Turtle:show.args
 msgid "self"
 msgstr "self"
 
@@ -500,10 +524,7 @@ msgstr "imaginário"
 
 #. pi.doc
 #. e.doc
-msgid ""
-"float(x) -> floating point number\n"
-"\n"
-"Convert a string or number to a floating point number, if possible."
+msgid "Convert a string or number to a floating point number, if possible."
 msgstr "Converte argumento para um número de ponto flutuante, se possível."
 
 #. cos.name
@@ -545,11 +566,6 @@ msgstr ""
 "raiz_quadrada"
 
 #. sqrt.doc
-#, fuzzy
-#| msgid ""
-#| "sqrt(x)\n"
-#| "\n"
-#| "Return the square root of x."
 msgid "Return the square root of a positive number."
 msgstr "Retorna a raiz quadrada do argumento."
 
@@ -560,10 +576,8 @@ msgstr ""
 "exponencial"
 
 #. exp.doc
-#, fuzzy
-#| msgid "Return the product of all numbers in the sequence."
 msgid "Return the exponential of a number."
-msgstr "Retornar o produto de todos os números no argumento."
+msgstr "Retorna a exponencial do argumento."
 
 #. log.name
 #. ln.name
@@ -579,36 +593,29 @@ msgid ""
 "\n"
 "Aliases: log | ln"
 msgstr ""
+"Retorna o logaritmo natural de x.\n"
+"\n"
+"Aliases: log | ln"
 
 #. log10.name
 msgid "log10"
 msgstr "log10"
 
 #. log10.doc
-#, fuzzy
-#| msgid ""
-#| "log2(x)\n"
-#| "\n"
-#| "Return the base 2 logarithm of x."
 msgid "Return the logarithm of x in base 10."
-msgstr "Retorna o logaritmo do argumento na base 2."
+msgstr "Retorna o logaritmo do argumento na base 10."
 
 #. log2.name
 msgid "log2"
 msgstr "log2"
 
 #. log2.doc
-#, fuzzy
-#| msgid ""
-#| "log2(x)\n"
-#| "\n"
-#| "Return the base 2 logarithm of x."
 msgid "Return the logarithm of x in base 2."
 msgstr "Retorna o logaritmo do argumento na base 2."
 
 #. sign.name
 msgid "sign"
-msgstr ""
+msgstr "sinal"
 
 #. sign.doc
 msgid ""
@@ -618,6 +625,11 @@ msgid ""
 "    >>> sign(-32.0)\n"
 "    -1"
 msgstr ""
+"Retorna 1 se x for positivo, -1 se for negativo e 0 caso seja nulo.\n"
+"\n"
+"Examples:\n"
+"    >>> sinal(-32.0)\n"
+"    -1"
 
 #. abs.name
 msgid "abs"
@@ -644,10 +656,18 @@ msgid ""
 "    >>> round(3.141516, 2)\n"
 "    3.14"
 msgstr ""
+"Arredonda um número para uma precisão determinada em dígitos decimais "
+"(padrão de 0 dígitos).\n"
+"\n"
+"Exemplos:\n"
+"    >>> arredondar(1.9)\n"
+"    2\n"
+"    >>> arredondar(3.141516, 2)\n"
+"    3.14"
 
 #. round.args
 msgid "number, ndigits"
-msgstr ""
+msgstr "numero, ndigitos"
 
 #. ceil.name
 msgid "ceil"
@@ -656,51 +676,37 @@ msgstr ""
 "arredonde_para_cima"
 
 #. ceil.doc
-#, fuzzy
-#| msgid ""
-#| "ceil(x)\n"
-#| "\n"
-#| "Return the ceiling of x as an Integral.\n"
-#| "This is the smallest integer >= x."
 msgid ""
 "Return the ceiling of x as an Integral.\n"
 "This is the smallest integer >= x."
-msgstr "Arredonda o argumento para o inteiro imediatamente maior."
+msgstr ""
+"Arredonda o argumento para o inteiro imediatamente maior. É o maior inteiro "
+"maior que x."
 
 #. ceil.args
 #. trunc.args
-#, fuzzy
-#| msgid "read_number"
 msgid "number"
-msgstr "Retorna o número de elementos de um objeto."
+msgstr "numero"
 
 #. trunc.name
-#, fuzzy
 msgid "trunc"
-msgstr "trunc"
+msgstr ""
+"truncar\n"
+"trunque"
 
 #. trunc.doc
-#, fuzzy
 msgid "Truncates x to the nearest Integral toward 0."
-msgstr ""
-"trunc (x: Real) -> Integral\n"
-"\n"
-"Trunca x para o Integral mais próximo em direção a 0. Usa o método mágico "
-"__trunc__."
+msgstr "Trunca x para o inteiro mais próximo em direção a 0."
 
 #. sum.name
 msgid "sum"
 msgstr "soma"
 
 #. sum.doc
-#, fuzzy
-#| msgid "Return the product of all numbers in the sequence."
 msgid "Return the sum of all numbers in the sequence."
-msgstr "Retornar o produto de todos os números no argumento."
+msgstr "Retorna a soma de todos os números na sequência."
 
 #. sum.args
-#, fuzzy
-#| msgid "x, start"
 msgid "seq, start"
 msgstr "x, começo"
 
@@ -725,7 +731,7 @@ msgid ""
 "Return the minimum value in the arguments.\n"
 "\n"
 "It called with a single sequence, return the minimum value on that sequence."
-msgstr ""
+msgstr "Como máximo, mas retorna o menor valor."
 
 #. max.name
 msgid "max"
@@ -737,10 +743,13 @@ msgid ""
 "\n"
 "It called with a single sequence, return the maximum value on that sequence."
 msgstr ""
+"Retorna o valor máximo nos argumentos.\n"
+"\n"
+"Se chamada com uma seqüência, retorna o valor máximo desta seqüência."
 
 #. dice.name
 msgid "dice"
-msgstr ""
+msgstr "dados"
 
 #. dice.doc
 msgid ""
@@ -754,10 +763,18 @@ msgid ""
 "+SKIP\n"
 "    13"
 msgstr ""
+"Simule um lance de dados  (retorna um número aleatório entre 1 e 6.\n"
+"\n"
+"Chame com um argumento explícito para lançar um dado com um número diferente "
+"de faces\n"
+"\n"
+"Exemplos:\n"
+"    >>> dados (20) # doctest: + SKIP\n"
+"    13"
 
 #. dice.args
 msgid "n"
-msgstr ""
+msgstr "n"
 
 #. random.name
 msgid "random"
@@ -765,26 +782,21 @@ msgstr "número_aleatório"
 
 #. random.doc
 msgid "Return a random number between 0 and 1."
-msgstr ""
+msgstr "Retorna um número aleatório entre 0 e 1."
 
 #. randint.name
 msgid "randint"
 msgstr "inteiro_aleatório"
 
 #. randint.doc
-#, fuzzy
 msgid "Return a random integer between a and b (inclusive)."
 msgstr ""
 "Retorna o inteiro aleatório no intervalo [a, b], incluindo ambos os pontos "
 "finais."
 
 #. randint.args
-#, fuzzy
 msgid "a, b"
-msgstr ""
-"Modifica a cor do traço.\n"
-"\n"
-"A cor pode ser especificada como uma tupla (R, G, B) ou pelo nome."
+msgstr "a, b"
 
 #. Vec.name
 msgid "Vec"
@@ -833,8 +845,6 @@ msgid "perp"
 msgstr "perpendicular"
 
 #. Vec:perp.doc
-#, fuzzy
-#| msgid "Returns a perpendicular vector rotated 90 degrees counter clockwise."
 msgid "Returns a perpendicular vector rotated 90 degrees counter-clockwise."
 msgstr ""
 "Retorna um vetor perpendicular girado 90 graus no sentido anti-horário."
@@ -852,8 +862,6 @@ msgid "Return rotated vector by the given angle."
 msgstr "Retorna o vetor girado pelo ângulo dado."
 
 #. Vec:rotate.args
-#, fuzzy
-#| msgid "self, theta, x, y, c, s"
 msgid "self, angle, x, y, c, s"
 msgstr "self, ângulo, x, y, c, s"
 
@@ -885,6 +893,526 @@ msgstr "O produto escalar de dois vetores."
 msgid "u, v"
 msgstr "u, v"
 
+#. mainturtle.name
+msgid "mainturtle"
+msgstr "tuga_principal"
+
+#. mainturtle.doc
+msgid "Returns the main turtle object."
+msgstr "Retorna o Tuga principal."
+
+#. Turtle.name
+msgid "Turtle"
+msgstr "Tuga"
+
+#. Turtle.doc
+msgid "Creates a new Turtle."
+msgstr "Cria uma nova tartaruga."
+
+#. Turtle:back.name
+#. Turtle:backward.name
+#. Turtle:bk.name
+#. backward.name
+#. bk.name
+#. back.name
+msgid "backward"
+msgstr "trás"
+
+#. Turtle:back.doc
+#. Turtle:backward.doc
+#. Turtle:bk.doc
+#. backward.doc
+#. bk.doc
+#. back.doc
+msgid ""
+"Move the turtle backward by the given step size (in pixels).\n"
+"\n"
+"Aliases: backward | back | bk"
+msgstr "Move o Tuga para trás pelo passo fornecido em pixels"
+
+#. Turtle:back.args
+#. Turtle:backward.args
+#. Turtle:bk.args
+#. Turtle:fd.args
+#. Turtle:forward.args
+msgid "self, step"
+msgstr "self, passo"
+
+#. Turtle:clean.name
+#. clean.name
+msgid "clean"
+msgstr ""
+"limpar\n"
+"limpe"
+
+#. Turtle:clean.doc
+#. clean.doc
+msgid "Clear all drawings made by turtle."
+msgstr "Limpa todos os desenhos feitos pelo tuga."
+
+#. Turtle:color
+msgid "color"
+msgstr "cor"
+
+#. Turtle:drawing
+msgid "drawing"
+msgstr "desenhando"
+
+#. Turtle:fd.name
+#. Turtle:forward.name
+#. forward.name
+#. fd.name
+msgid "forward"
+msgstr "frente"
+
+#. Turtle:fd.doc
+#. Turtle:forward.doc
+#. forward.doc
+#. fd.doc
+msgid ""
+"Move the turtle forward by the given step size (in pixels).\n"
+"\n"
+"Aliases: forward | fd"
+msgstr "Mova o Tuga para frente pelo passo dado em pixels"
+
+#. Turtle:fillcolor
+msgid "fillcolor"
+msgstr "cor_preenchimento"
+
+#. Turtle:getavatar.name
+#. getavatar.name
+msgid "getavatar"
+msgstr ""
+"obter_avatar\n"
+"obtenha_avatar"
+
+#. Turtle:getavatar.doc
+#. getavatar.doc
+msgid "Return a string with the name of the current avatar."
+msgstr "Retorna o nome do avatar atual."
+
+#. Turtle:getcolor.name
+#. getcolor.name
+msgid "getcolor"
+msgstr ""
+"obter_cor\n"
+"obtenha_cor"
+
+#. Turtle:getcolor.doc
+#. getcolor.doc
+msgid "Return a tuple of (R, G, B) with the current pen color."
+msgstr "Retorna  a cor de desenho atual."
+
+#. Turtle:getfillcolor.name
+#. getfillcolor.name
+msgid "getfillcolor"
+msgstr "obter_cor_preenchimento"
+
+#. Turtle:getfillcolor.doc
+#. getfillcolor.doc
+msgid "Return a tuple of (R, G, B) with the current fill color."
+msgstr "Retorna a cor de preenchimento atual."
+
+#. Turtle:getheading.name
+#. getheading.name
+msgid "getheading"
+msgstr ""
+"obter_orientação\n"
+"obtenha_orientação"
+
+#. Turtle:getheading.doc
+#. getheading.doc
+msgid "Return current heading of the turtle (in degrees)."
+msgstr ""
+"Retorna a orientação atual do Tuga (em graus).\n"
+"\n"
+"O valor de referência consiste na orientação inicial em que o Tuga aponta "
+"para a direita."
+
+#. Turtle:getpos.name
+#. getpos.name
+msgid "getpos"
+msgstr ""
+"obter_posição\n"
+"obtenha_posição"
+
+#. Turtle:getpos.doc
+#. getpos.doc
+msgid "Return a vector (x, y) with turtle's position (in pixels)."
+msgstr "Retorna um vetor (x, y) com a posição do Tuga (em pixels)."
+
+#. Turtle:getwidth.name
+#. getwidth.name
+msgid "getwidth"
+msgstr ""
+"obter_espessura\n"
+"obtenha_espessura"
+
+#. Turtle:getwidth.doc
+#. getwidth.doc
+msgid "Return the pen width (in pixels):"
+msgstr "Retorna a espessura do traço (em pixels)"
+
+#. Turtle:goto.name
+#. goto.name
+msgid "goto"
+msgstr ""
+"ir_para\n"
+"vá_para"
+
+#. Turtle:goto.doc
+#. goto.doc
+msgid ""
+"Goes to the given position.\n"
+"\n"
+"If the pen is down, it draws a line."
+msgstr ""
+"Vai para a posição dada.\n"
+"\n"
+"Se a caneta estiver abaixada, desenha uma linha."
+
+#. Turtle:goto.args
+#. Turtle:jump.args
+#. Turtle:setpos.args
+msgid "self, x, y, kwds"
+msgstr "self, x, y, kwds"
+
+#. Turtle:heading
+msgid "heading"
+msgstr "orientação"
+
+#. Turtle:hidden
+msgid "hidden"
+msgstr "oculto"
+
+#. Turtle:hide.name
+#. hide.name
+msgid "hide"
+msgstr ""
+"ocultar\n"
+"oculte"
+
+#. Turtle:hide.doc
+#. hide.doc
+msgid "Hide turtle."
+msgstr "Esconda o Tuga."
+
+#. Turtle:isdown.name
+#. isdown.name
+msgid "isdown"
+msgstr "está_abaixado"
+
+#. Turtle:isdown.doc
+#. isdown.doc
+msgid "Return True if the pen is down or False otherwise."
+msgstr ""
+"Retorna Verdadeiro se a caneta estiver desativada, ou Falso caso contrário."
+
+#. Turtle:ishidden.name
+#. ishidden.name
+msgid "ishidden"
+msgstr "está_oculto"
+
+#. Turtle:ishidden.doc
+#. ishidden.doc
+msgid "Return True if the turtle is not visible."
+msgstr "Retorna Verdadeiro se o Tuga não estiver visível."
+
+#. Turtle:isvisible.name
+#. isvisible.name
+msgid "isvisible"
+msgstr "está_visível"
+
+#. Turtle:isvisible.doc
+#. isvisible.doc
+msgid "Return True if the turtle is visible."
+msgstr "Retornar Verdadeiro se o Tuga for visível."
+
+#. Turtle:jump.name
+#. jump.name
+msgid "jump"
+msgstr "pular_para"
+
+#. Turtle:jump.doc
+#. jump.doc
+msgid ""
+"Relative movement by the desired position. It *never* draw as line even\n"
+"if the pen is down."
+msgstr ""
+"Faz o Tuga pular pelas coordenadas escolhidas. Esta função *nunca* desenha "
+"uma linha, mesmo se a caneta estiver abaixada."
+
+#. Turtle:left.name
+#. Turtle:lt.name
+#. left.name
+#. lt.name
+msgid "left"
+msgstr "esquerda"
+
+#. Turtle:left.doc
+#. Turtle:lt.doc
+#. left.doc
+#. lt.doc
+msgid ""
+"Rotate the turtle counter-clockwise by the given angle.\n"
+"\n"
+"Aliases: left | lt\n"
+"\n"
+"Negative angles produces clockwise rotation."
+msgstr ""
+"Gira o Tuga no sentido anti-horário pelo ângulo dado.\n"
+"\n"
+"Ângulos negativos produzem rotação no sentido horário."
+
+#. Turtle:left.args
+#. Turtle:lt.args
+#. Turtle:right.args
+#. Turtle:rt.args
+msgid "self, angle"
+msgstr "self, ângulo"
+
+#. Turtle:pd.name
+#. Turtle:pendown.name
+#. pendown.name
+#. pd.name
+msgid "pendown"
+msgstr "abaixar_caneta"
+
+#. Turtle:pd.doc
+#. Turtle:pendown.doc
+#. pendown.doc
+#. pd.doc
+msgid ""
+"Lower the turtle pen so it can draw in the screen.\n"
+"\n"
+"Aliases: pendown | pd"
+msgstr ""
+"Abaixa a caneta do Tuga para que ele possa desenhar na tela quando se "
+"movimentar"
+
+#. Turtle:penup.name
+#. Turtle:pu.name
+#. penup.name
+#. pu.name
+msgid "penup"
+msgstr "levantar_caneta"
+
+#. Turtle:penup.doc
+#. Turtle:pu.doc
+#. penup.doc
+#. pu.doc
+msgid ""
+"Raises the turtle pen so it stops drawing.\n"
+"\n"
+"Aliases: penup | pu"
+msgstr "Levanta a caneta do Tuga para que pare de desenhar enquanto se desloca"
+
+#. Turtle:pos
+msgid "pos"
+msgstr "posição"
+
+#. Turtle:reset.name
+#. reset.name
+msgid "reset"
+msgstr ""
+"reiniciar\n"
+"reinicie"
+
+#. Turtle:reset.doc
+#. reset.doc
+msgid "Clear all drawings and reset turtle to initial position."
+msgstr "Limpe todos os desenhos e repõe o Tuga na posição inicial."
+
+#. Turtle:right.name
+#. Turtle:rt.name
+#. right.name
+#. rt.name
+msgid "right"
+msgstr "direita"
+
+#. Turtle:right.doc
+#. Turtle:rt.doc
+#. right.doc
+#. rt.doc
+msgid ""
+"Rotate the turtle clockwise by the given angle.\n"
+"\n"
+"Aliases: right | rt\n"
+"\n"
+"Negative angles produces counter-clockwise rotation. Return final\n"
+"heading."
+msgstr ""
+"Gira a tartaruga no sentido horário pelo ângulo dado.\n"
+"\n"
+"Os ângulos negativos produzem rotação no sentido anti-horário."
+
+#. Turtle:setavatar.name
+#. setavatar.name
+msgid "setavatar"
+msgstr ""
+"definir_avatar\n"
+"defina_avatar"
+
+#. Turtle:setavatar.doc
+#. setavatar.doc
+msgid "Modifies the turtle avatar."
+msgstr "Modifica o avatar utilizado pelo Tuga."
+
+#. Turtle:setavatar.args
+#. Turtle:setcolor.args
+#. Turtle:setfillcolor.args
+#. Turtle:setheading.args
+#. Turtle:setwidth.args
+msgid "self, value"
+msgstr "self, valor"
+
+#. Turtle:setcolor.name
+#. setcolor.name
+msgid "setcolor"
+msgstr ""
+"definir_cor\n"
+"defina_cor"
+
+#. Turtle:setcolor.doc
+#. setcolor.doc
+msgid ""
+"Modifies the pen color.\n"
+"\n"
+"Color can be specified as an (R, G, B) tuple or as a hex string or by\n"
+"name."
+msgstr ""
+"Modifica a cor do traço.\n"
+"\n"
+"A cor pode ser especificada como uma tupla (R, G, B) ou pelo nome."
+
+#. Turtle:setfillcolor.name
+#. setfillcolor.name
+msgid "setfillcolor"
+msgstr ""
+"definir_cor\n"
+"defina_cor"
+
+#. Turtle:setfillcolor.doc
+#. setfillcolor.doc
+msgid ""
+"Modifies the fill color.\n"
+"\n"
+"Color can be specified as an (R, G, B) tuple or as a hex string or by\n"
+"name."
+msgstr ""
+"Modifica a cor de preenchimento.\n"
+"\n"
+"A cor pode ser especificada como uma tupla de (R, G, B) ou pelo nome."
+
+#. Turtle:setheading.name
+#. setheading.name
+msgid "setheading"
+msgstr ""
+"definir_orientação\n"
+"defina_orientação"
+
+#. Turtle:setheading.doc
+#. setheading.doc
+msgid "Sets turtle's heading (in degrees)."
+msgstr "Define a orientação do Tuga (em graus)."
+
+#. Turtle:setpos.name
+#. setpos.name
+msgid "setpos"
+msgstr ""
+"definir_posição\n"
+"defina_posição"
+
+#. Turtle:setpos.doc
+#. setpos.doc
+msgid ""
+"Modifies turtle's position (in pixels)\n"
+"\n"
+"User can pass the x, y coordinates of the new position or a tuple of\n"
+"(x, y) values. This method never draws a line."
+msgstr ""
+"Modifica a posição do Tuga (em pixels)\n"
+"\n"
+"É possível passar as coordenadas x, y da nova posição ou uma tupla de "
+"valores (x, y). Esta função nunca desenha uma linha."
+
+#. Turtle:setwidth.name
+#. setwidth.name
+msgid "setwidth"
+msgstr ""
+"definir_espessura\n"
+"defina_espessura"
+
+#. Turtle:setwidth.doc
+#. setwidth.doc
+msgid "Modifies the pen width (in pixels)"
+msgstr "Modifica a largura do traço (em pixels)"
+
+#. Turtle:show.name
+#. show.name
+msgid "show"
+msgstr ""
+"mostrar\n"
+"mostre"
+
+#. Turtle:show.doc
+#. show.doc
+msgid "Shows a hidden turtle."
+msgstr "Mostra um Tuga oculto."
+
+#. Turtle:width
+msgid "width"
+msgstr "espessura"
+
+#. getpos.args
+#. setpos.args
+#. getheading.args
+#. setheading.args
+#. getwidth.args
+#. setwidth.args
+#. getcolor.args
+#. setcolor.args
+#. getfillcolor.args
+#. setfillcolor.args
+#. getavatar.args
+#. setavatar.args
+#. penup.args
+#. pendown.args
+#. isdown.args
+#. isvisible.args
+#. ishidden.args
+#. hide.args
+#. show.args
+#. clean.args
+#. reset.args
+#. goto.args
+#. jump.args
+#. forward.args
+#. backward.args
+#. left.args
+#. right.args
+#. fd.args
+#. bk.args
+#. back.args
+#. lt.args
+#. rt.args
+#. pu.args
+#. pd.args
+msgid "args, kwargs, turtle"
+msgstr "args, kwargs, tuga"
+
+#. setspeed.name
+msgid "setspeed"
+msgstr ""
+"definir_velocidade\n"
+"defina_velocidade"
+
+#. getspeed.name
+msgid "getspeed"
+msgstr ""
+"obter_velocidade\n"
+"obtenha_velocidade"
+
 #. exiter.name
 msgid "quit"
 msgstr "sair"
@@ -906,9 +1434,6 @@ msgstr "Limpar tela"
 #~ msgid "Finish program execution."
 #~ msgstr "Concluir a execução do programa."
 
-#~ msgid "Turtle"
-#~ msgstr "Tuga"
-
 #~ msgid ""
 #~ "Turtle representation on client.\n"
 #~ "\n"
@@ -917,304 +1442,6 @@ msgstr "Limpar tela"
 #~ "simply\n"
 #~ "sends messages through this connection object."
 #~ msgstr "Uma nova instância do Tuga para desenhar na tela."
-
-#~ msgid "backward"
-#~ msgstr "trás"
-
-#~ msgid ""
-#~ "Move the turtle backward by the given step size (in pixels).\n"
-#~ "\n"
-#~ "Aliases: backward | back | bk"
-#~ msgstr "Move o Tuga para trás pelo passo fornecido em pixels."
-
-#~ msgid "self, step"
-#~ msgstr "self, passo"
-
-#~ msgid "clear"
-#~ msgstr "limpar"
-
-#~ msgid "Clear all drawings made by turtle."
-#~ msgstr "Limpa todos os desenhos feitos pelo tuga."
-
-#~ msgid "color"
-#~ msgstr "cor"
-
-#~ msgid "drawing"
-#~ msgstr "desenhando"
-
-#~ msgid "forward"
-#~ msgstr "frente"
-
-#~ msgid ""
-#~ "Move the turtle forward by the given step size (in pixels).\n"
-#~ "\n"
-#~ "Aliases: forward | fd"
-#~ msgstr "Mova o Tuga para frente pelo passo dado em pixels."
-
-#~ msgid "fillcolor"
-#~ msgstr "cor_preenchimento"
-
-#~ msgid "getavatar"
-#~ msgstr ""
-#~ "obter_avatar\n"
-#~ "obtenha_avatar"
-
-#~ msgid "Return a string with the name of the current avatar."
-#~ msgstr "Retorna o nome do avatar atual."
-
-#~ msgid "getcolor"
-#~ msgstr ""
-#~ "obter_cor\n"
-#~ "obtenha_cor"
-
-#~ msgid "Return a tuple of (R, G, B) with the current pen color."
-#~ msgstr "Retorna  a cor de desenho atual."
-
-#~ msgid "getfillcolor"
-#~ msgstr "obter_cor_preenchimento"
-
-#~ msgid "Return a tuple of (R, G, B) with the current fill color."
-#~ msgstr "Retorna a cor de preenchimento atual."
-
-#~ msgid "getheading"
-#~ msgstr ""
-#~ "obter_orientação\n"
-#~ "obtenha_orientação"
-
-#~ msgid "Return current heading of the turtle (in degrees)."
-#~ msgstr ""
-#~ "Retorna a orientação atual do Tuga (em graus).\n"
-#~ "\n"
-#~ "O valor de referência consiste na orientação inicial em que o Tuga aponta "
-#~ "para a direita."
-
-#~ msgid "getpos"
-#~ msgstr ""
-#~ "obter_posição\n"
-#~ "obtenha_posição"
-
-#~ msgid "Return a vector (x, y) with turtle's position (in pixels)."
-#~ msgstr "Retorna um vetor (x, y) com a posição do Tuga (em pixels)."
-
-#~ msgid "getwidth"
-#~ msgstr ""
-#~ "obter_espessura\n"
-#~ "obtenha_espessura"
-
-#~ msgid "Return the pen width (in pixels):"
-#~ msgstr "Retorna a espessura do traço (em pixels)"
-
-#~ msgid "goto"
-#~ msgstr ""
-#~ "ir_para\n"
-#~ "vá_para"
-
-#~ msgid ""
-#~ "Goes to the given position.\n"
-#~ "\n"
-#~ "If the pen is down, it draws a line."
-#~ msgstr ""
-#~ "Vai para a posição dada.\n"
-#~ "\n"
-#~ "Se a caneta estiver abaixada, desenha uma linha."
-
-#~ msgid "self, x, y, kwds"
-#~ msgstr "self, x, y, kwds"
-
-#~ msgid "heading"
-#~ msgstr "orientação"
-
-#~ msgid "hidden"
-#~ msgstr "oculto"
-
-#~ msgid "hide"
-#~ msgstr ""
-#~ "ocultar\n"
-#~ "oculte"
-
-#~ msgid "Hide turtle."
-#~ msgstr "Esconda o Tuga."
-
-#~ msgid "isdown"
-#~ msgstr "está_abaixado"
-
-#~ msgid "Return True if the pen is down or False otherwise."
-#~ msgstr ""
-#~ "Retorna Verdadeiro se a caneta estiver desativada, ou Falso caso "
-#~ "contrário."
-
-#~ msgid "ishidden"
-#~ msgstr "está_oculto"
-
-#~ msgid "Return True if the turtle is not visible."
-#~ msgstr "Retorna Verdadeiro se o Tuga não estiver visível."
-
-#~ msgid "isvisible"
-#~ msgstr "está_visível"
-
-#~ msgid "Return True if the turtle is visible."
-#~ msgstr "Retornar Verdadeiro se o Tuga for visível."
-
-#~ msgid "jump"
-#~ msgstr "pular_para"
-
-#~ msgid ""
-#~ "Relative movement by the desired position. It *never* draw as line even\n"
-#~ "if the pen is down."
-#~ msgstr ""
-#~ "Faz o Tuga pular pelas coordenadas escolhidas. Esta função *nunca* "
-#~ "desenha uma linha, mesmo se a caneta estiver abaixada."
-
-#~ msgid "left"
-#~ msgstr "esquerda"
-
-#~ msgid ""
-#~ "Rotate the turtle counter-clockwise by the given angle.\n"
-#~ "\n"
-#~ "Aliases: left | lt\n"
-#~ "\n"
-#~ "Negative angles produces clockwise rotation."
-#~ msgstr ""
-#~ "Gira o Tuga no sentido anti-horário pelo ângulo dado.\n"
-#~ "\n"
-#~ "Ângulos negativos produzem rotação no sentido horário."
-
-#~ msgid "self, angle"
-#~ msgstr "self, ângulo"
-
-#~ msgid "pendown"
-#~ msgstr "abaixar_caneta"
-
-#~ msgid ""
-#~ "Lower the turtle pen so it can draw in the screen.\n"
-#~ "\n"
-#~ "Aliases: pendown | pd"
-#~ msgstr ""
-#~ "Abaixa a caneta do Tuga para que ele possa desenhar na tela quando se "
-#~ "movimentar."
-
-#~ msgid "penup"
-#~ msgstr "levantar_caneta"
-
-#~ msgid ""
-#~ "Raises the turtle pen so it stops drawing.\n"
-#~ "\n"
-#~ "Aliases: penup | pu"
-#~ msgstr ""
-#~ "Levanta a caneta do Tuga para que pare de desenhar enquanto se desloca."
-
-#~ msgid "pos"
-#~ msgstr "posição"
-
-#~ msgid "reset"
-#~ msgstr ""
-#~ "reiniciar\n"
-#~ "reinicie"
-
-#~ msgid "Clear all drawings and reset turtle to initial position."
-#~ msgstr "Limpe todos os desenhos e repõe o Tuga na posição inicial."
-
-#~ msgid "right"
-#~ msgstr "direita"
-
-#~ msgid ""
-#~ "Rotate the turtle clockwise by the given angle.\n"
-#~ "\n"
-#~ "Aliases: right | rt\n"
-#~ "\n"
-#~ "Negative angles produces counter-clockwise rotation. Return final\n"
-#~ "heading."
-#~ msgstr ""
-#~ "Gira a tartaruga no sentido horário pelo ângulo dado.\n"
-#~ "\n"
-#~ "Os ângulos negativos produzem rotação no sentido anti-horário."
-
-#~ msgid "setavatar"
-#~ msgstr ""
-#~ "definir_avatar\n"
-#~ "defina_avatar"
-
-#~ msgid "Modifies the turtle avatar."
-#~ msgstr "Modifica o avatar utilizado pelo Tuga."
-
-#~ msgid "self, value"
-#~ msgstr "self, valor"
-
-#~ msgid "setcolor"
-#~ msgstr ""
-#~ "definir_cor\n"
-#~ "defina_cor"
-
-#~ msgid ""
-#~ "Modifies the pen color.\n"
-#~ "\n"
-#~ "Color can be specified as an (R, G, B) tuple or as a hex string or by\n"
-#~ "name."
-#~ msgstr ""
-#~ "Modifica a cor do traço.\n"
-#~ "\n"
-#~ "A cor pode ser especificada como uma tupla (R, G, B) ou pelo nome."
-
-#~ msgid "setfillcolor"
-#~ msgstr "setfillcolo"
-
-#~ msgid ""
-#~ "Modifies the fill color.\n"
-#~ "\n"
-#~ "Color can be specified as an (R, G, B) tuple or as a hex string or by\n"
-#~ "name."
-#~ msgstr ""
-#~ "Modifica a cor de preenchimento.\n"
-#~ "\n"
-#~ "A cor pode ser especificada como uma tupla de (R, G, B) ou pelo nome."
-
-#~ msgid "setheading"
-#~ msgstr ""
-#~ "definir_orientação\n"
-#~ "defina_orientação"
-
-#~ msgid "Sets turtle's heading (in degrees)."
-#~ msgstr "Define a orientação do Tuga (em graus)."
-
-#~ msgid "setpos"
-#~ msgstr "definir_posição"
-
-#~ msgid ""
-#~ "Modifies turtle's position (in pixels)\n"
-#~ "\n"
-#~ "User can pass the x, y coordinates of the new position or a tuple of\n"
-#~ "(x, y) values. This method never draws a line."
-#~ msgstr ""
-#~ "Modifica a posição do Tuga (em pixels)\n"
-#~ "\n"
-#~ "É possível passar as coordenadas x, y da nova posição ou uma tupla de "
-#~ "valores (x, y). Esta função nunca desenha uma linha."
-
-#~ msgid "setwidth"
-#~ msgstr "definir_espessura"
-
-#~ msgid "Modifies the pen width (in pixels)"
-#~ msgstr "Modifica a largura do traço (em pixels)"
-
-#~ msgid "show"
-#~ msgstr ""
-#~ "mostrar\n"
-#~ "mostre"
-
-#~ msgid "Shows a hidden turtle."
-#~ msgstr "Mostra um Tuga oculto."
-
-#~ msgid "width"
-#~ msgstr "espessura"
-
-#~ msgid "mainturtle"
-#~ msgstr "tuga_principal"
-
-#~ msgid "Returns the main turtle object."
-#~ msgstr "Retorna o Tuga principal."
-
-#~ msgid "args, kwargs, turtle"
-#~ msgstr "args, kwargs, tuga"
 
 #~ msgid ""
 #~ "exp(x)\n"

@@ -1,30 +1,24 @@
-import os
 import codecs
+import os
+import re
+
 from setuptools import setup, find_packages
 
-# Save version and author to __meta__.py
-version = open('VERSION').read().strip()
-dirname = os.path.dirname(__file__)
-path = os.path.join(dirname, 'src', 'transpyler', '__meta__.py')
-meta = '''# Automatically created. Please do not edit.
-__version__ = '%s'
-__author__ = 'F\\xe1bio Mac\\xeado Mendes'
-''' % version
-with open(path, 'w') as F:
-    F.write(meta)
-
+# Extract version
+init = open(os.path.join('src', 'transpyler', '__init__.py')).read()
+m = re.search(r"__version__ ?= ?'([0-9a-z.]+)'", init)
+version = m.group(1)
 
 # Reuse dependencies list
 dependencies = {
     'google_translate': ['textblob'],
     'jupyter': ['jupyter', 'jupyter-console', 'ipython'],
     'pygments': ['pygments'],
-    'dev': ['python-boilerplate[dev]']
+    'dev': ['manuel', 'pytest', 'pytest-cov']
 }
 dependencies['dev'] += sum(
     [v for k, v in dependencies.items() if k != 'dev'], []
 )
-
 
 setup(
     # Basic info
@@ -32,7 +26,7 @@ setup(
     version=version,
     author='Fábio Macêdo Mendes',
     author_email='fabiomacedomendes@gmail.com',
-    url='',
+    url='https://github.com/transpyler/transpyler/',
     description='A framework for building localized Python-like languages.',
     long_description=codecs.open('README.rst', 'rb', 'utf8').read(),
 

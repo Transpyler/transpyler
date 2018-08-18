@@ -369,7 +369,7 @@ msgstr ""
 #. Real:conjugate.args
 #. Vec:norm.args
 #. Vec:normalized.args
-#. Turtle:clear.args
+#. Turtle:clean.args
 #. Turtle:getavatar.args
 #. Turtle:getcolor.args
 #. Turtle:getfillcolor.args
@@ -395,10 +395,7 @@ msgstr ""
 
 #. pi.doc
 #. e.doc
-msgid ""
-"float(x) -> floating point number\n"
-"\n"
-"Convert a string or number to a floating point number, if possible."
+msgid "Convert a string or number to a floating point number, if possible."
 msgstr ""
 
 #. cos.name
@@ -762,13 +759,13 @@ msgstr ""
 msgid "self, step"
 msgstr ""
 
-#. Turtle:clear.name
-#. clear.name
-msgid "clear"
+#. Turtle:clean.name
+#. clean.name
+msgid "clean"
 msgstr ""
 
-#. Turtle:clear.doc
-#. clear.doc
+#. Turtle:clean.doc
+#. clean.doc
 msgid "Clear all drawings made by turtle."
 msgstr ""
 
@@ -1147,7 +1144,7 @@ msgstr ""
 #. ishidden.args
 #. hide.args
 #. show.args
-#. clear.args
+#. clean.args
 #. reset.args
 #. goto.args
 #. jump.args
@@ -1163,6 +1160,14 @@ msgstr ""
 #. pu.args
 #. pd.args
 msgid "args, kwargs, turtle"
+msgstr ""
+
+#. setspeed.name
+msgid "setspeed"
+msgstr ""
+
+#. getspeed.name
+msgid "getspeed"
 msgstr ""
 
 #. exiter.name

@@ -157,11 +157,11 @@ class Turtle:
         """
         self._state.hidden = False
 
-    def clear(self):
+    def clean(self):
         """
         Clear all drawings made by turtle.
         """
-        self._state.clear()
+        self._state.clean()
 
     def reset(self):
         """

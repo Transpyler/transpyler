@@ -16,7 +16,7 @@ def print(*args, **kwargs):
         Hello World!
     """
 
-    _print(*args)
+    _print(*args, **kwargs)
 
 
 def alert(*args, **kwargs):

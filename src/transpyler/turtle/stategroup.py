@@ -64,12 +64,12 @@ class StateGroup(collections.MutableSequence):
         self.append(turtle)
         return turtle
 
-    def clear(self):
+    def clean(self):
         """
         Clear all drawings, but maintains turtles in their respective states.
         """
         for turtle in self:
-            turtle.clear()
+            turtle.clean()
 
     def reset(self):
         """
@@ -135,7 +135,7 @@ class IpcStateGroup(StateGroup):
             new = self.new_turtle(**kwargs)
             return ['newturtle', new.id]
         elif action == 'clear':
-            self.clear()
+            self.clean()
             return ['clear']
         elif action == 'reset':
             self.reset()

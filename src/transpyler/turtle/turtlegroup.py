@@ -174,12 +174,12 @@ class TurtleGroup(collections.MutableSequence):
         for t in self:
             t.right(angle)
 
-    def clear(self):
+    def clean(self):
         """
         Clear all drawings made by turtles.
         """
         for t in self:
-            t.clear()
+            t.clean()
 
     def reset(self):
         """

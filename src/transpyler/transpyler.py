@@ -6,9 +6,8 @@ from lazyutils import lazy
 from .info import Info
 from .introspection import Introspection
 from .lexer import Lexer
-from .translate import gettext_for
-from .translate import translate_namespace, translator_factory
-from .utils import pretty_callable
+from .namespace import Namespace
+from .translate import translator_factory
 from .utils.utils import has_qt
 
 # Save useful builtin functions
@@ -81,6 +80,7 @@ class Transpyler(metaclass=SingletonMeta):
     lexer_factory = Lexer
     info_factory = Info
     introspection_factory = Introspection
+    namespace_factory = Namespace
 
     # Constants
     lang = 'en'
@@ -94,7 +94,7 @@ class Transpyler(metaclass=SingletonMeta):
     codemirror_mode = 'python'
     file_extension = 'py'
 
-    # Language info and instrospection
+    # Language info and introspection
     introspection = lazy(lambda self: self.introspection_factory(self))
     info = lazy(lambda self: self.info_factory(self))
     mimetypes = lazy(lambda self: [self.mimetype])
@@ -106,10 +106,9 @@ class Transpyler(metaclass=SingletonMeta):
     link_github = lazy(
         lambda self: "http://github.com/transpyler/%s/" % self.name
     )
-
     translate = lazy(lambda self: translator_factory(self.lang))
 
-    # Computed constants
+    # Display messages
     display_name = lazy(lambda self: self.name.title().replace('_', ' '))
     short_banner = lazy(
         lambda self: self.translate(
@@ -118,8 +117,11 @@ class Transpyler(metaclass=SingletonMeta):
             (self.display_name, self.version))
     )
     long_banner = lazy(lambda self: self.short_banner)
+    use_short_banner = True
+
+    # Lexer
     lexer = lazy(lambda self: self.lexer_factory(self))
-    
+
     @lazy
     def name(self):
         cls_name = self.__class__.__name__.lower()
@@ -337,95 +339,33 @@ class Transpyler(metaclass=SingletonMeta):
             transpile=transpile, is_incomplete_source=is_incomplete_source,
             namespace=namespace,
         )
-    
 
     #
     # Console helpers
     #
-    def console_banner(self, short=False):
+    def console_banner(self, short=None):
         """
         Return a string with the console banner.
         """
+        if short is None:
+            short = self.use_short_banner
 
         if short:
             return self.short_banner
         return getattr(self, 'banner', self.short_banner)
 
-    def make_exit_function(self, function):
-        """
-        Wraps the exit function into a callable object that prints a nice
-        message for its repr.
-        """
-
-        @pretty_callable(self.translate('exiter.doc'))
-        def exit():
-            return function()
-
-        exit.__name__ = self.translate('exiter.name')
-        exit.__doc__ = self.translate('exiter.doc')
-        return exit
-
-    def make_global_namespace(self):
-        """
-        Return a dictionary with the default global namespace for the
-        transpyler runtime.
-        """
-        from transpyler import lib
-
-        ns = extract_namespace(lib)
-
-        # Load default translations from using the lang option
-        if self.lang:
-            translated = translate_namespace(ns, self.lang)
-            ns.update(translated)
-
-        return ns
-
-    def make_turtle_namespace(self, backend):
-        """
-        Return a dictionary with all turtle-related functions.
-        """
-
-        if backend == 'tk':
-            from transpyler.turtle.tk import make_turtle_namespace
-
-            ns = make_turtle_namespace()
-
-        elif backend == 'qt':
-            from transpyler.turtle.qt import make_turtle_namespace
-
-            ns = make_turtle_namespace()
-
-        else:
-            raise ValueError('invalid backend: %r' % backend)
-
-        if self.lang:
-            translated = translate_namespace(ns, self.lang)
-            ns.update(translated)
-
-        return ns
-
     def recreate_namespace(self):
         """
         Recompute the default namespace for the transpyler object.
         """
-        ns = self.make_global_namespace()
-
-        if self.has_turtle_functions:
-            if self.turtle_backend is None:
-                raise RuntimeError(
-                    '.turtle_backend of transpyler object must be set to '
-                    'either "tk" or "qt"'
-                )
-            turtle_ns = self.make_turtle_namespace(self.turtle_backend)
-            ns.update(turtle_ns)
-        self.namespace = ns
-        return ns
+        ns = self.namespace_factory(self)
+        self.namespace = dict(ns)
+        return self.namespace
 
     #
     # External execution
     #
-    def start_console(self, console='auto', turtle='auto'):
+    def start_console(self, console='auto'):
         """
         Starts a regular python console with the current transpyler.
 
@@ -435,10 +375,6 @@ class Transpyler(metaclass=SingletonMeta):
                 chooses the default console application. The default behavior
                 (auto) is to try jupyter and fallback to console if it is
                 not available.
-            turtle:
-                Sets the turtle backend. It can be either 'qt', 'tk', 'none' or
-                'auto'. The defaut strategy (auto) is to try the qt first and
-                fallback to tk.
         """
 
         # Select the console application
@@ -461,6 +397,9 @@ class Transpyler(metaclass=SingletonMeta):
         elif console == 'console':
             from .console import start_console
             start_console(transpyler=self)
+
+        else:
+            raise ValueError('invalid console: %r' % console)
 
     def start_notebook(self):
         """
@@ -498,20 +437,27 @@ class Transpyler(metaclass=SingletonMeta):
                       help='starts notebook server.')
         def main(cli, notebook, console):
             if cli:
-                return self.start_console(console='auto')
+                return self.start_console('auto')
             if console:
-                return self.start_console(console='console')
+                return self.start_console('console')
             if notebook:
                 return self.start_notebook()
 
             if has_qt():
                 return self.start_qturtle()
             else:
-                click.echo('Could not start GUI. Do you have Qt installed?',
-                           err=True)
-                return self.start_console(console='nogui')
+                msg = 'Could not start GUI. Do you have Qt installed?'
+                click.echo(msg, err=True)
+                return self.start_console('jupyter')
 
         return main()
+
+    #
+    # Callbacks: those methods are designed to be overridden by instances
+    #
+    def exit_callback(self):
+        print('bye!')
+        raise SystemExit(0)
 
 
 #

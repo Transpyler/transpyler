@@ -1,7 +1,7 @@
 import pytest
 
 from transpyler import lib
-from transpyler.tests import mod
+from tests import mod
 from transpyler.translate import extract_translations, extract_translation, \
     translate_namespace
 

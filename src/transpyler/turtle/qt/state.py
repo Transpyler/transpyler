@@ -58,7 +58,7 @@ class QGraphicsItemState(TurtleState):
         line = self.group.scene.addLine(a, b, c, d, self.pen)
         self.lines.append(line)
 
-    def clear(self):
+    def clean(self):
         scene = self.group.scene
         lines = self.lines
         while lines:

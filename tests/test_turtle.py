@@ -7,10 +7,11 @@ class TestTurtleNamespace:
         assert hasattr(ns, 'items')
         assert 'forward' in ns
         assert set(ns) == {
-            'Turtle', 'back', 'backward', 'bk', 'clear', 'fd', 'forward',
+            'Turtle', 'back', 'backward', 'bk', 'fd', 'forward',
             'getavatar', 'getcolor', 'getfillcolor', 'getheading', 'getpos',
             'getwidth', 'goto', 'hide', 'isdown', 'ishidden', 'isvisible',
             'jump', 'left', 'lt', 'mainturtle', 'pd', 'pendown', 'penup', 'pu',
             'reset', 'right', 'rt', 'setavatar', 'setcolor', 'setfillcolor',
-            'setheading', 'setpos', 'setwidth', 'show'
+            'setheading', 'setpos', 'setwidth', 'show', 'setspeed', 'getspeed',
+            'clean',
         }

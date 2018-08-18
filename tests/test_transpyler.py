@@ -145,14 +145,14 @@ class TestPyBrLanguage(PyBrFixtures, TranspyledLanguage):
         assert transpyler.eval('1 em (1, 2)', {}) is True
 
     def test_default_namespace(self, transpyler):
-        ns = transpyler.make_global_namespace()
+        ns = transpyler.namespace
         assert 'cos' in ns
         assert 'mostre' in ns
-    
+        assert 'sair' in ns
+
     def test_translate_factory(self):
         translator = translator_factory('pt_BR')
         assert translator('file') == 'arquivo'
 
     def test_translate(self, transpyler):
         assert transpyler.translate('file') == 'arquivo'
-

@@ -1,4 +1,4 @@
-from collections import Mapping
+from collections.abc import Mapping
 from functools import wraps
 
 from .turtle import Turtle
@@ -75,7 +75,7 @@ class TurtleNamespace(Mapping):
             ishidden=wrap(cls.ishidden),
             hide=wrap(cls.hide),
             show=wrap(cls.show),
-            clear=wrap(cls.clear),
+            clean=wrap(cls.clean),
             reset=wrap(cls.reset),
 
             # Movement
@@ -85,6 +85,8 @@ class TurtleNamespace(Mapping):
             backward=wrap(cls.backward),
             left=wrap(cls.left),
             right=wrap(cls.right),
+            setspeed=self.setspeed,
+            getspeed=self.getspeed,
 
             # Aliases
             fd=wrap(cls.forward),
@@ -95,3 +97,9 @@ class TurtleNamespace(Mapping):
             pu=wrap(cls.penup),
             pd=wrap(cls.pendown),
         )
+
+    def getspeed(self):
+        return 5
+
+    def setspeed(self, value):
+        pass
